@@ -1,0 +1,10 @@
+flask
+flask-login
+flask-principal
+flask-sqlalchemy
+requests
+tornado
+gunicorn
+redis
+eventlet
+docker-py
