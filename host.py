@@ -26,7 +26,7 @@ from model.user import UserAccount
 
 host_blueprint = Blueprint('host_hosts', __name__)
 
-@template_blueprint.route('/host/hosts', methods=['GET'])
+@host_blueprint.route('/host/hosts', methods=['GET'])
 @login_required
 def host_hosts():
     username = current_user.username

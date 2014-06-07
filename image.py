@@ -26,7 +26,7 @@ from model.user import UserAccount
 
 image_blueprint = Blueprint('image_blueprint', __name__)
 
-@template_blueprint.route('/image/images', methods=['GET'])
+@image_blueprint.route('/image/images', methods=['GET'])
 @login_required
 def image_images():
     username = current_user.username

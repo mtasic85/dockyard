@@ -26,7 +26,7 @@ from model.user import UserAccount
 
 network_blueprint = Blueprint('network_blueprint', __name__)
 
-@template_blueprint.route('/network/networks', methods=['GET'])
+@network_blueprint.route('/network/networks', methods=['GET'])
 @login_required
 def network_networks():
     username = current_user.username

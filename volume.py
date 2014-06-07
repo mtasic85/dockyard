@@ -26,7 +26,7 @@ from model.user import UserAccount
 
 volume_blueprint = Blueprint('volume_blueprint', __name__)
 
-@template_blueprint.route('/volume/volumes', methods=['GET'])
+@volume_blueprint.route('/volume/volumes', methods=['GET'])
 @login_required
 def volume_volumes():
     username = current_user.username

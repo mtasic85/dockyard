@@ -26,7 +26,7 @@ from model.user import UserAccount
 
 dashboard_blueprint = Blueprint('dashboard_blueprint', __name__)
 
-@template_blueprint.route('/dashboard', methods=['GET'])
+@dashboard_blueprint.route('/dashboard', methods=['GET'])
 @login_required
 def dashboard_dashboard():
     username = current_user.username

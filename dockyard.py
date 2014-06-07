@@ -92,7 +92,6 @@ if FlaskConfig.PROXY_FIX:
 
 app.config.from_object(FlaskConfig)
 
-'''
 # flask-sqlalchemy
 from model.db import init_db
 db = init_db(app)
@@ -109,17 +108,24 @@ if not UserAccount.query.filter_by(username='admin').count():
     user_account = UserAccount(
         username = 'admin',
         password = 'd0cky4rd',
-        email = 'mtasic85@gmail.com',
+        email = '',
         usertype = 'super',
     )
     db.session.add(user_account)
     db.session.commit()
-'''
 
 # account
 from account import account_blueprint, login_manager
 app.register_blueprint(account_blueprint)
 login_manager.init_app(app)
+
+# dashboard
+from dashboard import dashboard_blueprint
+app.register_blueprint(dashboard_blueprint)
+
+#~ # dashboard
+#~ from dashboard import dashboard_blueprint
+#~ app.register_blueprint(dashboard_blueprint)
 
 @app.route('/')
 def index():
