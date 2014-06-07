@@ -10,6 +10,7 @@ import os
 import sys
 
 # requests with 'http+unix:/' adapter
+# based on dotcloud/docker-py
 import socket
 import requests
 import requests.adapters
