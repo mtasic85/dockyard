@@ -33,13 +33,13 @@ Sections:
         - list
         - create
         
-        - clone
-        - destory
+        # - clone
         - start
         - restart
         - stop
         - attach
         - logs
+        - destory
     
     Networking
         - list
@@ -82,7 +82,7 @@ from flask.ext.login import (
 )
 
 # config
-from config import FlaskConfig
+from config.flask import FlaskConfig
 
 # app
 app = Flask(__name__)
@@ -92,9 +92,68 @@ if FlaskConfig.PROXY_FIX:
 
 app.config.from_object(FlaskConfig)
 
-@app.route('/', methods=['GET'])
+# flask-sqlalchemy
+from model.db import init_db
+db = init_db(app)
+
+# model
+from model.user import UserAccount
+
+# model - create all tables
+# db.drop_all()
+db.create_all()
+
+# create super user if does not exits
+if not UserAccount.query.filter_by(username='terumo').count():
+    user_account = UserAccount(
+        username = 'terumo',
+        password = 'terum0',
+        email = 'mtasic85@gmail.com',
+        usertype = 'super',
+    )
+    db.session.add(user_account)
+    db.session.commit()
+
+# account
+from account import account_blueprint, login_manager
+app.register_blueprint(account_blueprint)
+login_manager.init_app(app)
+
+@app.route('/')
 def index():
-    return ''
+    return redirect(url_for(FlaskConfig.DEFAULT_VIEW))
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(
+        os.path.join(app.root_path, 'static', 'dockyard', 'img'),
+        'favicon.ico',
+        mimetype='image/vnd.microsoft.icon',
+    )
+
+@app.route('/robots.txt')
+def robots():
+    return send_from_directory(
+        os.path.join(app.root_path, 'static', 'dockyard', 'other'),
+        'robots.txt',
+        mimetype='text/plain',
+    )
+
+@app.errorhandler(403)
+def forbidden(e):
+    return render_template('403.html'), 403
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(410)
+def gone(e):
+    return render_template('410.html'), 410
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
 
 if __name__ == '__main__':
     import argparse
