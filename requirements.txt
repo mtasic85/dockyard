@@ -1,4 +1,5 @@
 flask
+flask-wtf
 flask-login
 flask-principal
 flask-sqlalchemy
@@ -8,3 +9,7 @@ gunicorn
 redis
 eventlet
 docker-py
+python-dateutil
+wtforms
+wtforms-html5
+mysql-python

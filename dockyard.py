@@ -92,6 +92,7 @@ if FlaskConfig.PROXY_FIX:
 
 app.config.from_object(FlaskConfig)
 
+'''
 # flask-sqlalchemy
 from model.db import init_db
 db = init_db(app)
@@ -104,15 +105,16 @@ from model.user import UserAccount
 db.create_all()
 
 # create super user if does not exits
-if not UserAccount.query.filter_by(username='terumo').count():
+if not UserAccount.query.filter_by(username='admin').count():
     user_account = UserAccount(
-        username = 'terumo',
-        password = 'terum0',
+        username = 'admin',
+        password = 'd0cky4rd',
         email = 'mtasic85@gmail.com',
         usertype = 'super',
     )
     db.session.add(user_account)
     db.session.commit()
+'''
 
 # account
 from account import account_blueprint, login_manager
