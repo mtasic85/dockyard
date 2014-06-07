@@ -8,11 +8,11 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"> Sign Up </h3>
+                        <h3 class="panel-title"> Profile </h3>
                     </div>
                     
                     <div class="panel-body">
-                        <form role="form" action="{{ url_for('account_blueprint.account_signup') }}" method="POST">
+                        <form role="form" action="{{ url_for('account_blueprint.account_profile') }}" method="POST">
                             {{ form.csrf_token }}
                             
                             <fieldset>
@@ -46,6 +46,21 @@
                                     {{ form.email(class='form-control', placeholder='E-mail') }}
                                 </div>
                                 
+                                {% if form.current_password.errors %}
+                                    {% for n in form.current_password.errors %}
+                                        <div class="form-group">
+                                            <div class="alert alert-warning alert-dismissable">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                {{ n }}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                
+                                <div class="form-group">
+                                    {{ form.current_password(class='form-control', placeholder='Current Password') }}
+                                </div>
+                                
                                 {% if form.password.errors %}
                                     {% for n in form.password.errors %}
                                         <div class="form-group">
@@ -58,7 +73,7 @@
                                 {% endif %}
                                 
                                 <div class="form-group">
-                                    {{ form.password(class='form-control', placeholder='Password') }}
+                                    {{ form.password(class='form-control', placeholder='New Password') }}
                                 </div>
                                 
                                 {% if form.confirm_password.errors %}
@@ -76,12 +91,20 @@
                                     {{ form.confirm_password(class='form-control', placeholder='Confirm Password') }}
                                 </div>
                                 
+                                <div class="form-group none-display">
+                                    {{ form.usertype(class='select', value=usertype) }}
+                                </div>
+                                
+                                <div class="form-group none-display">
+                                    {{ form.active(class='checkbox') }}
+                                </div>
+                                
                                 <!-- Change this to a button or input when using this as a form -->
-                                <button type="submit" class="btn btn-lg btn-success btn-block"> Sign Up </button>
+                                <button type="submit" class="btn btn-lg btn-success btn-block"> Update </button>
                             </fieldset>
                         </form>
                         
-                        <a href="{{ url_for('account_blueprint.account_signin') }}" class="btn btn-lg btn-primary btn-block mt10"> Sign In </a>
+                        <a href="/" class="btn btn-lg btn-primary btn-block mt10"> Go Back </a>
                     </div>
                 </div>
             </div>

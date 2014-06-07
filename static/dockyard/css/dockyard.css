@@ -115,6 +115,7 @@
 
 .none-display       { display: none !important; }
 .block-display      { display: block !important; }
+.inline-block-display      { display: inline-block !important; }
 
 .relative-position  { position: relative !important; }
 .absolute-position  { position: absolute !important; }

@@ -169,6 +169,7 @@ class SignUpForm(Form):
         
         if not rv:
             # invalid information
+            self.username.errors.append('Something gone wrong')
             return False
         
         if User.check_username(self.username.data):
@@ -221,6 +222,7 @@ class SignInForm(Form):
         
         if not rv:
             # invalid information
+            self.username.errors.append('Something gone wrong')
             return False
         
         if not User.check_username(username):
@@ -389,9 +391,15 @@ class UserForm(Form):
                 v = getattr(self, k)
                 dct[k] = v.data
         
-        # print '!!!', dct
+        print '!!!', dct
         
-        User.update_user(**dct)
+        try:
+            User.update_user(**dct)
+        except Exception as e:
+            # user could not be created for some reason
+            self.username.errors.append('Something gone wrong')
+            return False
+        
         user = User(username=self.username.data)
         
         if user is None:
@@ -409,35 +417,8 @@ def account_profile():
     usertype = current_user.usertype
     print 'account_profile:', locals()
     
-    if request.method == 'GET':
-        if usertype == 'user':
-            return redirect(url_for('account_blueprint.account_profile_user'))
-        elif usertype == 'super':
-            return redirect(url_for('account_blueprint.account_profile_super'))
-        else:
-            raise Exception(usertype)
-    elif request.method == 'POST':
-        # get user account properties
-        user_account = UserAccount.query.filter_by(username=username).one()
-        dct = {}
-        
-        for column in user_account.__table__.columns:
-            v = getattr(user_account, column.name)
-            dct[column.name] = v
-        
-        data = {
-            'user_account': dct,
-        }
-        
-        return jsonify(data)
-
-@account_blueprint.route('/account/profile/user', methods=['GET', 'POST'])
-@login_required
-def account_profile_user():
     error = None
     form = UserForm()
-    username = current_user.username
-    print 'account_profile_user:', locals()
     
     if request.method == 'GET':
         # find all field values
@@ -456,8 +437,10 @@ def account_profile_user():
             
             dct[column.name] = v
         
+        print '!!!', dct
+        
         return render_template(
-            'account-profile-user.html',
+            'account-profile.html',
             form = form,
             error = error,
             **dct
@@ -485,71 +468,22 @@ def account_profile_user():
             login_user(form.user)
         
         return render_template(
-            'account-profile-user.html',
+            'account-profile.html',
             form = form,
             error = error,
             **dct
         )
 
-@account_blueprint.route('/account/profile/super', methods=['GET', 'POST'])
+#
+# settings
+#
+@account_blueprint.route('/account/settings', methods=['GET', 'POST'])
 @login_required
-def account_profile_super():
-    error = None
-    form = UserForm()
+def account_settings():
     username = current_user.username
-    print 'account_profile_super:', locals()
-    
-    if request.method == 'GET':
-        # find all field values
-        dct = {}
-        user_account = UserAccount.query.filter_by(username=username).one()
-        
-        for column in user_account.__table__.columns:
-            if column.name == 'id': continue
-            v = getattr(user_account, column.name)
-            
-            if v:
-                field = getattr(form, column.name)
-                setattr(field, 'data', v)
-            else:
-                v = ''
-            
-            dct[column.name] = v
-        
-        return render_template(
-            'account-profile-super.html',
-            form = form,
-            error = error,
-            **dct
-        )
-    elif request.method == 'POST':
-        # find all field values
-        dct = {}
-        user_account = UserAccount.query.filter_by(username=username).one()
-        
-        for k in dir(form):
-            v = getattr(form, k)
-            
-            if isinstance(v, (Field, UnboundField)):
-                field = getattr(form, k)
-                v = field.data
-                
-                if v is None:
-                    v = getattr(user_account, k)
-                    field = getattr(form, k)
-                    setattr(field, 'data', v)
-                
-                dct[k] = v
-        
-        if form.validate_on_submit():
-            login_user(form.user)
-        
-        return render_template(
-            'account-profile-super.html',
-            form = form,
-            error = error,
-            **dct
-        )
+    usertype = current_user.usertype
+    print 'account_settings:', locals()
+    return render_template('404.html'), 404
 
 #
 # users
