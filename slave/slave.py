@@ -9,6 +9,63 @@ __all__ = ['app']
 import os
 import sys
 
+# requests with 'http+unix:/' adapter
+import socket
+import requests
+import requests.adapters
+
+try:
+    import http.client as httplib
+except ImportError:
+    import httplib
+
+try:
+    import requests.packages.urllib3.connectionpool as connectionpool
+except ImportError:
+    import urllib3.connectionpool as connectionpool
+
+class UnixAdapter(requests.adapters.HTTPAdapter):
+    def __init__(self, base_url, timeout=60):
+        self.base_url = base_url
+        self.timeout = timeout
+        super(UnixAdapter, self).__init__()
+    
+    def get_connection(self, socket_path, proxies=None):
+        return UnixHTTPConnectionPool(self.base_url, socket_path, self.timeout)
+
+class UnixHTTPConnectionPool(connectionpool.HTTPConnectionPool):
+    def __init__(self, base_url, socket_path, timeout=60):
+        connectionpool.HTTPConnectionPool.__init__(self, 'localhost',
+                                                   timeout=timeout)
+        self.base_url = base_url
+        self.socket_path = socket_path
+        self.timeout = timeout
+
+    def _new_conn(self):
+        return UnixHTTPConnection(self.base_url, self.socket_path,
+                                  self.timeout)
+
+class UnixHTTPConnection(httplib.HTTPConnection, object):
+    def __init__(self, base_url, unix_socket, timeout=60):
+        httplib.HTTPConnection.__init__(self, 'localhost', timeout=timeout)
+        self.base_url = base_url
+        self.unix_socket = unix_socket
+        self.timeout = timeout
+
+    def connect(self):
+        sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        sock.settimeout(self.timeout)
+        sock.connect(self.base_url.replace("http+unix:/", ""))
+        self.sock = sock
+
+    def _extract_path(self, url):
+        # remove the base_url entirely..
+        return url.replace(self.base_url, "")
+
+    def request(self, method, url, **kwargs):
+        url = self._extract_path(self.unix_socket)
+        super(UnixHTTPConnection, self).request(method, url, **kwargs)
+
 # werkzeug
 from werkzeug.contrib.fixers import ProxyFix
 
@@ -20,6 +77,7 @@ from flask import (
     Blueprint, abort,
     send_from_directory,
     current_app,
+    make_response,
 )
 
 # flask login
@@ -39,12 +97,19 @@ if FlaskConfig.PROXY_FIX:
 
 app.config.from_object(FlaskConfig)
 
-# docker
-import docker
-
-@app.route('/')
-def hello():
-    return 'Hello World!'
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/<path:path>', methods=['GET', 'POST'])
+def catch_all(path):
+    # get docker API route
+    s = request.url.find(request.url_root) + len(request.url_root)
+    path = request.url[s:]
+    
+    # execute
+    s = requests.Session()
+    s.mount('http+unix://', UnixAdapter('http+unix://var/run/docker.sock'))
+    f = getattr(s, request.method.lower())
+    r = f('http+unix://var/run/docker.sock/%s' % path)
+    return make_response(r.text, r.status_code, r.headers.items())
 
 if __name__ == '__main__':
     import argparse
@@ -52,10 +117,12 @@ if __name__ == '__main__':
     # parse cli arguments
     parser = argparse.ArgumentParser()
     
-    parser.add_argument('-b', '--bind', type=str, default='0.0.0.0:80',
+    parser.add_argument('-b', '--bind', type=str,
+                        default='{HOST}:{PORT}'.format(**FlaskConfig.__dict__),
                         help='bind to host:port')
     
-    parser.add_argument('-t', '--threaded', type=bool, default=False,
+    parser.add_argument('-t', '--threaded', type=bool,
+                        default=FlaskConfig.THREADED,
                         help='threaded execution')
     
     args = parser.parse_args()
@@ -65,7 +132,7 @@ if __name__ == '__main__':
     
     if len(host_port) == 1:
         host = host_port[0]
-        port = 80
+        port = FlaskConfig.PORT
     else:
         host = host_port[0]
         port = int(host_port[1])

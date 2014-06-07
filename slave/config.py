@@ -2,12 +2,12 @@
 __all__ = ['FlaskConfig']
 
 class FlaskConfig(object):
-    SECRET_KEY = '!d0cky4rd!'   # IMPORTANT: change this value with your secret
+    SECRET_KEY = '!d0cky4rd-sl4ve!'   # IMPORTANT: change this value with your secret
     DEBUG = True
     SILENT = False
     PROXY_FIX = True
     HOST = '0.0.0.0'
-    PORT = 80
+    PORT = 4000
     THREADED = False
     LAZY_INITIALIZATION = False
     # DEFAULT_VIEW = 'home_blueprint.home'
