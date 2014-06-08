@@ -24,7 +24,7 @@ from wtforms_html5 import EmailField
 from model.db import db
 from model.user import UserAccount
 
-host_blueprint = Blueprint('host_hosts', __name__)
+host_blueprint = Blueprint('host_blueprint', __name__)
 
 @host_blueprint.route('/host/hosts', methods=['GET'])
 @login_required

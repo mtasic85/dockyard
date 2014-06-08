@@ -48,17 +48,25 @@
                         <li>
                             <a href="{{ url_for('dashboard_blueprint.dashboard_dashboard') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard </a>
                         </li>
+                        
                         <li>
-                            <a href="{{ url_for('dashboard_blueprint.dashboard_dashboard') }}"><i class="fa fa-folder fa-fw"></i> Images </a>
+                            <a href="{{ url_for('dashboard_blueprint.host_hosts') }}"><i class="fa fa-cloud fa-fw"></i> Hosts </a>
                         </li>
+                        
                         <li>
-                            <a href="{{ url_for('dashboard_blueprint.dashboard_dashboard') }}"><i class="fa fa-database fa-fw"></i> Volumes </a>
+                            <a href="{{ url_for('dashboard_blueprint.image_images') }}"><i class="fa fa-folder fa-fw"></i> Images </a>
                         </li>
+                        
                         <li>
-                            <a href="{{ url_for('dashboard_blueprint.dashboard_dashboard') }}"><i class="fa fa-cubes fa-fw"></i> Containers </a>
+                            <a href="{{ url_for('dashboard_blueprint.volume_volumes') }}"><i class="fa fa-database fa-fw"></i> Volumes </a>
                         </li>
+                        
                         <li>
-                            <a href="{{ url_for('dashboard_blueprint.dashboard_dashboard') }}"><i class="fa fa-sitemap fa-fw"></i> Networking </a>
+                            <a href="{{ url_for('dashboard_blueprint.container_containers') }}"><i class="fa fa-cubes fa-fw"></i> Containers </a>
+                        </li>
+                        
+                        <li>
+                            <a href="{{ url_for('dashboard_blueprint.network_networks') }}"><i class="fa fa-sitemap fa-fw"></i> Networking </a>
                         </li>
                     </ul>
                     <!-- /#side-menu -->
@@ -67,7 +75,7 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-
+        
         <div id="page-wrapper">
             {% block page_wrapper %}
             {% endblock %}

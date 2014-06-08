@@ -97,7 +97,7 @@ from model.db import init_db
 db = init_db(app)
 
 # model
-from model.user import UserAccount
+from model.user import UserAccount, UserQuota
 
 # model - create all tables
 # db.drop_all()
@@ -123,9 +123,25 @@ login_manager.init_app(app)
 from dashboard import dashboard_blueprint
 app.register_blueprint(dashboard_blueprint)
 
-#~ # dashboard
-#~ from dashboard import dashboard_blueprint
-#~ app.register_blueprint(dashboard_blueprint)
+# host
+from host import host_blueprint
+app.register_blueprint(host_blueprint)
+
+# image
+from image import image_blueprint
+app.register_blueprint(image_blueprint)
+
+# volume
+from volume import volume_blueprint
+app.register_blueprint(volume_blueprint)
+
+# container
+from container import container_blueprint
+app.register_blueprint(container_blueprint)
+
+# network
+from network import network_blueprint
+app.register_blueprint(network_blueprint)
 
 @app.route('/')
 def index():
