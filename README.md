@@ -3,6 +3,7 @@ dockyard
 
 Dockyard is web UI for docker
 
+Follow us on [![alt text][1.2]][1]
 
 Setup Development Environment
 =============================
@@ -22,3 +23,6 @@ $ docker run -d -p 3306:3306 -e MYSQL_DATABASE=dockyard -e MYSQL_ROOT_PASSWORD=d
 ```
 $ sudo python -B dockyard.py -b 0.0.0.0:80
 ```
+
+[1.2]: http://i.imgur.com/wWzX9uB.png (getdockyard)
+[1]: http://www.twitter.com/getdockyard
