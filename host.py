@@ -21,8 +21,9 @@ from wtforms import TextField, PasswordField, SelectField, BooleanField
 from wtforms_html5 import EmailField
 
 # model
-from model.db import db
-from model.user import UserAccount
+from model.db import db, object_to_dict, objects_to_list
+from model.user import UserAccount, UserQuota
+from model.host import Host
 
 host_blueprint = Blueprint('host_blueprint', __name__)
 
@@ -34,13 +35,78 @@ def host_hosts():
     
     # get user account properties
     user_account = UserAccount.query.filter_by(username=username).one()
-    dct = {}
-    
-    for column in user_account.__table__.columns:
-        v = getattr(user_account, column.name)
-        dct[column.name] = v
+    dct = object_to_dict(user_account)
     
     return render_template(
         'host-hosts.html',
         **dct
     )
+
+@host_blueprint.route('/host/all', methods=['POST'])
+@login_required
+def host_all():
+    username = current_user.username
+    usertype = current_user.usertype
+    print 'host_all:', locals()
+    
+    if usertype == 'super':
+        hosts = Host.query.all()
+        _hosts = objects_to_list(hosts)
+    else:
+        _hosts = None
+    
+    data = {
+        'hosts': _hosts,
+    }
+    
+    return jsonify(data)
+
+@host_blueprint.route('/host/add', methods=['POST'])
+@login_required
+def host_add():
+    username = current_user.username
+    usertype = current_user.usertype
+    _host = request.json['host']
+    print 'host_add:', locals()
+    
+    if usertype == 'super':
+        host = Host(**_host)
+        _host['created'] = _host['updated'] = datetime.utcnow()
+        db.session.add(host)
+        db.session.commit()
+    
+    data = {}
+    return jsonify(data)
+
+@host_blueprint.route('/host/update', methods=['POST'])
+@login_required
+def host_update():
+    username = current_user.username
+    usertype = current_user.usertype
+    _host = request.json['host']
+    print 'host_update:', locals()
+    
+    if usertype == 'super':
+        host = Host.query.get(_host['id'])
+        _host['updated'] = datetime.utcnow()
+        host.update(_host)
+        db.session.commit()
+    
+    data = {}
+    return jsonify(data)
+
+@host_blueprint.route('/host/remove', methods=['POST'])
+@login_required
+def host_remove():
+    username = current_user.username
+    usertype = current_user.usertype
+    _host = request.json['host']
+    print 'host_remove:', locals()
+    
+    if usertype == 'super':
+        host = Host.query.get(_host['id'])
+        db.session.delete(host)
+        db.session.commit()
+    
+    data = {}
+    return jsonify(data)

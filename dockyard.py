@@ -93,11 +93,12 @@ if FlaskConfig.PROXY_FIX:
 app.config.from_object(FlaskConfig)
 
 # flask-sqlalchemy
-from model.db import init_db
+from model.db import init_db, object_to_dict, objects_to_list
 db = init_db(app)
 
 # model
 from model.user import UserAccount, UserQuota
+from model.host import Host
 
 # model - create all tables
 # db.drop_all()

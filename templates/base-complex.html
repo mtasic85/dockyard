@@ -18,11 +18,15 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
+                {% block navbar_top_links %}
+                {% endblock %}
+                
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
+                    
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="{{ url_for('account_blueprint.account_profile') }}"><i class="fa fa-user fa-fw"></i> User Profile </a>
                         </li>
@@ -50,23 +54,23 @@
                         </li>
                         
                         <li>
-                            <a href="{{ url_for('dashboard_blueprint.host_hosts') }}"><i class="fa fa-cloud fa-fw"></i> Hosts </a>
+                            <a href="{{ url_for('host_blueprint.host_hosts') }}"><i class="fa fa-cloud fa-fw"></i> Hosts </a>
                         </li>
                         
                         <li>
-                            <a href="{{ url_for('dashboard_blueprint.image_images') }}"><i class="fa fa-folder fa-fw"></i> Images </a>
+                            <a href="{{ url_for('image_blueprint.image_images') }}"><i class="fa fa-folder fa-fw"></i> Images </a>
                         </li>
                         
                         <li>
-                            <a href="{{ url_for('dashboard_blueprint.volume_volumes') }}"><i class="fa fa-database fa-fw"></i> Volumes </a>
+                            <a href="{{ url_for('volume_blueprint.volume_volumes') }}"><i class="fa fa-database fa-fw"></i> Volumes </a>
                         </li>
                         
                         <li>
-                            <a href="{{ url_for('dashboard_blueprint.container_containers') }}"><i class="fa fa-cubes fa-fw"></i> Containers </a>
+                            <a href="{{ url_for('container_blueprint.container_containers') }}"><i class="fa fa-cubes fa-fw"></i> Containers </a>
                         </li>
                         
                         <li>
-                            <a href="{{ url_for('dashboard_blueprint.network_networks') }}"><i class="fa fa-sitemap fa-fw"></i> Networking </a>
+                            <a href="{{ url_for('network_blueprint.network_networks') }}"><i class="fa fa-sitemap fa-fw"></i> Networking </a>
                         </li>
                     </ul>
                     <!-- /#side-menu -->
