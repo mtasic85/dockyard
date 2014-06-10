@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 __all__ = ['db', 'init_app', 'get_db', 'object_to_dict', 'objects_to_list']
+from datetime import date, time, datetime
 
 from flask import Flask, current_app
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -18,14 +19,24 @@ def get_db():
     global db
     return db
 
-def object_to_dict(obj):
+def object_to_dict(obj, skip=()):
     dct = {}
     
     for column in obj.__table__.columns:
-        v = getattr(obj, column.name)
-        dct[column.name] = v
+        name = column.name
+        
+        if name in skip:
+            continue
+        
+        v = getattr(obj, name)
+        
+        if isinstance(v, date) or isinstance(v, time) or \
+           isinstance(v, datetime):
+            v = v.isoformat()
+        
+        dct[name] = v
     
     return dct
 
-def objects_to_list(objs):
-    return [object_to_dict(obj) for obj in objs]
+def objects_to_list(objs, skip=()):
+    return [object_to_dict(obj, skip) for obj in objs]

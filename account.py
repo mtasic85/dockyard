@@ -40,7 +40,7 @@ from dateutil.parser import parse as dtparse
 from config.flask import FlaskConfig
 
 # model
-from model.db import db
+from model.db import db, object_to_dict, objects_to_list
 from model.user import UserAccount, UserQuota, UserStat
 
 # flask mail
@@ -508,27 +508,34 @@ def account_users():
         **dct
     )
 
-@account_blueprint.route('/account/users/list', methods=['POST'])
+@account_blueprint.route('/account/users/all', methods=['POST'])
 @login_required
-def account_users_list():
+def account_users_all():
     username = current_user.username
     usertype = current_user.usertype
-    print 'account_users_list locals:', dict(locals())
+    print 'account_users_all locals:', dict(locals())
     
     # get all results
+    '''
     results = []
     
     for user_account in UserAccount.query.all():
         result = {}
         
         for column in user_account.__table__.columns:
+            if column.name == 'password':
+                continue
+            
             v = getattr(user_account, column.name)
             result[column.name] = v
         
         results.append(result)
+    '''
+    user_accounts = UserAccount.query.all()
+    _user_accounts = objects_to_list(user_accounts, skip=['password'])
     
     data = {
-        'results': results,
+        'user_accounts': _user_accounts,
     }
     
     return jsonify(data)
