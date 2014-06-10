@@ -8,6 +8,7 @@ Master asks slave for stats and to execute commands.
 __all__ = ['app']
 import os
 import sys
+from ConfigParser import ConfigParser
 
 # requests with 'http+unix:/' adapter
 # based on dotcloud/docker-py
@@ -126,6 +127,21 @@ def catch_all(path):
     f = getattr(s, request.method.lower())
     r = f('http+unix://var/run/docker.sock/%s' % path)
     return make_response(r.text, r.status_code, r.headers.items())
+
+@app.route('/dockyard/volumes', methods=['GET'])
+def dockyard_volumes():
+    # read config
+    config = ConfigParser()
+    config.read(['slave.conf'])
+    btrfs_device = config.get('btrfs', 'device')
+    
+    volumes = []
+    
+    data = {
+        'volumes': volumes,
+    }
+    
+    return jsonify(data)
 
 if __name__ == '__main__':
     import argparse
