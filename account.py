@@ -41,7 +41,7 @@ from config.flask import FlaskConfig
 
 # model
 from model.db import db
-from model.user import UserAccount, UserQuota
+from model.user import UserAccount, UserQuota, UserStat
 
 # flask mail
 from mail import mail, Message

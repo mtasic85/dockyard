@@ -97,7 +97,7 @@ from model.db import init_db, object_to_dict, objects_to_list
 db = init_db(app)
 
 # model
-from model.user import UserAccount, UserQuota
+from model.user import UserAccount, UserQuota, UserStat
 from model.host import Host
 
 # model - create all tables

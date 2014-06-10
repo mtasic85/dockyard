@@ -54,9 +54,11 @@
                             <a href="{{ url_for('dashboard_blueprint.dashboard_dashboard') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard </a>
                         </li>
                         
+                        {% if usertype == 'super' %}
                         <li>
-                            <a href="{{ url_for('account_blueprint.account_accounts') }}"><i class="fa fa-users fa-fw"></i> Users </a>
+                            <a href="{{ url_for('account_blueprint.account_users') }}"><i class="fa fa-users fa-fw"></i> Users </a>
                         </li>
+                        {% endif %}
                         
                         <li>
                             <a href="{{ url_for('host_blueprint.host_hosts') }}"><i class="fa fa-cloud fa-fw"></i> Hosts </a>
