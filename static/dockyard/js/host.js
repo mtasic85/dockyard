@@ -6,7 +6,7 @@
 var host = {};
 
 $.extend(host, {
-    hosts_table: null,
+    table: null,
     
     list: function(options) {
         options = options || {};
@@ -20,7 +20,7 @@ $.extend(host, {
         })
         .done(function(data) {
             console.log(data);
-            var tbody = host.hosts_table.find('tbody');
+            var tbody = host.table.find('tbody');
             
             _.each(data.hosts, function(host) {
                 var tr = $('<tr>')

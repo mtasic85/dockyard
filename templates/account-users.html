@@ -3,16 +3,16 @@
 {% block scripts %}
     <!-- dockyard -->
     <script
-        src="{{ url_for('static', filename='dockyard/js/host.js') }}"
+        src="{{ url_for('static', filename='dockyard/js/account.js') }}"
         type="text/javascript"></script>
     
     <script type="text/javascript">
         $(document).ready(function(e) {
-            host.hosts_table = $('table#hosts');
-            host.list();
+            account.table = $('table#users');
+            account.list();
             
             $('button#add').click(function(e) {
-                host.add();
+                account.add();
             });
         });
     </script>
