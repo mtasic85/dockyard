@@ -19,12 +19,12 @@
     
     <script type="text/template" id="table-row-user"> 
         <tr data-id="<%= id %>">
-            <td> <%= username %> </td>
-            <td> <%= email %> </td>
-            <td> <%= usertype %> </td>
-            <td> <%= active %> </td>
-            <td> <%= created %> </td>
-            <td> <%= updated %> </td>
+            <td id="username"> <%= username %> </td>
+            <td id="email"> <%= email %> </td>
+            <td id="usertype"> <%= usertype %> </td>
+            <td id="active"> <%= active %> </td>
+            <td id="created"> <%= created %> </td>
+            <td id="updated"> <%= updated %> </td>
             
             <td>
                 <div class="btn-group">
@@ -38,7 +38,7 @@
                         <li><a href="#" id="quota"> Quota </a></li>
                         <li><a href="#" id="stat"> Statistics </a></li>
                         <li class="divider"></li>
-                        <li><a href="#" id="deactivate"> Activate </a></li>
+                        <li><a href="#" id="activate"> Activate </a></li>
                         <li><a href="#" id="deactivate"> Deactivate </a></li>
                         <li class="divider"></li>
                         <li><a href="#" id="remove"> Remove </a></li>
@@ -322,22 +322,11 @@
                         <th> Active </th>
                         <th> Created </th>
                         <th> Updated </th>
-<!--
-                        <th> # Images </th>
-                        <th> # Volumes </th>
-                        <th> Max Volume Cap </th>
-                        <th> Max Volumes Cap </th>
-                        <th> # Containers </th>
-                        <th> Max Container CPU </th>
-                        <th> Max Containers CPU </th>
-                        <th> Max Container RAM </th>
-                        <th> Max Containers RAM </th>
-                        <th> # Subdomains </th>
--->
                         
                         <th> Action </th>
                     </tr>
                 </thead>
+                
                 <tbody>
                 </tbody>
             </table>

@@ -150,7 +150,9 @@ $.extend(account, {
                     username: user_account.username,
                 }),
             })
-            .done(function(data) {})
+            .done(function(data) {
+                tr.find('#active').val('true');
+            })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
             });
@@ -167,7 +169,9 @@ $.extend(account, {
                     username: user_account.username,
                 }),
             })
-            .done(function(data) {})
+            .done(function(data) {
+                tr.find('#active').val('false');
+            })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
             });
