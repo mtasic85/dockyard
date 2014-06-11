@@ -35,9 +35,6 @@ $.extend(account, {
         var edit_template = _.template($('#modal-edit-user').html());
         var quota_template = _.template($('#modal-quota-user').html());
         var stat_template = _.template($('#modal-stat-user').html());
-        // var activate_template = _.template($('#modal-activate-user').html());
-        // var deactivate_template = _.template($('#modal-deactivate-user').html());
-        // var remove_template = _.template($('#modal-remove-user').html());
         
         var tr = $(tr_template(user_account))
             .appendTo(tbody);
@@ -292,7 +289,7 @@ $.extend(account, {
             $('.modal-backdrop').remove();
             
             // create user account
-            var user_account = {
+            var _user_account = {
                 username: modal_div.find('#username').val(),
                 password: modal_div.find('#password').val(),
                 email: modal_div.find('#email').val(),
@@ -305,7 +302,7 @@ $.extend(account, {
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify({
-                    user_account: user_account,
+                    user_account: _user_account,
                 }),
             })
             .done(function(data) {

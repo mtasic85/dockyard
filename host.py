@@ -62,9 +62,9 @@ def host_hosts_all():
     
     return jsonify(data)
 
-@host_blueprint.route('/host/add', methods=['POST'])
+@host_blueprint.route('/host/create', methods=['POST'])
 @login_required
-def host_add():
+def host_create():
     username = current_user.username
     usertype = current_user.usertype
     _host = request.json['host']
@@ -79,7 +79,12 @@ def host_add():
     db.session.add(host)
     db.session.commit()
     
-    data = {}
+    _host = object_to_dict(host)
+    
+    data = {
+        'host': _host,
+    }
+    
     return jsonify(data)
 
 @host_blueprint.route('/host/update', methods=['POST'])
@@ -99,7 +104,12 @@ def host_update():
     host.update(_host)
     db.session.commit()
     
-    data = {}
+    _host = object_to_dict(host)
+    
+    data = {
+        'host': _host,
+    }
+    
     return jsonify(data)
 
 @host_blueprint.route('/host/remove', methods=['POST'])
@@ -107,14 +117,14 @@ def host_update():
 def host_remove():
     username = current_user.username
     usertype = current_user.usertype
-    _host = request.json['host']
+    id = request.json['id']
     print 'host_remove:', locals()
     
     if usertype != 'super':
         data = {}
         return jsonify(data)
-        
-    host = Host.query.get(_host['id'])
+    
+    host = Host.query.get(id)
     db.session.delete(host)
     db.session.commit()
     
