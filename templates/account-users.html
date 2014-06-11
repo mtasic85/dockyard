@@ -61,24 +61,24 @@
                         <div role="form">
                             <div class="form-group">
                                 <label> Username </label>
-                                <input class="form-control" value="<%= username %>" disabled>
+                                <input class="form-control" value="<%= username %>" id="username" disabled>
                                 <p class="help-block"> Username cannot be changed </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Password </label>
-                                <input type="password" class="form-control" placeholder="Password">
+                                <input type="password" class="form-control" id="password" placeholder="Password">
                             </div>
                             
                             <div class="form-group">
                                 <label> E-mail </label>
-                                <input type="email" class="form-control" placeholder="E-mail">
+                                <input type="email" class="form-control" id="email" placeholder="E-mail">
                             </div>
                             
                             <div class="form-group">
                                 <label> Type </label>
                                 
-                                <select class="form-control">
+                                <select class="form-control" id="usertype">
                                     <option value="user"> User </option>
                                     <option value="super"> Super </option>
                                 </select>
@@ -108,19 +108,19 @@
                         <div role="form">
                             <div class="form-group">
                                 <label> Username </label>
-                                <input class="form-control" value="<%= username %>" disabled>
+                                <input class="form-control" id="username" value="<%= username %>" disabled>
                                 <p class="help-block"> Username cannot be changed </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> E-mail </label>
-                                <input type="email" class="form-control" placeholder="E-mail">
+                                <input type="email" class="form-control" id="email" placeholder="E-mail">
                             </div>
                             
                             <div class="form-group">
                                 <label> Type </label>
                                 
-                                <select class="form-control">
+                                <select class="form-control" id="usertype">
                                     <option value="user"> User </option>
                                     <option value="super"> Super </option>
                                 </select>
@@ -150,68 +150,68 @@
                         <div role="form">
                             <div class="form-group">
                                 <label> Username </label>
-                                <input class="form-control" value="<%= username %>" disabled>
+                                <input class="form-control" id="username" value="<%= username %>" disabled>
                                 <p class="help-block"> Username cannot be changed. </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> # Images </label>
-                                <input class="form-control" value="<%= n_images %>">
+                                <input class="form-control" id="n_images" value="<%= n_images %>">
                                 <p class="help-block"> Number of Docker images allowed to have. </p>
                                 <p class="help-block"> Image is usually Opearting Systems with or without software such as database. </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> # Volumes </label>
-                                <input class="form-control" value="<%= n_volumes %>">
+                                <input class="form-control" id="n_volumes" value="<%= n_volumes %>">
                                 <p class="help-block"> Number of volumes allowed to create </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Max Volume Cap </label>
-                                <input class="form-control" value="<%= max_volume_cap %>">
+                                <input class="form-control" id="max_volume_cap" value="<%= max_volume_cap %>">
                                 <p class="help-block"> Max allowed capacity for a single volume. </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Max Volumes Cap </label>
-                                <input class="form-control" value="<%= max_volumes_cap %>">
+                                <input class="form-control" id="max_volumes_cap" value="<%= max_volumes_cap %>">
                                 <p class="help-block"> Max allowed capacity for all volumes. </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> # Containers </label>
-                                <input class="form-control" value="<%= n_containers %>">
+                                <input class="form-control" id="n_containers" value="<%= n_containers %>">
                                 <p class="help-block"> Max allowed number for containers (instances). </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Max Container CPU </label>
-                                <input class="form-control" value="<%= max_container_cpu %>">
+                                <input class="form-control" id="max_container_cpu" value="<%= max_container_cpu %>">
                                 <p class="help-block"> Max allowed CPU Cores per container (instance). </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Max Containers CPU </label>
-                                <input class="form-control" value="<%= max_containers_cpu %>">
+                                <input class="form-control" id="max_containers_cpu" value="<%= max_containers_cpu %>">
                                 <p class="help-block"> Max allowed count of CPU Cores for all containers (instances). </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Max Container RAM </label>
-                                <input class="form-control" value="<%= max_container_ram %>">
+                                <input class="form-control" id="max_container_ram" value="<%= max_container_ram %>">
                                 <p class="help-block"> Max allowed RAM per container (instance). </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Max Containers RAM </label>
-                                <input class="form-control" value="<%= max_containers_ram %>">
+                                <input class="form-control" id="max_containers_ram" value="<%= max_containers_ram %>">
                                 <p class="help-block"> Max allowed RAM for all containers (instances). </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> # Subdomains </label>
-                                <input class="form-control" value="<%= n_subdomains %>">
+                                <input class="form-control" id="n_subdomains" value="<%= n_subdomains %>">
                                 <p class="help-block"> Max allowed number of subdomains. </p>
                                 <p class="help-block"> Subdomains are used for network routing from Internet to containers (instances). </p>
                             </div>
@@ -240,50 +240,50 @@
                         <div role="form">
                             <div class="form-group">
                                 <label> Username </label>
-                                <input class="form-control" value="<%= username %>" disabled>
+                                <input class="form-control" id="username" value="<%= username %>" disabled>
                                 <p class="help-block"> Username cannot be changed. </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> # Images </label>
-                                <input class="form-control" value="<%= n_images %>" disabled>
+                                <input class="form-control" id="n_images" value="<%= n_images %>" disabled>
                                 <p class="help-block"> Number of Docker images. </p>
                                 <p class="help-block"> Image is usually Opearting Systems with or without software such as database. </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> # Volumes </label>
-                                <input class="form-control" value="<%= n_volumes %>" disabled>
+                                <input class="form-control" id="n_volumes" value="<%= n_volumes %>" disabled>
                                 <p class="help-block"> Number of volumes </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Volumes Cap </label>
-                                <input class="form-control" value="<%= volumes_cap %>" disabled>
+                                <input class="form-control" id="volumes_cap" value="<%= volumes_cap %>" disabled>
                                 <p class="help-block"> Occupied capacity of all volumes. </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> # Containers </label>
-                                <input class="form-control" value="<%= n_containers %>" disabled>
+                                <input class="form-control" id="n_containers" value="<%= n_containers %>" disabled>
                                 <p class="help-block"> Number of containers (instances). </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Containers CPU </label>
-                                <input class="form-control" value="<%= containers_cpu %>" disabled>
+                                <input class="form-control" id="containers_cpu" value="<%= containers_cpu %>" disabled>
                                 <p class="help-block"> Count of CPU Cores of all containers (instances). </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Containers RAM </label>
-                                <input class="form-control" value="<%= containers_ram %>" disabled>
+                                <input class="form-control" id="containers_ram" value="<%= containers_ram %>" disabled>
                                 <p class="help-block"> Occupied RAM of all containers (instances). </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> # Subdomains </label>
-                                <input class="form-control" value="<%= n_subdomains %>" disabled>
+                                <input class="form-control" id="n_subdomains" value="<%= n_subdomains %>" disabled>
                                 <p class="help-block"> Number of subdomains. </p>
                                 <p class="help-block"> Subdomains are used for network routing from Internet to containers (instances). </p>
                             </div>
