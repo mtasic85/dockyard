@@ -60,6 +60,31 @@ $.extend(account, {
                 modal_div.modal('hide');
                 setTimeout(function() { modal_div.remove();}, 500);
                 $('.modal-backdrop').remove();
+                
+                // update user account
+                var _user_account = {
+                    id: user_account.id,
+                    username: modal_div.find('#username').val(),
+                    password: modal_div.find('#password').val(),
+                    email: modal_div.find('#email').val(),
+                    usertype: modal_div.find('#usertype').val(),
+                };
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '/account/user/update',
+                    contentType: 'application/json;charset=utf-8',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        user_account: _user_account,
+                    }),
+                })
+                .done(function(data) {
+                    account._update(data.user_account);
+                })
+                .error(function (xhr, ajaxOptions, thrownError) {
+                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                });
             });
             
             modal_div.modal({
@@ -192,6 +217,16 @@ $.extend(account, {
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
             });
+        });
+    },
+    
+    _update: function(user_account) {
+        var tr = $('tr[data-id="' + user_account.id + '"]');
+        
+        _.each(user_account, function(value, key) {
+            if (key === 'id') return;
+            var td = tr.find('td#' + key);
+            td.text(value);
         });
     },
     

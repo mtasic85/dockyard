@@ -574,7 +574,12 @@ def account_user_update():
     update_model_object(user_account, _user_account)
     db.session.commit()
     
-    data = {}
+    _user_account = object_to_dict(user_account)
+    
+    data = {
+        'user_account': _user_account,
+    }
+    
     return jsonify(data)
 
 @account_blueprint.route('/account/user/activate', methods=['POST'])
