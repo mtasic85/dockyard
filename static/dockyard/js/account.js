@@ -22,7 +22,6 @@ $.extend(account, {
             console.log(data);
             var tbody = account.table.find('tbody');
             var tr_template = _.template($('#table-row-user').html());
-            var new_template = _.template($('#modal-new-user').html());
             var edit_template = _.template($('#modal-edit-user').html());
             var quota_template = _.template($('#modal-quota-user').html());
             var stat_template = _.template($('#modal-stat-user').html());
@@ -178,5 +177,28 @@ $.extend(account, {
     
     add: function(options) {
         options = options || {};
+        var tbody = account.table.find('tbody');
+        var new_template = _.template($('#modal-new-user').html());
+        var modal_div = $(new_template());
+        
+        // close
+        modal_div.find('button#close').click(function(e) {
+            // close modal
+            modal_div.modal('hide');
+            setTimeout(function() { modal_div.remove();}, 500);
+            $('.modal-backdrop').remove();
+        });
+        
+        // update
+        modal_div.find('button#create').click(function(e) {
+            // close modal
+            modal_div.modal('hide');
+            setTimeout(function() { modal_div.remove();}, 500);
+            $('.modal-backdrop').remove();
+        });
+        
+        modal_div.modal({
+            backdrop: 'static',
+        });
     },
 });
