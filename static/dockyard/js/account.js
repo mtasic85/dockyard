@@ -45,6 +45,7 @@ $.extend(account, {
         // edit
         tr.find('a#edit').click(function(e) {
             var modal_div = $(edit_template(user_account));
+            modal_div.find('select#usertype').val(user_account.usertype);
             
             // close
             modal_div.find('button#close').click(function(e) {
@@ -69,6 +70,9 @@ $.extend(account, {
                     email: modal_div.find('#email').val(),
                     usertype: modal_div.find('#usertype').val(),
                 };
+                
+                // FIX: required to fix variable "user_account" from closure
+                user_account.usertype = modal_div.find('#usertype').val();
                 
                 $.ajax({
                     type: 'POST',
@@ -121,6 +125,38 @@ $.extend(account, {
                     modal_div.modal('hide');
                     setTimeout(function() { modal_div.remove();}, 500);
                     $('.modal-backdrop').remove();
+                    
+                    // update user account
+                    var _user_account = {
+                        id: user_quota.id,
+                        username: modal_div.find('#username').val(),
+                        n_images: modal_div.find('#n_images').val(),
+                        n_volumes: modal_div.find('#n_volumes').val(),
+                        max_volume_cap: modal_div.find('#max_volume_cap').val(),
+                        max_volumes_cap: modal_div.find('#max_volumes_cap').val(),
+                        n_containers: modal_div.find('#n_containers').val(),
+                        max_container_cpu: modal_div.find('#max_container_cpu').val(),
+                        max_containers_cpu: modal_div.find('#max_containers_cpu').val(),
+                        max_container_ram: modal_div.find('#max_container_ram').val(),
+                        max_containers_ram: modal_div.find('#max_containers_ram').val(),
+                        n_subdomains: modal_div.find('#n_subdomains').val(),
+                    };
+                    
+                    $.ajax({
+                        type: 'POST',
+                        url: '/account/quota/update',
+                        contentType: 'application/json;charset=utf-8',
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            user_account: _user_account,
+                        }),
+                    })
+                    .done(function(data) {
+                        
+                    })
+                    .error(function (xhr, ajaxOptions, thrownError) {
+                        $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                    });
                 });
                 
                 modal_div.modal({

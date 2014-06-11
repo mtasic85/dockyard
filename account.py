@@ -540,15 +540,16 @@ def account_user_create():
     print 'account_user_create locals:', dict(locals())
     
     # create user account
+    username_ = _user_account['username']
     user_account = UserAccount(**_user_account)
     db.session.add(user_account)
     
     # create user quota
-    user_quota = UserQuota()
+    user_quota = UserQuota(username=username_)
     db.session.add(user_quota)
     
     # create user stat
-    user_stat = UserStat()
+    user_stat = UserStat(username=username_)
     db.session.add(user_stat)
     
     # commit
@@ -570,8 +571,9 @@ def account_user_update():
     print 'account_user_update locals:', dict(locals())
     
     # update user account
-    user_account = UserAccount.query.filter_by(username=_user_account['username'])
-    update_model_object(user_account, _user_account)
+    username_ = _user_account['username']
+    user_account = UserAccount.query.filter_by(username=username_).one()
+    update_object_with_dict(user_account, _user_account)
     db.session.commit()
     
     _user_account = object_to_dict(user_account)
@@ -668,7 +670,12 @@ def account_quota_update():
     update_object_with_dict(user_quota, _user_quota)
     db.session.commit()
     
-    data = {}
+    _user_quota = object_to_dict(user_quota)
+    
+    data = {
+        'user_quota': _user_quota,
+    }
+    
     return jsonify(data)
 
 @account_blueprint.route('/account/stat/get', methods=['POST'])
