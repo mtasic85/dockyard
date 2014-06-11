@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-__all__ = ['db', 'init_app', 'get_db', 'object_to_dict', 'objects_to_list']
+__all__ = ['db', 'init_app', 'get_db', 'object_to_dict', 'objects_to_list',
+           'update_object_with_dict']
+
 from datetime import date, time, datetime
 
 from flask import Flask, current_app
@@ -40,3 +42,12 @@ def object_to_dict(obj, skip=()):
 
 def objects_to_list(objs, skip=()):
     return [object_to_dict(obj, skip) for obj in objs]
+
+def update_object_with_dict(obj, dct, skip=()):
+    for k, v in dct.items():
+        if k in skip:
+            continue
+        
+        # FIXME: support date, time, and datetime objects
+        
+        setattr(obj, k, v)

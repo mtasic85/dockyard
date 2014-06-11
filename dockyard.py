@@ -115,6 +115,23 @@ if not UserAccount.query.filter_by(username='admin').count():
     db.session.add(user_account)
     db.session.commit()
 
+# create quota for super user
+if not UserQuota.query.filter_by(username='admin').count():
+    user_quota = UserQuota(
+        username = 'admin',
+    )
+    db.session.add(user_quota)
+    db.session.commit()
+
+# create stat for super user
+if not UserStat.query.filter_by(username='admin').count():
+    user_stat = UserStat(
+        username = 'admin',
+        
+    )
+    db.session.add(user_stat)
+    db.session.commit()
+
 # account
 from account import account_blueprint, login_manager
 app.register_blueprint(account_blueprint)

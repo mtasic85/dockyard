@@ -31,18 +31,68 @@
                     <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-cog fa-fw"></i>
                     </button>
+                    
                     <ul class="dropdown-menu pull-right" role="menu">
                         <li><a href="#" id="edit"> Edit </a></li>
                         <li class="divider"></li>
                         <li><a href="#" id="quota"> Quota </a></li>
                         <li><a href="#" id="stat"> Statistics </a></li>
                         <li class="divider"></li>
+                        <li><a href="#" id="deactivate"> Activate </a></li>
                         <li><a href="#" id="deactivate"> Deactivate </a></li>
+                        <li class="divider"></li>
                         <li><a href="#" id="remove"> Remove </a></li>
                     </ul>
                 </div>
             </td>
         </tr>
+    </script>
+    
+    <script type="text/template" id="modal-new-user">
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"> Create New User </h4>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <div role="form">
+                            <div class="form-group">
+                                <label> Username </label>
+                                <input class="form-control" value="<%= username %>" disabled>
+                                <p class="help-block"> Username cannot be changed </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Password </label>
+                                <input type="password" class="form-control" placeholder="Password">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> E-mail </label>
+                                <input type="email" class="form-control" placeholder="E-mail">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Type </label>
+                                
+                                <select class="form-control">
+                                    <option value="user"> User </option>
+                                    <option value="super"> Super </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="close"> Close </button>
+                        <button type="button" class="btn btn-primary" id="update"> Save changes </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </script>
     
     <script type="text/template" id="modal-edit-user">
@@ -51,7 +101,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"> User </h4>
+                        <h4 class="modal-title"> Edit User </h4>
                     </div>
                     
                     <div class="modal-body">
@@ -87,7 +137,7 @@
         </div><!-- /.modal -->
     </script>
     
-    <script type="text/template" id="modal-edit-quota">
+    <script type="text/template" id="modal-quota-user">
         <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -101,67 +151,69 @@
                             <div class="form-group">
                                 <label> Username </label>
                                 <input class="form-control" value="<%= username %>" disabled>
-                                <p class="help-block"> Username cannot be changed </p>
+                                <p class="help-block"> Username cannot be changed. </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> # Images </label>
-                                <input class="form-control" value="<%= n_images %>" disabled>
-                                <p class="help-block"> Username cannot be changed </p>
+                                <input class="form-control" value="<%= n_images %>">
+                                <p class="help-block"> Number of Docker images allowed to have. </p>
+                                <p class="help-block"> Image is usually Opearting Systems with or without software such as database. </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> n_volumes </label>
-                                <input class="form-control" value="<%= n_volumes %>" disabled>
-                                <p class="help-block"> Username cannot be changed </p>
+                                <label> # Volumes </label>
+                                <input class="form-control" value="<%= n_volumes %>">
+                                <p class="help-block"> Number of volumes allowed to create </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> max_volume_cap </label>
-                                <input class="form-control" value="<%= max_volume_cap %>" disabled>
-                                <p class="help-block"> Username cannot be changed </p>
+                                <label> Max Volume Cap </label>
+                                <input class="form-control" value="<%= max_volume_cap %>">
+                                <p class="help-block"> Max allowed capacity for a single volume. </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> max_volumes_cap </label>
-                                <input class="form-control" value="<%= max_volumes_cap %>" disabled>
-                                <p class="help-block"> Username cannot be changed </p>
+                                <label> Max Volumes Cap </label>
+                                <input class="form-control" value="<%= max_volumes_cap %>">
+                                <p class="help-block"> Max allowed capacity for all volumes. </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> n_containers </label>
-                                <input class="form-control" value="<%= n_containers %>" disabled>
-                                <p class="help-block"> Username cannot be changed </p>
+                                <label> # Containers </label>
+                                <input class="form-control" value="<%= n_containers %>">
+                                <p class="help-block"> Max allowed number for containers (instances). </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> max_container_cpu </label>
-                                <input class="form-control" value="<%= max_container_cpu %>" disabled>
-                                <p class="help-block"> Username cannot be changed </p>
+                                <label> Max Container CPU </label>
+                                <input class="form-control" value="<%= max_container_cpu %>">
+                                <p class="help-block"> Max allowed CPU Cores per container (instance). </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> max_containers_cpu </label>
-                                <input class="form-control" value="<%= max_containers_cpu %>" disabled>
-                                <p class="help-block"> Username cannot be changed </p>
+                                <label> Max Containers CPU </label>
+                                <input class="form-control" value="<%= max_containers_cpu %>">
+                                <p class="help-block"> Max allowed count of CPU Cores for all containers (instances). </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> max_container_ram </label>
-                                <input class="form-control" value="<%= max_container_ram %>" disabled>
-                                <p class="help-block"> Username cannot be changed </p>
+                                <label> Max Container RAM </label>
+                                <input class="form-control" value="<%= max_container_ram %>">
+                                <p class="help-block"> Max allowed RAM per container (instance). </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> max_containers_ram </label>
-                                <input class="form-control" value="<%= max_containers_ram %>" disabled>
-                                <p class="help-block"> Username cannot be changed </p>
+                                <label> Max Containers RAM </label>
+                                <input class="form-control" value="<%= max_containers_ram %>">
+                                <p class="help-block"> Max allowed RAM for all containers (instances). </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> n_subdomains </label>
-                                <input class="form-control" value="<%= n_subdomains %>" disabled>
-                                <p class="help-block"> Username cannot be changed </p>
+                                <label> # Subdomains </label>
+                                <input class="form-control" value="<%= n_subdomains %>">
+                                <p class="help-block"> Max allowed number of subdomains. </p>
+                                <p class="help-block"> Subdomains are used for network routing from Internet to containers (instances). </p>
                             </div>
                         </div>
                     </div>
@@ -169,6 +221,77 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="close"> Close </button>
                         <button type="button" class="btn btn-primary" id="update"> Save changes </button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    </script>
+    
+    <script type="text/template" id="modal-stat-user">
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"> User's Statistics </h4>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <div role="form">
+                            <div class="form-group">
+                                <label> Username </label>
+                                <input class="form-control" value="<%= username %>" disabled>
+                                <p class="help-block"> Username cannot be changed. </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> # Images </label>
+                                <input class="form-control" value="<%= n_images %>" disabled>
+                                <p class="help-block"> Number of Docker images. </p>
+                                <p class="help-block"> Image is usually Opearting Systems with or without software such as database. </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> # Volumes </label>
+                                <input class="form-control" value="<%= n_volumes %>" disabled>
+                                <p class="help-block"> Number of volumes </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Volumes Cap </label>
+                                <input class="form-control" value="<%= volumes_cap %>" disabled>
+                                <p class="help-block"> Occupied capacity of all volumes. </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> # Containers </label>
+                                <input class="form-control" value="<%= n_containers %>" disabled>
+                                <p class="help-block"> Number of containers (instances). </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Containers CPU </label>
+                                <input class="form-control" value="<%= containers_cpu %>" disabled>
+                                <p class="help-block"> Count of CPU Cores of all containers (instances). </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Containers RAM </label>
+                                <input class="form-control" value="<%= containers_ram %>" disabled>
+                                <p class="help-block"> Occupied RAM of all containers (instances). </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> # Subdomains </label>
+                                <input class="form-control" value="<%= n_subdomains %>" disabled>
+                                <p class="help-block"> Number of subdomains. </p>
+                                <p class="help-block"> Subdomains are used for network routing from Internet to containers (instances). </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="close"> Close </button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

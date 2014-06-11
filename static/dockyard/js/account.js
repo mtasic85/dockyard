@@ -22,16 +22,23 @@ $.extend(account, {
             console.log(data);
             var tbody = account.table.find('tbody');
             var tr_template = _.template($('#table-row-user').html());
-            var modal_template = _.template($('#modal-edit-user').html());
+            var new_template = _.template($('#modal-new-user').html());
+            var edit_template = _.template($('#modal-edit-user').html());
+            var quota_template = _.template($('#modal-quota-user').html());
+            var stat_template = _.template($('#modal-stat-user').html());
+            // var activate_template = _.template($('#modal-activate-user').html());
+            // var deactivate_template = _.template($('#modal-deactivate-user').html());
+            // var remove_template = _.template($('#modal-remove-user').html());
             
             _.each(data.user_accounts, function(user_account) {
                 var tr = $(tr_template(user_account))
                     .appendTo(tbody);
                 
-                // update
+                // edit
                 tr.find('a#edit').click(function(e) {
-                    var modal_div = $(modal_template(user_account));
+                    var modal_div = $(edit_template(user_account));
                     
+                    // close
                     modal_div.find('button#close').click(function(e) {
                         // close modal
                         modal_div.modal('hide');
@@ -39,6 +46,7 @@ $.extend(account, {
                         $('.modal-backdrop').remove();
                     });
                     
+                    // update
                     modal_div.find('button#update').click(function(e) {
                         // close modal
                         modal_div.modal('hide');
@@ -50,22 +58,125 @@ $.extend(account, {
                         backdrop: 'static',
                     });
                 });
+                
+                // quota
+                tr.find('a#quota').click(function(e) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/account/quota/get',
+                        contentType: 'application/json;charset=utf-8',
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            username: user_account.username,
+                        }),
+                    })
+                    .done(function(data) {
+                        var user_quota = data.user_quota;
+                        var modal_div = $(quota_template(user_quota));
+                        
+                        // close
+                        modal_div.find('button#close').click(function(e) {
+                            // close modal
+                            modal_div.modal('hide');
+                            setTimeout(function() { modal_div.remove();}, 500);
+                            $('.modal-backdrop').remove();
+                        });
+                        
+                        // update
+                        modal_div.find('button#update').click(function(e) {
+                            // close modal
+                            modal_div.modal('hide');
+                            setTimeout(function() { modal_div.remove();}, 500);
+                            $('.modal-backdrop').remove();
+                        });
+                        
+                        modal_div.modal({
+                            backdrop: 'static',
+                        });
+                    })
+                    .error(function (xhr, ajaxOptions, thrownError) {});
+                });
+                
+                // stat
+                tr.find('a#stat').click(function(e) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/account/stat/get',
+                        contentType: 'application/json;charset=utf-8',
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            username: user_account.username,
+                        }),
+                    })
+                    .done(function(data) {
+                        var user_stat = data.user_stat;
+                        var modal_div = $(stat_template(user_stat));
+                        
+                        // close
+                        modal_div.find('button#close').click(function(e) {
+                            // close modal
+                            modal_div.modal('hide');
+                            setTimeout(function() { modal_div.remove();}, 500);
+                            $('.modal-backdrop').remove();
+                        });
+                        
+                        modal_div.modal({
+                            backdrop: 'static',
+                        });
+                    })
+                    .error(function (xhr, ajaxOptions, thrownError) {});
+                });
+                
+                // activate
+                tr.find('a#activate').click(function(e) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/account/activate',
+                        contentType: 'application/json;charset=utf-8',
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            username: user_account.username,
+                        }),
+                    })
+                    .done(function(data) {})
+                    .error(function (xhr, ajaxOptions, thrownError) {});
+                });
+                
+                // deactivate
+                tr.find('a#deactivate').click(function(e) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/account/deactivate',
+                        contentType: 'application/json;charset=utf-8',
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            username: user_account.username,
+                        }),
+                    })
+                    .done(function(data) {})
+                    .error(function (xhr, ajaxOptions, thrownError) {});
+                });
+                
+                // remove
+                tr.find('a#remove').click(function(e) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/account/remove',
+                        contentType: 'application/json;charset=utf-8',
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            username: user_account.username,
+                        }),
+                    })
+                    .done(function(data) {})
+                    .error(function (xhr, ajaxOptions, thrownError) {});
+                });
             });
         })
-        .error(function (xhr, ajaxOptions, thrownError) {
-            
-        });
+        .error(function (xhr, ajaxOptions, thrownError) {});
     },
     
     add: function(options) {
-        options = options || {};
-    },
-    
-    update: function(options) {
-        options = options || {};
-    },
-    
-    remove: function(options) {
         options = options || {};
     },
 });

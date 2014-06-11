@@ -40,7 +40,8 @@ from dateutil.parser import parse as dtparse
 from config.flask import FlaskConfig
 
 # model
-from model.db import db, object_to_dict, objects_to_list
+from model.db import db
+from model.db import object_to_dict, objects_to_list, update_object_with_dict
 from model.user import UserAccount, UserQuota, UserStat
 
 # flask mail
@@ -99,6 +100,12 @@ class User(UserMixin):
         # create UserAccount record
         user_account = UserAccount(**kwargs)
         db.session.add(user_account)
+        # create UserQuota record
+        user_quota = UserQuota(username=kwargs['username'])
+        db.session.add(user_quota)
+        # create UserStat record
+        user_stat = UserStat(username=kwargs['username'])
+        db.session.add(user_stat)
         db.session.commit()
         return True
     
@@ -516,21 +523,6 @@ def account_users_all():
     print 'account_users_all locals:', dict(locals())
     
     # get all results
-    '''
-    results = []
-    
-    for user_account in UserAccount.query.all():
-        result = {}
-        
-        for column in user_account.__table__.columns:
-            if column.name == 'password':
-                continue
-            
-            v = getattr(user_account, column.name)
-            result[column.name] = v
-        
-        results.append(result)
-    '''
     user_accounts = UserAccount.query.all()
     _user_accounts = objects_to_list(user_accounts, skip=['password'])
     
@@ -540,40 +532,149 @@ def account_users_all():
     
     return jsonify(data)
 
-@account_blueprint.route('/account/users/activate', methods=['POST'])
+@account_blueprint.route('/account/user/create', methods=['POST'])
 @login_required
-def account_users_activate():
+def account_user_create():
     username = current_user.username
-    result = request.json['result']
-    print 'account_users_activate locals:', dict(locals())
+    _user_account = request.json['user_account']
+    print 'account_user_create locals:', dict(locals())
     
-    # get user account properties
-    user_account = UserAccount.query.filter_by(username=result['username']).one()
+    # create user account
+    user_account = UserAccount(**_user_account)
+    db.session.add(user_account)
+    
+    # create user quota
+    user_quota = UserQuota()
+    db.session.add(user_quota)
+    
+    # create user stat
+    user_stat = UserStat()
+    db.session.add(user_stat)
+    
+    # commit
+    db.session.commit()
+    
+    data = {}
+    return jsonify(data)
+
+@account_blueprint.route('/account/user/update', methods=['POST'])
+@login_required
+def account_user_update():
+    username = current_user.username
+    _user_account = request.json['user_account']
+    print 'account_user_update locals:', dict(locals())
+    
+    # update user account
+    user_account = UserAccount.query.filter_by(username=_user_account['username'])
+    update_model_object(user_account, _user_account)
+    db.session.commit()
+    
+    data = {}
+    return jsonify(data)
+
+@account_blueprint.route('/account/user/activate', methods=['POST'])
+@login_required
+def account_user_activate():
+    username = current_user.username
+    username_ = request.json['username']
+    print 'account_user_activate locals:', dict(locals())
+    
+    # activate user account
+    user_account = UserAccount.query.filter_by(username=username_).one()
     user_account.active = True
     db.session.commit()
-    result['active'] = True
+    
+    data = {}
+    return jsonify(data)
+
+@account_blueprint.route('/account/user/deactivate', methods=['POST'])
+@login_required
+def account_user_deactivate():
+    username = current_user.username
+    username_ = request.json['username']
+    print 'account_user_deactivate locals:', dict(locals())
+    
+    # deactivate user account
+    user_account = UserAccount.query.filter_by(username=username_).one()
+    user_account.active = False
+    db.session.commit()
+    
+    data = {}
+    return jsonify(data)
+
+@account_blueprint.route('/account/user/remove', methods=['POST'])
+@login_required
+def account_user_remove():
+    username = current_user.username
+    username_ = request.json['username']
+    print 'account_user_remove locals:', dict(locals())
+    
+    # delete user account
+    user_account = UserAccount.query.filter_by(username=username_).one()
+    db.session.delete(user_account)
+    
+    # delete user quota
+    user_quota = UserQuota.query.filter_by(username=username_).one()
+    db.session.delete(user_quota)
+    
+    # delete user stat
+    user_stat = UserStat.query.filter_by(username=username_).one()
+    db.session.delete(user_stat)
+    
+    # commit
+    db.session.commit()
+    
+    data = {}
+    return jsonify(data)
+
+@account_blueprint.route('/account/quota/get', methods=['POST'])
+@login_required
+def account_quota_get():
+    username = current_user.username
+    usertype = current_user.usertype
+    username_ = request.json['username']
+    print 'account_quota_get locals:', dict(locals())
+    
+    # get query
+    user_quota = UserQuota.query.filter_by(username=username_).one()
+    _user_quota = object_to_dict(user_quota)
     
     data = {
-        'result': result,
+        'user_quota': _user_quota,
     }
     
     return jsonify(data)
 
-@account_blueprint.route('/account/users/deactivate', methods=['POST'])
+@account_blueprint.route('/account/quota/update', methods=['POST'])
 @login_required
-def account_users_deactivate():
+def account_quota_update():
     username = current_user.username
-    result = request.json['result']
-    print 'account_users_deactivate locals:', dict(locals())
+    usertype = current_user.usertype
+    _user_quota = request.json['user_quota']
+    print 'account_quota_update locals:', dict(locals())
     
-    # get user account properties
-    user_account = UserAccount.query.filter_by(username=result['username']).one()
-    user_account.active = False
+    # update user quota
+    user_quota = UserQuota.query.filter_by(username=_user_quota['username']).one()
+    update_object_with_dict(user_quota, _user_quota)
     db.session.commit()
-    result['active'] = False
+    
+    data = {}
+    return jsonify(data)
+
+@account_blueprint.route('/account/stat/get', methods=['POST'])
+@login_required
+def account_stat_get():
+    username = current_user.username
+    usertype = current_user.usertype
+    username_ = request.json['username']
+    print 'account_stat_get locals:', dict(locals())
+    
+    # get stat
+    user_stat = UserStat.query.filter_by(username=username_).one()
+    _user_stat = object_to_dict(user_stat)
     
     data = {
-        'result': result,
+        'user_stat': _user_stat,
     }
     
     return jsonify(data)
