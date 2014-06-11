@@ -554,7 +554,7 @@ def account_user_create():
     # commit
     db.session.commit()
     
-    _user_account['id'] = user_account.id
+    _user_account = object_to_dict(user_account)
     
     data = {
         'user_account': _user_account,
