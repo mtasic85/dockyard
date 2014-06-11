@@ -143,7 +143,7 @@ $.extend(account, {
         tr.find('a#activate').click(function(e) {
             $.ajax({
                 type: 'POST',
-                url: '/account/activate',
+                url: '/account/user/activate',
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify({
@@ -160,7 +160,7 @@ $.extend(account, {
         tr.find('a#deactivate').click(function(e) {
             $.ajax({
                 type: 'POST',
-                url: '/account/deactivate',
+                url: '/account/user/deactivate',
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify({
@@ -177,7 +177,7 @@ $.extend(account, {
         tr.find('a#remove').click(function(e) {
             $.ajax({
                 type: 'POST',
-                url: '/account/remove',
+                url: '/account/user/remove',
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify({
