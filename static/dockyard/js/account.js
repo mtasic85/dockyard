@@ -127,7 +127,7 @@ $.extend(account, {
                     $('.modal-backdrop').remove();
                     
                     // update user account
-                    var _user_account = {
+                    var _user_quota = {
                         id: user_quota.id,
                         username: modal_div.find('#username').val(),
                         n_images: modal_div.find('#n_images').val(),
@@ -148,7 +148,7 @@ $.extend(account, {
                         contentType: 'application/json;charset=utf-8',
                         dataType: 'json',
                         data: JSON.stringify({
-                            user_account: _user_account,
+                            user_quota: _user_quota,
                         }),
                     })
                     .done(function(data) {
