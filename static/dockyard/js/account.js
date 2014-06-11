@@ -151,7 +151,7 @@ $.extend(account, {
                 }),
             })
             .done(function(data) {
-                tr.find('#active').val('true');
+                tr.find('td#active').text('true');
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -170,7 +170,7 @@ $.extend(account, {
                 }),
             })
             .done(function(data) {
-                tr.find('#active').val('false');
+                tr.find('td#active').text('false');
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
