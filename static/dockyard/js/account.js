@@ -85,6 +85,7 @@ $.extend(account, {
                 })
                 .done(function(data) {
                     account._update(data.user_account);
+                    $.bootstrapGrowl('User successfully updated.', {type: 'success'});
                 })
                 .error(function (xhr, ajaxOptions, thrownError) {
                     $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -152,7 +153,7 @@ $.extend(account, {
                         }),
                     })
                     .done(function(data) {
-                        
+                        $.bootstrapGrowl('Quota successfully updated.', {type: 'success'});
                     })
                     .error(function (xhr, ajaxOptions, thrownError) {
                         $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -213,6 +214,7 @@ $.extend(account, {
             })
             .done(function(data) {
                 tr.find('td#active').text('true');
+                $.bootstrapGrowl('User activated', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -232,6 +234,7 @@ $.extend(account, {
             })
             .done(function(data) {
                 tr.find('td#active').text('false');
+                $.bootstrapGrowl('User deactivated.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -249,7 +252,9 @@ $.extend(account, {
                     username: user_account.username,
                 }),
             })
-            .done(function(data) {})
+            .done(function(data) {
+                $.bootstrapGrowl('User successfully removed.', {type: 'success'});
+            })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
             });
@@ -305,6 +310,7 @@ $.extend(account, {
             })
             .done(function(data) {
                 account._add(data.user_account);
+                $.bootstrapGrowl('User successfully created.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
