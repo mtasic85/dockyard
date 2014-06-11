@@ -20,8 +20,8 @@ $.extend(host, {
         })
         .done(function(data) {
             // console.log(data);
-            _.each(data.hosts, function(host) {
-                host._add(host);
+            _.each(data.hosts, function(host_) {
+                host._add(host_);
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
@@ -29,17 +29,17 @@ $.extend(host, {
         });
     },
     
-    _add: function(host) {
-        var tbody = account.table.find('tbody');
+    _add: function(host_) {
+        var tbody = host.table.find('tbody');
         var tr_template = _.template($('#table-row-host').html());
         var edit_template = _.template($('#modal-edit-host').html());
         
-        var tr = $(tr_template(user_account))
+        var tr = $(tr_template(host_))
             .appendTo(tbody);
         
         // edit
         tr.find('a#edit').click(function(e) {
-            var modal_div = $(edit_template(user_account));
+            var modal_div = $(edit_template(host_));
             
             // close
             modal_div.find('button#close').click(function(e) {
@@ -58,7 +58,7 @@ $.extend(host, {
                 
                 // update host
                 var _host = {
-                    id: host.id,
+                    id: host_.id,
                     name: modal_div.find('#name').val(),
                     host: modal_div.find('#host').val(),
                     port: modal_div.find('#port').val(),
@@ -74,7 +74,7 @@ $.extend(host, {
                     }),
                 })
                 .done(function(data) {
-                    account._update(data.user_account);
+                    host._update(data.host);
                     $.bootstrapGrowl('Host successfully updated.', {type: 'success'});
                 })
                 .error(function (xhr, ajaxOptions, thrownError) {
@@ -95,7 +95,7 @@ $.extend(host, {
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify({
-                    id: host.id,
+                    id: host_.id,
                 }),
             })
             .done(function(data) {
@@ -129,7 +129,6 @@ $.extend(host, {
             
             // create host
             var _host = {
-                id: host.id,
                 name: modal_div.find('#name').val(),
                 host: modal_div.find('#host').val(),
                 port: modal_div.find('#port').val(),
