@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 __all__ = ['host_blueprint']
+from datetime import datetime, timedelta
+
+# dateutil
+from dateutil.parser import parse as dtparse
 
 # flask
 from flask import (
@@ -21,7 +25,8 @@ from wtforms import TextField, PasswordField, SelectField, BooleanField
 from wtforms_html5 import EmailField
 
 # model
-from model.db import db, object_to_dict, objects_to_list
+from model.db import db
+from model.db import object_to_dict, objects_to_list, update_object_with_dict
 from model.user import UserAccount, UserQuota
 from model.host import Host
 

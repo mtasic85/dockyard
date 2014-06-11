@@ -8,6 +8,9 @@ import base64
 import hashlib
 from datetime import datetime, timedelta
 
+# dateutil
+from dateutil.parser import parse as dtparse
+
 # flask
 from flask import (
     Flask, request, session, g,
@@ -32,9 +35,6 @@ from wtforms import TextField, TextAreaField
 from wtforms import PasswordField, SelectField, BooleanField
 from wtforms_html5 import EmailField
 from wtforms.fields.core import Field, UnboundField
-
-# dateutil
-from dateutil.parser import parse as dtparse
 
 # config
 from config.flask import FlaskConfig
