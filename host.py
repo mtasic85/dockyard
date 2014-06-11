@@ -27,7 +27,7 @@ from model.host import Host
 
 host_blueprint = Blueprint('host_blueprint', __name__)
 
-@host_blueprint.route('/host/hosts', methods=['GET'])
+@host_blueprint.route('/hosts', methods=['GET'])
 @login_required
 def host_hosts():
     username = current_user.username
@@ -42,18 +42,19 @@ def host_hosts():
         **dct
     )
 
-@host_blueprint.route('/host/all', methods=['POST'])
+@host_blueprint.route('/hosts/all', methods=['POST'])
 @login_required
-def host_all():
+def host_hosts_all():
     username = current_user.username
     usertype = current_user.usertype
-    print 'host_all:', locals()
+    print 'host_hosts_all:', locals()
     
-    if usertype == 'super':
-        hosts = Host.query.all()
-        _hosts = objects_to_list(hosts)
-    else:
-        _hosts = None
+    if usertype != 'super':
+        data = {}
+        return jsonify(data)
+        
+    hosts = Host.query.all()
+    _hosts = objects_to_list(hosts)
     
     data = {
         'hosts': _hosts,
@@ -69,11 +70,14 @@ def host_add():
     _host = request.json['host']
     print 'host_add:', locals()
     
-    if usertype == 'super':
-        host = Host(**_host)
-        _host['created'] = _host['updated'] = datetime.utcnow()
-        db.session.add(host)
-        db.session.commit()
+    if usertype != 'super':
+        data = {}
+        return jsonify(data)
+    
+    host = Host(**_host)
+    _host['created'] = _host['updated'] = datetime.utcnow()
+    db.session.add(host)
+    db.session.commit()
     
     data = {}
     return jsonify(data)
@@ -86,11 +90,14 @@ def host_update():
     _host = request.json['host']
     print 'host_update:', locals()
     
-    if usertype == 'super':
-        host = Host.query.get(_host['id'])
-        _host['updated'] = datetime.utcnow()
-        host.update(_host)
-        db.session.commit()
+    if usertype != 'super':
+        data = {}
+        return jsonify(data)
+        
+    host = Host.query.get(_host['id'])
+    _host['updated'] = datetime.utcnow()
+    host.update(_host)
+    db.session.commit()
     
     data = {}
     return jsonify(data)
@@ -103,10 +110,13 @@ def host_remove():
     _host = request.json['host']
     print 'host_remove:', locals()
     
-    if usertype == 'super':
-        host = Host.query.get(_host['id'])
-        db.session.delete(host)
-        db.session.commit()
+    if usertype != 'super':
+        data = {}
+        return jsonify(data)
+        
+    host = Host.query.get(_host['id'])
+    db.session.delete(host)
+    db.session.commit()
     
     data = {}
     return jsonify(data)
