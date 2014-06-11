@@ -554,7 +554,12 @@ def account_user_create():
     # commit
     db.session.commit()
     
-    data = {}
+    _user_account['id'] = user_account.id
+    
+    data = {
+        'user_account': _user_account,
+    }
+    
     return jsonify(data)
 
 @account_blueprint.route('/account/user/update', methods=['POST'])

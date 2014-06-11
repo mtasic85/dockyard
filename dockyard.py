@@ -127,7 +127,6 @@ if not UserQuota.query.filter_by(username='admin').count():
 if not UserStat.query.filter_by(username='admin').count():
     user_stat = UserStat(
         username = 'admin',
-        
     )
     db.session.add(user_stat)
     db.session.commit()

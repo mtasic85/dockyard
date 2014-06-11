@@ -217,7 +217,7 @@ $.extend(account, {
                 }),
             })
             .done(function(data) {
-                account._add(user_account);
+                account._add(data.user_account);
             })
             .error(function (xhr, ajaxOptions, thrownError) {});
         });
