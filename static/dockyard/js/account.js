@@ -68,9 +68,6 @@ $.extend(account, {
                     usertype: modal_div.find('#usertype').val(),
                 };
                 
-                // FIX: required to fix variable "user_account" from closure
-                user_account.usertype = modal_div.find('#usertype').val();
-                
                 $.ajax({
                     type: 'POST',
                     url: '/account/user/update',
@@ -81,6 +78,10 @@ $.extend(account, {
                     }),
                 })
                 .done(function(data) {
+                    // required to fix variable "user_account" from closure
+                    _.each(_user_account, function(value, key) { user_account[key] = value; });
+                    
+                    // update UI
                     account._update(data.user_account);
                     $.bootstrapGrowl('User successfully updated.', {type: 'success'});
                 })
