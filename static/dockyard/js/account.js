@@ -212,7 +212,7 @@ $.extend(account, {
             })
             .done(function(data) {
                 tr.find('td#active').text('true');
-                $.bootstrapGrowl('User activated', {type: 'success'});
+                $.bootstrapGrowl('User activated.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});

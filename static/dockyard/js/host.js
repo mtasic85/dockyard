@@ -91,6 +91,58 @@ $.extend(host, {
             });
         });
         
+        // activate
+        tr.find('a#activate').click(function(e) {
+            // update host
+            var _host = {
+                id: host_.id,
+                active: true,
+            };
+            
+            $.ajax({
+                type: 'POST',
+                url: '/account/user/update',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({
+                    host: _host,
+                }),
+            })
+            .done(function(data) {
+                tr.find('td#active').text('true');
+                $.bootstrapGrowl('Host activated.', {type: 'success'});
+            })
+            .error(function (xhr, ajaxOptions, thrownError) {
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            });
+        });
+        
+        // deactivate
+        tr.find('a#deactivate').click(function(e) {
+            // update host
+            var _host = {
+                id: host_.id,
+                active: false,
+            };
+            
+            $.ajax({
+                type: 'POST',
+                url: '/account/user/update',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({
+                    host: _host,
+                }),
+            })
+            .done(function(data) {
+                tr.find('td#active').text('true');
+                $.bootstrapGrowl('Host deactivated.', {type: 'success'});
+            })
+            .error(function (xhr, ajaxOptions, thrownError) {
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            });
+        });
+        
         // remove
         tr.find('a#remove').click(function(e) {
             $.ajax({
