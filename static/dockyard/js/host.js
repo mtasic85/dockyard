@@ -76,7 +76,7 @@ $.extend(host, {
                 .done(function(data) {
                     // required to fix variable "host" from closure
                     _.each(_host, function(value, key) { host[key] = value; });
-                        
+                    
                     // update UI
                     host._update(data.host);
                     $.bootstrapGrowl('Host successfully updated.', {type: 'success'});
@@ -101,7 +101,7 @@ $.extend(host, {
             
             $.ajax({
                 type: 'POST',
-                url: '/account/user/update',
+                url: '/host/update',
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify({
@@ -109,7 +109,11 @@ $.extend(host, {
                 }),
             })
             .done(function(data) {
-                tr.find('td#active').text('true');
+                // required to fix variable "host" from closure
+                _.each(_host, function(value, key) { host[key] = value; });
+                
+                // update UI
+                host._update(data.host);
                 $.bootstrapGrowl('Host activated.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
@@ -127,7 +131,7 @@ $.extend(host, {
             
             $.ajax({
                 type: 'POST',
-                url: '/account/user/update',
+                url: '/host/update',
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify({
@@ -135,7 +139,11 @@ $.extend(host, {
                 }),
             })
             .done(function(data) {
-                tr.find('td#active').text('true');
+                // required to fix variable "host" from closure
+                _.each(_host, function(value, key) { host[key] = value; });
+                
+                // update UI
+                host._update(data.host);
                 $.bootstrapGrowl('Host deactivated.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {

@@ -201,17 +201,28 @@ $.extend(account, {
         
         // activate
         tr.find('a#activate').click(function(e) {
+            // update user account
+            var _user_account = {
+                id: user_account.id,
+                username: user_account.username,
+                active: true,
+            };
+            
             $.ajax({
                 type: 'POST',
-                url: '/account/user/activate',
+                url: '/account/user/update',
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify({
-                    username: user_account.username,
+                    user_account: _user_account,
                 }),
             })
             .done(function(data) {
-                tr.find('td#active').text('true');
+                // required to fix variable "user_account" from closure
+                _.each(_user_account, function(value, key) { user_account[key] = value; });
+                
+                // update UI
+                account._update(data.user_account);
                 $.bootstrapGrowl('User activated.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
@@ -221,17 +232,28 @@ $.extend(account, {
         
         // deactivate
         tr.find('a#deactivate').click(function(e) {
+            // update user account
+            var _user_account = {
+                id: user_account.id,
+                username: user_account.username,
+                active: false,
+            };
+            
             $.ajax({
                 type: 'POST',
-                url: '/account/user/deactivate',
+                url: '/account/user/update',
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify({
-                    username: user_account.username,
+                    user_account: _user_account,
                 }),
             })
             .done(function(data) {
-                tr.find('td#active').text('false');
+                // required to fix variable "user_account" from closure
+                _.each(_user_account, function(value, key) { user_account[key] = value; });
+                
+                // update UI
+                account._update(data.user_account);
                 $.bootstrapGrowl('User deactivated.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {

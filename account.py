@@ -541,6 +541,7 @@ def account_user_create():
     
     # create user account
     username_ = _user_account['username']
+    _user_account['created'] = _user_account['updated'] = datetime.utcnow()
     user_account = UserAccount(**_user_account)
     db.session.add(user_account)
     
@@ -573,6 +574,7 @@ def account_user_update():
     # update user account
     username_ = _user_account['username']
     user_account = UserAccount.query.filter_by(username=username_).one()
+    _user_account['updated'] = datetime.utcnow()
     update_object_with_dict(user_account, _user_account)
     db.session.commit()
     
@@ -582,36 +584,6 @@ def account_user_update():
         'user_account': _user_account,
     }
     
-    return jsonify(data)
-
-@account_blueprint.route('/account/user/activate', methods=['POST'])
-@login_required
-def account_user_activate():
-    username = current_user.username
-    username_ = request.json['username']
-    print 'account_user_activate locals:', dict(locals())
-    
-    # activate user account
-    user_account = UserAccount.query.filter_by(username=username_).one()
-    user_account.active = True
-    db.session.commit()
-    
-    data = {}
-    return jsonify(data)
-
-@account_blueprint.route('/account/user/deactivate', methods=['POST'])
-@login_required
-def account_user_deactivate():
-    username = current_user.username
-    username_ = request.json['username']
-    print 'account_user_deactivate locals:', dict(locals())
-    
-    # deactivate user account
-    user_account = UserAccount.query.filter_by(username=username_).one()
-    user_account.active = False
-    db.session.commit()
-    
-    data = {}
     return jsonify(data)
 
 @account_blueprint.route('/account/user/remove', methods=['POST'])
