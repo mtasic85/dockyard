@@ -251,6 +251,7 @@ $.extend(account, {
                 }),
             })
             .done(function(data) {
+                tr.remove();
                 $.bootstrapGrowl('User successfully removed.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
