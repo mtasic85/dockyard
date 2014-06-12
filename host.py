@@ -106,7 +106,7 @@ def host_update():
         
     host = Host.query.get(_host['id'])
     _host['updated'] = datetime.utcnow()
-    host.update(_host)
+    update_object_with_dict(host, _host)
     db.session.commit()
     
     _host = object_to_dict(host)
