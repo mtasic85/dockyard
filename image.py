@@ -28,6 +28,7 @@ from wtforms_html5 import EmailField
 from model.db import db
 from model.db import object_to_dict, objects_to_list, update_object_with_dict
 from model.user import UserAccount, UserQuota
+from model.host import Host
 from model.image import Image
 
 image_blueprint = Blueprint('image_blueprint', __name__)
@@ -54,12 +55,18 @@ def image_images_all():
     usertype = current_user.usertype
     print 'image_images_all:', locals()
     
+    # FIXME:
     if usertype != 'super':
         data = {}
         return jsonify(data)
-        
+    
     images = Image.query.all()
     _images = objects_to_list(images)
+    
+    # insert host_name
+    for _image in _images:
+        host = Host.query.get(_image['host_id'])
+        _image['host_name'] = host.name
     
     data = {
         'images': _images,
@@ -75,6 +82,7 @@ def image_create():
     _image = request.json['image']
     print 'image_add:', locals()
     
+    # FIXME:
     if usertype != 'super':
         data = {}
         return jsonify(data)
@@ -85,6 +93,10 @@ def image_create():
     db.session.commit()
     
     _image = object_to_dict(image)
+    
+    # insert host_name
+    host = Host.query.get(_image['host_id'])
+    _image['host_name'] = host.name
     
     data = {
         'image': _image,
@@ -100,6 +112,7 @@ def image_update():
     _image = request.json['image']
     print 'image_update:', locals()
     
+    # FIXME:
     if usertype != 'super':
         data = {}
         return jsonify(data)
@@ -110,6 +123,10 @@ def image_update():
     db.session.commit()
     
     _image = object_to_dict(image)
+    
+    # insert host_name
+    host = Host.query.get(_image['host_id'])
+    _image['host_name'] = host.name
     
     data = {
         'image': _image,
@@ -125,6 +142,7 @@ def image_remove():
     id = request.json['id']
     print 'image_remove:', locals()
     
+    # FIXME:
     if usertype != 'super':
         data = {}
         return jsonify(data)

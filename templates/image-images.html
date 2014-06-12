@@ -20,8 +20,8 @@
     <script type="text/template" id="table-row-image"> 
         <tr data-id="<%= id %>">
             <td id="name"> <%= name %> </td>
-            <td id="host"> <%= host %> </td>
-            <td id="port"> <%= port %> </td>
+            <td id="host_name" data-host-name="<%= host_name %>" data-host-id="<%= host_id %>"> <%= host_name %> </td>
+            <td id="username"> <%= username %> </td>
             <td id="active"> <%= active %> </td>
             <td id="created"> <%= created %> </td>
             <td id="updated"> <%= updated %> </td>
@@ -51,7 +51,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"> Create New Host </h4>
+                        <h4 class="modal-title"> Create New Image </h4>
                     </div>
                     
                     <div class="modal-body">
@@ -59,19 +59,19 @@
                             <div class="form-group">
                                 <label> Name </label>
                                 <input type="text" class="form-control" id="name" placeholder="Name">
-                                <p class="help-block"> Unique recognizable name of host. </p>
+                                <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Host </label>
-                                <input type="text" class="form-control" id="host" placeholder="Host">
-                                <p class="help-block"> IP address or domain name of host. </p>
+                                <select id="host_id" class="form-control"></select>
+                                <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> Port </label>
-                                <input type="text" class="form-control" id="port" placeholder="Port" value="4000">
-                                <p class="help-block"> Default port is 4000. </p>
+                                <label> Username </label>
+                                <input type="text" class="form-control" id="username" placeholder="Username" value="{{ username }}" disabled>
+                                <p class="help-block">  </p>
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"> Edit Host </h4>
+                        <h4 class="modal-title"> Edit Image </h4>
                     </div>
                     
                     <div class="modal-body">
@@ -99,19 +99,19 @@
                             <div class="form-group">
                                 <label> Name </label>
                                 <input class="form-control" id="name" value="<%= name %>">
-                                <p class="help-block"> Unique recognizable name of host. </p>
+                                <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Host </label>
-                                <input class="form-control" id="host" value="<%= host %>">
-                                <p class="help-block"> IP address or domain name of host. </p>
+                                <select id="host_id" class="form-control"></select>
+                                <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> Port </label>
-                                <input class="form-control" id="port" value="<%= port %>">
-                                <p class="help-block"> Default port is 4000. </p>
+                                <label> Username </label>
+                                <input class="form-control" id="username" value="<%= username %>" disabled>
+                                <p class="help-block">  </p>
                             </div>
                         </div>
                     </div>
@@ -144,7 +144,7 @@
                     <tr>
                         <th> Name </th>
                         <th> Host </th>
-                        <th> Port </th>
+                        <th> Username </th>
                         
                         <th> Active </th>
                         <th> Created </th>
