@@ -74,6 +74,10 @@ $.extend(host, {
                     }),
                 })
                 .done(function(data) {
+                    // required to fix variable "host" from closure
+                    _.each(_host, function(value, key) { host[key] = value; });
+                        
+                    // update UI
                     host._update(data.host);
                     $.bootstrapGrowl('Host successfully updated.', {type: 'success'});
                 })
@@ -144,10 +148,6 @@ $.extend(host, {
                 }),
             })
             .done(function(data) {
-                // required to fix variable "host" from closure
-                _.each(_host, function(value, key) { host[key] = value; });
-                    
-                // update UI
                 host._add(data.host);
                 $.bootstrapGrowl('User successfully created.', {type: 'success'});
             })
