@@ -156,4 +156,14 @@ $.extend(host, {
             backdrop: 'static',
         });
     },
+    
+    _update: function(host_) {
+        var tr = $('tr[data-id="' + host_.id + '"]');
+        
+        _.each(host_, function(value, key) {
+            if (key === 'id') return;
+            var td = tr.find('td#' + key);
+            td.text(value);
+        });
+    },
 });
