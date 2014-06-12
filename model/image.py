@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__all__ = ['DockerImage']
+__all__ = ['Image']
 
 from datetime import datetime
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -7,7 +7,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from .db import get_db
 db = get_db()
 
-class DockerImage(db.Model):
+class Image(db.Model):
     id =            db.Column(db.Integer, primary_key=True)
     active =        db.Column(db.Boolean, default=True)
     created =       db.Column(db.DateTime, default=datetime.utcnow)
