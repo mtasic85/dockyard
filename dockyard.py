@@ -28,6 +28,7 @@ Sections:
         - list
         - add
         - remove
+        - update [only name]
     
     Containers [per-user, or all for super]
         - list
@@ -99,6 +100,7 @@ db = init_db(app)
 # model
 from model.user import UserAccount, UserQuota, UserStat
 from model.host import Host
+from model.image import Image
 
 # model - create all tables
 # db.drop_all()
@@ -109,7 +111,7 @@ if not UserAccount.query.filter_by(username='admin').count():
     user_account = UserAccount(
         username = 'admin',
         password = 'd0cky4rd',
-        email = '',
+        email = 'dockyard@example.com',
         usertype = 'super',
     )
     db.session.add(user_account)
