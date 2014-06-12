@@ -639,6 +639,7 @@ def account_quota_update():
     
     # update user quota
     user_quota = UserQuota.query.filter_by(username=_user_quota['username']).one()
+    _user_quota['updated'] = datetime.utcnow()
     update_object_with_dict(user_quota, _user_quota)
     db.session.commit()
     
