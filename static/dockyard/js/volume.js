@@ -20,7 +20,7 @@ $.extend(volume, {
         })
         .done(function(data) {
             // console.log(data);
-            _.each(data.images, function(volume_) {
+            _.each(data.volumes, function(volume_) {
                 volume._add(volume_);
             });
         })
@@ -30,7 +30,7 @@ $.extend(volume, {
     },
     
     _add: function(volume_) {
-        var tbody = image.table.find('tbody');
+        var tbody = volume.table.find('tbody');
         var tr_template = _.template($('#table-row-volume').html());
         var edit_template = _.template($('#modal-edit-volume').html());
         
@@ -121,7 +121,7 @@ $.extend(volume, {
         tr.find('a#activate').click(function(e) {
             // update volume
             var _volume = {
-                id: image_.id,
+                id: volume_.id,
                 active: true,
             };
             
@@ -272,7 +272,7 @@ $.extend(volume, {
     },
     
     _update: function(volume_) {
-        var tr = $('tr[data-id="' + image_.id + '"]');
+        var tr = $('tr[data-id="' + volume_.id + '"]');
         
         _.each(volume_, function(value, key) {
             if (key === 'id') return;
