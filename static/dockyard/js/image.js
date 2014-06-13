@@ -189,7 +189,7 @@ $.extend(image, {
             })
             .done(function(data) {
                 tr.remove();
-                $.bootstrapGrowl('User successfully removed.', {type: 'success'});
+                $.bootstrapGrowl('Image successfully removed.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -257,7 +257,7 @@ $.extend(image, {
             })
             .done(function(data) {
                 image._add(data.image);
-                $.bootstrapGrowl('User successfully created.', {type: 'success'});
+                $.bootstrapGrowl('Image successfully created.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});

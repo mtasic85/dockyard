@@ -1,11 +1,11 @@
 "use strict";
 
 /*
- * host
+ * volume
  */
-var host = {};
+var volume = {};
 
-$.extend(host, {
+$.extend(volume, {
     table: null,
     
     list: function(options) {
@@ -13,15 +13,15 @@ $.extend(host, {
         
         $.ajax({
             type: 'POST',
-            url: '/hosts/all',
+            url: '/volumes/all',
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             data: JSON.stringify({}),
         })
         .done(function(data) {
             // console.log(data);
-            _.each(data.hosts, function(host_) {
-                host._add(host_);
+            _.each(data.images, function(volume_) {
+                volume._add(volume_);
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
@@ -29,17 +29,42 @@ $.extend(host, {
         });
     },
     
-    _add: function(host_) {
-        var tbody = host.table.find('tbody');
-        var tr_template = _.template($('#table-row-host').html());
-        var edit_template = _.template($('#modal-edit-host').html());
+    _add: function(volume_) {
+        var tbody = image.table.find('tbody');
+        var tr_template = _.template($('#table-row-volume').html());
+        var edit_template = _.template($('#modal-edit-volume').html());
         
-        var tr = $(tr_template(host_))
+        var tr = $(tr_template(volume_))
             .appendTo(tbody);
         
         // edit
         tr.find('a#edit').click(function(e) {
-            var modal_div = $(edit_template(host_));
+            var modal_div = $(edit_template(volume_));
+            var host_id_select = modal_div.find('#host_id');
+            
+            // populate hosts
+            $.ajax({
+                type: 'POST',
+                url: '/hosts/all',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({}),
+            })
+            .done(function(data) {
+                // console.log(data);
+                _.each(data.hosts, function(host_) {
+                    var option = $('<option>')
+                        .attr('value', host_.id)
+                        .text(host_.name)
+                        .appendTo(host_id_select);
+                });
+                
+                // select host
+                host_id_select.val(volume_.host_id);
+            })
+            .error(function (xhr, ajaxOptions, thrownError) {
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            });
             
             // close
             modal_div.find('button#close').click(function(e) {
@@ -56,30 +81,31 @@ $.extend(host, {
                 setTimeout(function() { modal_div.remove();}, 500);
                 $('.modal-backdrop').remove();
                 
-                // update host
-                var _host = {
-                    id: host_.id,
+                // update volume
+                var _volume = {
+                    id: volume_.id,
                     name: modal_div.find('#name').val(),
-                    host: modal_div.find('#host').val(),
-                    port: modal_div.find('#port').val(),
+                    capacity: modal_div.find('#capacity').val(),
+                    host_id: modal_div.find('#host_id').val(),
+                    username: modal_div.find('#username').val(),
                 };
                 
                 $.ajax({
                     type: 'POST',
-                    url: '/host/update',
+                    url: '/volume/update',
                     contentType: 'application/json;charset=utf-8',
                     dataType: 'json',
                     data: JSON.stringify({
-                        host: _host,
+                        volume: _volume,
                     }),
                 })
                 .done(function(data) {
-                    // required to fix variable "host" from closure
-                    _.each(_host, function(value, key) { host[key] = value; });
+                    // required to fix variable "volume" from closure
+                    _.each(_volume, function(value, key) { volume[key] = value; });
                     
                     // update UI
-                    host._update(data.host);
-                    $.bootstrapGrowl('Host successfully updated.', {type: 'success'});
+                    volume._update(data.volume);
+                    $.bootstrapGrowl('Volume successfully updated.', {type: 'success'});
                 })
                 .error(function (xhr, ajaxOptions, thrownError) {
                     $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -93,28 +119,28 @@ $.extend(host, {
         
         // activate
         tr.find('a#activate').click(function(e) {
-            // update host
-            var _host = {
-                id: host_.id,
+            // update volume
+            var _volume = {
+                id: image_.id,
                 active: true,
             };
             
             $.ajax({
                 type: 'POST',
-                url: '/host/update',
+                url: '/volume/update',
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify({
-                    host: _host,
+                    volume: _volume,
                 }),
             })
             .done(function(data) {
-                // required to fix variable "host" from closure
-                _.each(_host, function(value, key) { host[key] = value; });
+                // required to fix variable "volume" from closure
+                _.each(_volume, function(value, key) { volume[key] = value; });
                 
                 // update UI
-                host._update(data.host);
-                $.bootstrapGrowl('Host activated.', {type: 'success'});
+                volume._update(data.volume);
+                $.bootstrapGrowl('Volume activated.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -123,28 +149,28 @@ $.extend(host, {
         
         // deactivate
         tr.find('a#deactivate').click(function(e) {
-            // update host
-            var _host = {
-                id: host_.id,
+            // update volume
+            var _volume = {
+                id: volume_.id,
                 active: false,
             };
             
             $.ajax({
                 type: 'POST',
-                url: '/host/update',
+                url: '/volume/update',
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify({
-                    host: _host,
+                    volume: _volume,
                 }),
             })
             .done(function(data) {
-                // required to fix variable "host" from closure
-                _.each(_host, function(value, key) { host[key] = value; });
+                // required to fix variable "volume" from closure
+                _.each(_volume, function(value, key) { volume[key] = value; });
                 
                 // update UI
-                host._update(data.host);
-                $.bootstrapGrowl('Host deactivated.', {type: 'success'});
+                volume._update(data.volume);
+                $.bootstrapGrowl('Volume deactivated.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -155,16 +181,16 @@ $.extend(host, {
         tr.find('a#remove').click(function(e) {
             $.ajax({
                 type: 'POST',
-                url: '/host/remove',
+                url: '/volume/remove',
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify({
-                    id: host_.id,
+                    id: volume_.id,
                 }),
             })
             .done(function(data) {
                 tr.remove();
-                $.bootstrapGrowl('Host successfully removed.', {type: 'success'});
+                $.bootstrapGrowl('User successfully removed.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -174,8 +200,30 @@ $.extend(host, {
     
     add: function(options) {
         options = options || {};
-        var new_template = _.template($('#modal-new-host').html());
+        var new_template = _.template($('#modal-new-volume').html());
         var modal_div = $(new_template());
+        var host_id_select = modal_div.find('#host_id');
+        
+        // populate hosts
+        $.ajax({
+            type: 'POST',
+            url: '/hosts/all',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify({}),
+        })
+        .done(function(data) {
+            // console.log(data);
+            _.each(data.hosts, function(host_) {
+                var option = $('<option>')
+                    .attr('value', host_.id)
+                    .text(host_.name)
+                    .appendTo(host_id_select);
+            });
+        })
+        .error(function (xhr, ajaxOptions, thrownError) {
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+        });
         
         // close
         modal_div.find('button#close').click(function(e) {
@@ -192,25 +240,26 @@ $.extend(host, {
             setTimeout(function() { modal_div.remove();}, 500);
             $('.modal-backdrop').remove();
             
-            // create host
-            var _host = {
+            // create volume
+            var _volume = {
                 name: modal_div.find('#name').val(),
-                host: modal_div.find('#host').val(),
-                port: modal_div.find('#port').val(),
+                capacity: modal_div.find('#capacity').val(),
+                host_id: modal_div.find('#host_id').val(),
+                username: modal_div.find('#username').val(),
             };
             
             $.ajax({
                 type: 'POST',
-                url: '/host/create',
+                url: '/volume/create',
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify({
-                    host: _host,
+                    volume: _volume,
                 }),
             })
             .done(function(data) {
-                host._add(data.host);
-                $.bootstrapGrowl('Host successfully created.', {type: 'success'});
+                volume._add(data.volume);
+                $.bootstrapGrowl('Volume successfully created.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -222,13 +271,14 @@ $.extend(host, {
         });
     },
     
-    _update: function(host_) {
-        var tr = $('tr[data-id="' + host_.id + '"]');
+    _update: function(volume_) {
+        var tr = $('tr[data-id="' + image_.id + '"]');
         
-        _.each(host_, function(value, key) {
+        _.each(volume_, function(value, key) {
             if (key === 'id') return;
             var td = tr.find('td#' + key);
             td.text(value);
         });
     },
 });
+

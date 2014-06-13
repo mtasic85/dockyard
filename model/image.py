@@ -15,7 +15,7 @@ class Image(db.Model):
     
     host_id =       db.Column(db.Integer)
     username =      db.Column(db.String(128))
-    name =          db.Column(db.String(1024))
+    name =          db.Column(db.String(256))
     
     def __init__(self, **kwargs):
         for k, v in kwargs.iteritems():

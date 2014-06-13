@@ -101,6 +101,7 @@ db = init_db(app)
 from model.user import UserAccount, UserQuota, UserStat
 from model.host import Host
 from model.image import Image
+from model.volume import Volume
 
 # model - create all tables
 # db.drop_all()
