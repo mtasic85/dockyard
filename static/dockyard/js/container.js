@@ -109,6 +109,7 @@ $.extend(container, {
                 // update container
                 var _container = {
                     id: container_.id,
+                    container_id: modal_div.find('#container_id').val(),
                     name: modal_div.find('#name').val(),
                     host_id: modal_div.find('#host_id').val(),
                     image_id: modal_div.find('#image_id').val(),

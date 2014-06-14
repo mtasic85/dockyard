@@ -104,6 +104,7 @@ from model.image import Image
 from model.volume import Volume
 from model.mount import MountPoint
 from model.container import Container
+from model.network import Domain, Route
 
 # model - create all tables
 # db.drop_all()

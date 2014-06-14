@@ -14,6 +14,7 @@ class Container(db.Model):
     updated =           db.Column(db.DateTime)
     
     host_id =           db.Column(db.Integer)
+    container_id =      db.Column(db.String(128))
     username =          db.Column(db.String(128))
     name =              db.Column(db.String(256))
     image_id =          db.Column(db.Integer)
