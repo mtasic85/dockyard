@@ -44,7 +44,7 @@ def mount_points():
     dct = object_to_dict(user_account)
     
     return render_template(
-        'mount-mounts.html',
+        'mount-points.html',
         **dct
     )
 
