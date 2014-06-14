@@ -31,10 +31,10 @@ class Route(db.Model):
     
     username =          db.Column(db.String(128))
     domain_id =         db.Column(db.String(1024))
-    host_id =           db.Column(db.Integer, unique=True)
-    host_port =         db.Column(db.Integer, unique=True)
-    conatiner_id =      db.Column(db.Integer, unique=True)
-    conatiner_port =    db.Column(db.Integer, unique=True)
+    host_id =           db.Column(db.Integer)
+    host_port =         db.Column(db.Integer)
+    conatiner_id =      db.Column(db.Integer)
+    conatiner_port =    db.Column(db.Integer)
     
     def __init__(self, **kwargs):
         for k, v in kwargs.iteritems():
