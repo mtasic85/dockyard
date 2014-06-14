@@ -79,7 +79,7 @@ def network_domain_create():
         data = {}
         return jsonify(data)
     
-    domain = Domain(**_network)
+    domain = Domain(**_domain)
     _domain['created'] = _domain['updated'] = datetime.utcnow()
     db.session.add(domain)
     db.session.commit()

@@ -78,7 +78,7 @@ $.extend(domain, {
                     
                     // update UI
                     domain._update(data.domain);
-                    $.bootstrapGrowl('Host successfully updated.', {type: 'success'});
+                    $.bootstrapGrowl('Domain successfully updated.', {type: 'success'});
                 })
                 .error(function (xhr, ajaxOptions, thrownError) {
                     $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -113,7 +113,7 @@ $.extend(domain, {
                 
                 // update UI
                 domain._update(data.domain);
-                $.bootstrapGrowl('Host activated.', {type: 'success'});
+                $.bootstrapGrowl('Domain activated.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -124,7 +124,7 @@ $.extend(domain, {
         tr.find('a#deactivate').click(function(e) {
             // update domain
             var _domain = {
-                id: domain.id,
+                id: domain_.id,
                 active: false,
             };
             
@@ -143,7 +143,7 @@ $.extend(domain, {
                 
                 // update UI
                 domain._update(data.domain);
-                $.bootstrapGrowl('Host deactivated.', {type: 'success'});
+                $.bootstrapGrowl('Domain deactivated.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -163,7 +163,7 @@ $.extend(domain, {
             })
             .done(function(data) {
                 tr.remove();
-                $.bootstrapGrowl('Host successfully removed.', {type: 'success'});
+                $.bootstrapGrowl('Domain successfully removed.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -208,7 +208,7 @@ $.extend(domain, {
             })
             .done(function(data) {
                 domain._add(data.domain);
-                $.bootstrapGrowl('Host successfully created.', {type: 'success'});
+                $.bootstrapGrowl('Domain successfully created.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
