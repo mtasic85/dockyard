@@ -79,7 +79,7 @@ $.extend(account, {
                 })
                 .done(function(data) {
                     // required to fix variable "user_account" from closure
-                    _.each(_user_account, function(value, key) { user_account[key] = value; });
+                    _.each(_user_account, function(value, key) { user_account_[key] = value; });
                     
                     // update UI
                     account._update(data.user_account);
@@ -219,7 +219,7 @@ $.extend(account, {
             })
             .done(function(data) {
                 // required to fix variable "user_account" from closure
-                _.each(_user_account, function(value, key) { user_account[key] = value; });
+                _.each(_user_account, function(value, key) { user_account_[key] = value; });
                 
                 // update UI
                 account._update(data.user_account);
@@ -250,7 +250,7 @@ $.extend(account, {
             })
             .done(function(data) {
                 // required to fix variable "user_account" from closure
-                _.each(_user_account, function(value, key) { user_account[key] = value; });
+                _.each(_user_account, function(value, key) { user_account_[key] = value; });
                 
                 // update UI
                 account._update(data.user_account);

@@ -33,11 +33,11 @@ from model.mount import MountPoint
 
 mount_blueprint = Blueprint('mount_blueprint', __name__)
 
-@mount_blueprint.route('/mounts', methods=['GET'])
+@mount_blueprint.route('/mount/points', methods=['GET'])
 @login_required
-def mount_mounts():
+def mount_points():
     username = current_user.username
-    print 'mount_mounts:', locals()
+    print 'mount_points:', locals()
     
     # get user account properties
     user_account = UserAccount.query.filter_by(username=username).one()
@@ -48,19 +48,19 @@ def mount_mounts():
         **dct
     )
 
-@mount_blueprint.route('/mounts/all', methods=['POST'])
+@mount_blueprint.route('/mount/points/all', methods=['POST'])
 @login_required
-def mount_mounts_all():
+def mount_points_all():
     username = current_user.username
     usertype = current_user.usertype
-    print 'mount_mounts_all:', locals()
+    print 'mount_points_all:', locals()
     
     # FIXME:
     if usertype != 'super':
         data = {}
         return jsonify(data)
     
-    mounts = Volume.query.all()
+    mounts = MountPoint.query.all()
     _mounts = objects_to_list(mounts)
     
     # insert host_name
@@ -74,7 +74,7 @@ def mount_mounts_all():
     
     return jsonify(data)
 
-@mount_blueprint.route('/mount/create', methods=['POST'])
+@mount_blueprint.route('/mount/point/create', methods=['POST'])
 @login_required
 def mount_create():
     username = current_user.username
@@ -87,7 +87,7 @@ def mount_create():
         data = {}
         return jsonify(data)
     
-    mount = Volume(**_mount)
+    mount = MountPoint(**_mount)
     _mount['created'] = _mount['updated'] = datetime.utcnow()
     db.session.add(mount)
     db.session.commit()
@@ -104,7 +104,7 @@ def mount_create():
     
     return jsonify(data)
 
-@mount_blueprint.route('/mount/update', methods=['POST'])
+@mount_blueprint.route('/mount/point/update', methods=['POST'])
 @login_required
 def mount_update():
     username = current_user.username
@@ -117,7 +117,7 @@ def mount_update():
         data = {}
         return jsonify(data)
         
-    mount = Volume.query.get(_mount['id'])
+    mount = MountPoint.query.get(_mount['id'])
     _mount['updated'] = datetime.utcnow()
     update_object_with_dict(mount, _mount)
     db.session.commit()
@@ -134,7 +134,7 @@ def mount_update():
     
     return jsonify(data)
 
-@mount_blueprint.route('/mount/remove', methods=['POST'])
+@mount_blueprint.route('/mount/point/remove', methods=['POST'])
 @login_required
 def mount_remove():
     username = current_user.username
@@ -147,7 +147,7 @@ def mount_remove():
         data = {}
         return jsonify(data)
     
-    mount = Volume.query.get(id)
+    mount = MountPoint.query.get(id)
     db.session.delete(mount)
     db.session.commit()
     

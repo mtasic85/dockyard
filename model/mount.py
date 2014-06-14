@@ -17,6 +17,8 @@ class MountPoint(db.Model):
     name =          db.Column(db.String(256))
     device =        db.Column(db.String(1024))
     mountpoint =    db.Column(db.String(1024))
+    filesystem =    db.Column(db.String(32))
+    capacity =      db.Column(db.String(32))
     
     def __init__(self, **kwargs):
         for k, v in kwargs.iteritems():

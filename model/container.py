@@ -17,15 +17,15 @@ class Container(db.Model):
     username =          db.Column(db.String(128))
     name =              db.Column(db.String(256))
     image_id =          db.Column(db.Integer)
-    command =           db.Column(db.String(4096))
+    command =           db.Column(db.String(4096), default='')
     
-    volumes =           db.Column(db.String(4096))
-    volumes_from =      db.Column(db.String(4096))
+    volumes =           db.Column(db.String(4096), default='')
+    volumes_from =      db.Column(db.String(4096), default='')
     
-    env =               db.Column(db.String(4096))
-    expose_ports =      db.Column(db.String(1024))
-    publish_ports =     db.Column(db.String(1024))
-    link_containers =   db.Column(db.String(4096))
+    env =               db.Column(db.String(4096), default='')
+    expose_ports =      db.Column(db.String(1024), default='')
+    publish_ports =     db.Column(db.String(1024), default='')
+    link_containers =   db.Column(db.String(4096), default='')
     
     ram_limit =         db.Column(db.String(32), default='256m')
     n_cpu_cores =       db.Column(db.Integer, default=1)

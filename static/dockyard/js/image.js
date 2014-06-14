@@ -100,7 +100,7 @@ $.extend(image, {
                 })
                 .done(function(data) {
                     // required to fix variable "image" from closure
-                    _.each(_image, function(value, key) { image[key] = value; });
+                    _.each(_image, function(value, key) { image_[key] = value; });
                     
                     // update UI
                     image._update(data.image);
@@ -135,7 +135,7 @@ $.extend(image, {
             })
             .done(function(data) {
                 // required to fix variable "image" from closure
-                _.each(_image, function(value, key) { image[key] = value; });
+                _.each(_image, function(value, key) { image_[key] = value; });
                 
                 // update UI
                 image._update(data.image);
@@ -165,7 +165,7 @@ $.extend(image, {
             })
             .done(function(data) {
                 // required to fix variable "image" from closure
-                _.each(_image, function(value, key) { image[key] = value; });
+                _.each(_image, function(value, key) { image_[key] = value; });
                 
                 // update UI
                 image._update(data.image);

@@ -75,7 +75,7 @@ $.extend(host, {
                 })
                 .done(function(data) {
                     // required to fix variable "host" from closure
-                    _.each(_host, function(value, key) { host[key] = value; });
+                    _.each(_host, function(value, key) { host_[key] = value; });
                     
                     // update UI
                     host._update(data.host);
@@ -110,7 +110,7 @@ $.extend(host, {
             })
             .done(function(data) {
                 // required to fix variable "host" from closure
-                _.each(_host, function(value, key) { host[key] = value; });
+                _.each(_host, function(value, key) { host_[key] = value; });
                 
                 // update UI
                 host._update(data.host);
@@ -140,7 +140,7 @@ $.extend(host, {
             })
             .done(function(data) {
                 // required to fix variable "host" from closure
-                _.each(_host, function(value, key) { host[key] = value; });
+                _.each(_host, function(value, key) { host_[key] = value; });
                 
                 // update UI
                 host._update(data.host);

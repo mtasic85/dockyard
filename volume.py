@@ -30,6 +30,7 @@ from model.db import object_to_dict, objects_to_list, update_object_with_dict
 from model.user import UserAccount, UserQuota
 from model.host import Host
 from model.volume import Volume
+from model.mount import MountPoint
 
 volume_blueprint = Blueprint('volume_blueprint', __name__)
 
@@ -64,9 +65,12 @@ def volume_volumes_all():
     _volumes = objects_to_list(volumes)
     
     # insert host_name
+    # insert mount_point_name
     for _volume in _volumes:
         host = Host.query.get(_volume['host_id'])
+        mount_point = MountPoint.query.get(_volume['mount_point_id'])
         _volume['host_name'] = host.name
+        _volume['mount_point_name'] = mount_point.name
     
     data = {
         'volumes': _volumes,
@@ -87,16 +91,21 @@ def volume_create():
         data = {}
         return jsonify(data)
     
-    volume = Volume(**_volume)
     _volume['created'] = _volume['updated'] = datetime.utcnow()
+    _volume['perm_name'] = '%s_%s' % (_volume['username'], _volume['name'])
+    
+    volume = Volume(**_volume)
     db.session.add(volume)
     db.session.commit()
     
     _volume = object_to_dict(volume)
     
     # insert host_name
+    # insert mount_point_name
     host = Host.query.get(_volume['host_id'])
+    mount_point = MountPoint.query.get(_volume['mount_point_id'])
     _volume['host_name'] = host.name
+    _volume['mount_point_name'] = mount_point.name
     
     data = {
         'volume': _volume,
@@ -125,8 +134,11 @@ def volume_update():
     _volume = object_to_dict(volume)
     
     # insert host_name
+    # insert mount_point_name
     host = Host.query.get(_volume['host_id'])
+    mount_point = MountPoint.query.get(_volume['mount_point_id'])
     _volume['host_name'] = host.name
+    _volume['mount_point_name'] = mount_point.name
     
     data = {
         'volume': _volume,

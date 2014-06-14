@@ -102,6 +102,7 @@ from model.user import UserAccount, UserQuota, UserStat
 from model.host import Host
 from model.image import Image
 from model.volume import Volume
+from model.mount import MountPoint
 
 # model - create all tables
 # db.drop_all()
@@ -150,6 +151,10 @@ app.register_blueprint(host_blueprint)
 # image
 from image import image_blueprint
 app.register_blueprint(image_blueprint)
+
+# mount
+from mount import mount_blueprint
+app.register_blueprint(mount_blueprint)
 
 # volume
 from volume import volume_blueprint
