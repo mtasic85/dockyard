@@ -43,7 +43,7 @@ def network_domains():
     dct = object_to_dict(user_account)
     
     return render_template(
-        'network-domain.html',
+        'network-domains.html',
         **dct
     )
 
