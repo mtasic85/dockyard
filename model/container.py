@@ -19,13 +19,13 @@ class Container(db.Model):
     image_id =          db.Column(db.Integer)
     command =           db.Column(db.String(4096), default='')
     
-    volumes =           db.Column(db.String(4096), default='')
-    volumes_from =      db.Column(db.String(4096), default='')
+    volumes =           db.Column(db.String(1024), default='')
+    volumes_from =      db.Column(db.String(1024), default='')
     
-    env =               db.Column(db.String(4096), default='')
+    env_vars =          db.Column(db.String(4096), default='')
     expose_ports =      db.Column(db.String(1024), default='')
     publish_ports =     db.Column(db.String(1024), default='')
-    link_containers =   db.Column(db.String(4096), default='')
+    link_containers =   db.Column(db.String(1024), default='')
     
     ram_limit =         db.Column(db.String(32), default='256m')
     n_cpu_cores =       db.Column(db.Integer, default=1)
