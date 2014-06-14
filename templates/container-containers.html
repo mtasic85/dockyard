@@ -92,61 +92,61 @@
                             
                             <div class="form-group">
                                 <label> Command </label>
-                                <select id="command" class="form-control"></select>
+                                <input type="text" class="form-control" id="command" placeholder="Command" value="/bin/bash">
                                 <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Volumes </label>
-                                <input type="text" class="form-control" id="volumes" placeholder="Volumes" value="{{ volumes }}">
+                                <input type="text" class="form-control" id="volumes" placeholder="Volumes">
                                 <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Volumes From </label>
-                                <input type="text" class="form-control" id="volumes_from" placeholder="Volumes From" value="{{ volumes_from }}">
+                                <input type="text" class="form-control" id="volumes_from" placeholder="Volumes From">
                                 <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Env Vars </label>
-                                <input type="text" class="form-control" id="env_vars" placeholder="Env Vars" value="{{ env_vars }}">
+                                <input type="text" class="form-control" id="env_vars" placeholder="Env Vars">
                                 <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> expose_ports </label>
-                                <input type="text" class="form-control" id="expose_ports" placeholder="Expose Ports" value="{{ expose_ports }}">
+                                <input type="text" class="form-control" id="expose_ports" placeholder="Expose Ports">
                                 <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> publish_ports </label>
-                                <input type="text" class="form-control" id="publish_ports" placeholder="Publish Ports" value="{{ publish_ports }}">
+                                <input type="text" class="form-control" id="publish_ports" placeholder="Publish Ports">
                                 <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> Link Containers </label>
-                                <input type="text" class="form-control" id="link_containers" placeholder="Link Containers" value="{{ link_containers }}">
+                                <input type="text" class="form-control" id="link_containers" placeholder="Link Containers">
                                 <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> RAM Limit </label>
-                                <input type="text" class="form-control" id="ram_limit" placeholder="RAM Limit" value="{{ ram_limit }}">
+                                <input type="text" class="form-control" id="ram_limit" placeholder="RAM Limit" value="256m">
                                 <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> # CPU Cores </label>
-                                <input type="text" class="form-control" id="n_cpu_cores" placeholder="# CPU Cores" value="{{ n_cpu_cores }}">
+                                <input type="text" class="form-control" id="n_cpu_cores" placeholder="# CPU Cores" value="1">
                                 <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
                                 <label> CPU Share </label>
-                                <input type="text" class="form-control" id="cpu_share" placeholder="CPU Share" value="{{ cpu_share }}">
+                                <input type="text" class="form-control" id="cpu_share" placeholder="CPU Share" value="0">
                                 <p class="help-block">  </p>
                             </div>
                         </div>

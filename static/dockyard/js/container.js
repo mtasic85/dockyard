@@ -41,7 +41,7 @@ $.extend(container, {
         tr.find('a#edit').click(function(e) {
             var modal_div = $(edit_template(container_));
             var host_id_select = modal_div.find('#host_id');
-            var mount_point_id_select = modal_div.find('#mount_point_id');
+            var image_id_select = modal_div.find('#image_id');
             
             // populate hosts
             $.ajax({
@@ -67,25 +67,25 @@ $.extend(container, {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
             });
             
-            // populate mount points
+            // populate images
             $.ajax({
                 type: 'POST',
-                url: '/mount/points/all',
+                url: '/images/all',
                 contentType: 'application/json;charset=utf-8',
                 dataType: 'json',
                 data: JSON.stringify({}),
             })
             .done(function(data) {
                 // console.log(data);
-                _.each(data.mounts, function(mount_point_) {
+                _.each(data.images, function(image_) {
                     var option = $('<option>')
-                        .attr('value', mount_point_.id)
-                        .text(mount_point_.name)
-                        .appendTo(mount_point_id_select);
+                        .attr('value', image_.id)
+                        .text(image_.name)
+                        .appendTo(image_id_select);
                 });
                 
                 // select host
-                mount_point_id_select.val(container_.mount_point_id);
+                image_id_select.val(container_.image_id);
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -110,10 +110,18 @@ $.extend(container, {
                 var _container = {
                     id: container_.id,
                     name: modal_div.find('#name').val(),
-                    capacity: modal_div.find('#capacity').val(),
                     host_id: modal_div.find('#host_id').val(),
-                    mount_point_id: modal_div.find('#mount_point_id').val(),
-                    username: modal_div.find('#username').val(),
+                    image_id: modal_div.find('#image_id').val(),
+                    command: modal_div.find('#command').val(),
+                    volumes: modal_div.find('#volumes').val(),
+                    volumes_from: modal_div.find('#volumes_from').val(),
+                    env_vars: modal_div.find('#env_vars').val(),
+                    expose_ports: modal_div.find('#expose_ports').val(),
+                    publish_ports: modal_div.find('#publish_ports').val(),
+                    link_containers: modal_div.find('#link_containers').val(),
+                    ram_limit: modal_div.find('#ram_limit').val(),
+                    n_cpu_cores: modal_div.find('#n_cpu_cores').val(),
+                    cpu_share: modal_div.find('#cpu_share').val(),
                 };
                 
                 $.ajax({
@@ -229,7 +237,7 @@ $.extend(container, {
         var new_template = _.template($('#modal-new-container').html());
         var modal_div = $(new_template());
         var host_id_select = modal_div.find('#host_id');
-        var mount_point_id_select = modal_div.find('#mount_point_id');
+        var image_id_select = modal_div.find('#image_id');
         
         // populate hosts
         $.ajax({
@@ -252,21 +260,21 @@ $.extend(container, {
             $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
         });
         
-        // populate mount points
+        // populate images
         $.ajax({
             type: 'POST',
-            url: '/mount/points/all',
+            url: '/images/all',
             contentType: 'application/json;charset=utf-8',
             dataType: 'json',
             data: JSON.stringify({}),
         })
         .done(function(data) {
             // console.log(data);
-            _.each(data.mounts, function(mount_point_) {
+            _.each(data.images, function(image_) {
                 var option = $('<option>')
-                    .attr('value', mount_point_.id)
-                    .text(mount_point_.name)
-                    .appendTo(mount_point_id_select);
+                    .attr('value', image_.id)
+                    .text(image_.name)
+                    .appendTo(image_id_select);
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
@@ -291,10 +299,18 @@ $.extend(container, {
             // create container
             var _container = {
                 name: modal_div.find('#name').val(),
-                capacity: modal_div.find('#capacity').val(),
                 host_id: modal_div.find('#host_id').val(),
-                mount_point_id: modal_div.find('#mount_point_id').val(),
-                username: modal_div.find('#username').val(),
+                image_id: modal_div.find('#image_id').val(),
+                command: modal_div.find('#command').val(),
+                volumes: modal_div.find('#volumes').val(),
+                volumes_from: modal_div.find('#volumes_from').val(),
+                env_vars: modal_div.find('#env_vars').val(),
+                expose_ports: modal_div.find('#expose_ports').val(),
+                publish_ports: modal_div.find('#publish_ports').val(),
+                link_containers: modal_div.find('#link_containers').val(),
+                ram_limit: modal_div.find('#ram_limit').val(),
+                n_cpu_cores: modal_div.find('#n_cpu_cores').val(),
+                cpu_share: modal_div.find('#cpu_share').val(),
             };
             
             $.ajax({
