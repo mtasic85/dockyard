@@ -78,26 +78,75 @@
                             </div>
                             
                             <div class="form-group">
-                                <label> Capacity </label>
-                                <input type="text" class="form-control" id="capacity" placeholder="Capacity">
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
                                 <label> Host </label>
                                 <select id="host_id" class="form-control"></select>
                                 <p class="help-block">  </p>
                             </div>
                             
+                            
                             <div class="form-group">
-                                <label> Mount Point </label>
-                                <select id="mount_point_id" class="form-control"></select>
+                                <label> Image </label>
+                                <select id="image_id" class="form-control"></select>
                                 <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> Username </label>
-                                <input type="text" class="form-control" id="username" placeholder="Username" value="{{ username }}" disabled>
+                                <label> Command </label>
+                                <select id="command" class="form-control"></select>
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Volumes </label>
+                                <input type="text" class="form-control" id="volumes" placeholder="Volumes" value="{{ volumes }}">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Volumes From </label>
+                                <input type="text" class="form-control" id="volumes_from" placeholder="Volumes From" value="{{ volumes_from }}">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Env Vars </label>
+                                <input type="text" class="form-control" id="env_vars" placeholder="Env Vars" value="{{ env_vars }}">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> expose_ports </label>
+                                <input type="text" class="form-control" id="expose_ports" placeholder="Expose Ports" value="{{ expose_ports }}">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> publish_ports </label>
+                                <input type="text" class="form-control" id="publish_ports" placeholder="Publish Ports" value="{{ publish_ports }}">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Link Containers </label>
+                                <input type="text" class="form-control" id="link_containers" placeholder="Link Containers" value="{{ link_containers }}">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> RAM Limit </label>
+                                <input type="text" class="form-control" id="ram_limit" placeholder="RAM Limit" value="{{ ram_limit }}">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> # CPU Cores </label>
+                                <input type="text" class="form-control" id="n_cpu_cores" placeholder="# CPU Cores" value="{{ n_cpu_cores }}">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> CPU Share </label>
+                                <input type="text" class="form-control" id="cpu_share" placeholder="CPU Share" value="{{ cpu_share }}">
                                 <p class="help-block">  </p>
                             </div>
                         </div>
@@ -130,27 +179,74 @@
                             </div>
                             
                             <div class="form-group">
-                                <label> Capacity </label>
-                                <input class="form-control" id="capacity" value="<%= capacity %>" disabled>
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
                                 <label> Host </label>
                                 <select id="host_id" class="form-control" disabled></select>
                                 <p class="help-block">  </p>
                             </div>
                             
-                            
                             <div class="form-group">
-                                <label> Mount Point </label>
-                                <select id="mount_point_id" class="form-control" disabled></select>
+                                <label> Image </label>
+                                <select id="image_id" class="form-control" disabled></select>
                                 <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> Username </label>
-                                <input class="form-control" id="username" value="<%= username %>" disabled>
+                                <label> Command </label>
+                                <input class="form-control" id="command" value="<%= command %>">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Volumes </label>
+                                <input class="form-control" id="volumes" value="<%= volumes %>">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Volumes From </label>
+                                <input class="form-control" id="volumes_from" value="<%= volumes_from %>">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Env Vars </label>
+                                <input class="form-control" id="env_vars" value="<%= env_vars %>">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Expose Ports </label>
+                                <input class="form-control" id="expose_ports" value="<%= expose_ports %>">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Publish Ports </label>
+                                <input class="form-control" id="publish_ports" value="<%= publish_ports %>">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Link Containers </label>
+                                <input class="form-control" id="link_containers" value="<%= link_containers %>">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> RAM Limit </label>
+                                <input class="form-control" id="ram_limit" value="<%= ram_limit %>">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> # CPU Cores </label>
+                                <input class="form-control" id="n_cpu_cores" value="<%= n_cpu_cores %>">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> CPU Share </label>
+                                <input class="form-control" id="cpu_share" value="<%= cpu_share %>">
                                 <p class="help-block">  </p>
                             </div>
                         </div>
@@ -183,10 +279,19 @@
                 <thead>
                     <tr>
                         <th> Name </th>
-                        <th> Capacity </th>
                         <th> Host </th>
-                        <th> Mount Point </th>
-                        <th> Username </th>
+                        <th> Image </th>
+                        <th> Command </th>
+                        
+                        <th> Volumes </th>
+                        <th> Volumes From </th>
+                        <th> Env Vars </th>
+                        <th> Expose Ports </th>
+                        <th> Publish Ports </th>
+                        <th> Link Containers </th>
+                        <th> RAM Limit </th>
+                        <th> # CPU Cores </th>
+                        <th> CPU Share </th>
                         
                         <th> Active </th>
                         <th> Created </th>
