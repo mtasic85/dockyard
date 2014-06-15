@@ -352,9 +352,6 @@ $.extend(route, {
                     .text(container_.name)
                     .appendTo(container_id_select);
             });
-            
-            // select container
-            container_id_select.val(route_.container_id);
         })
         .error(function (xhr, ajaxOptions, thrownError) {
             $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});

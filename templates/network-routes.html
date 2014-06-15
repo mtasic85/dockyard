@@ -12,6 +12,10 @@
             route.domain_id = {{ domain_id|tojson }};
             route.list();
             
+            $('button#back').click(function(e) {
+                window.open('/network/domains', '_self');
+            });
+            
             $('button#add').click(function(e) {
                 route.add();
             });
@@ -20,10 +24,10 @@
     
     <script type="text/template" id="table-row-route"> 
         <tr data-id="<%= id %>">
-            <td id="domain_name"
-                data-domain-name="<%= domain_name %>"
+            <td id="domain_domain"
+                data-domain-domain="<%= domain_domain %>"
                 data-domain-id="<%= domain_id %>">
-                    <%= domain_name %>
+                    <%= domain_domain %>
                 </td>
             <td id="host_name"
                 data-host-name="<%= host_name %>"
@@ -183,7 +187,8 @@
     {{ super() }}
     
     <li>
-        <button type="submit" class="btn" id="add"> Add </button>
+        <button class="btn" id="back"> Back to Domains </button>
+        <button class="btn" id="add"> Add </button>
     </li>
 {% endblock %}
 

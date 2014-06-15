@@ -32,6 +32,8 @@ class Container(db.Model):
     n_cpu_cores =       db.Column(db.Integer, default=1)
     cpu_share =         db.Column(db.Integer, default=0)
     
+    status =            db.Column(db.String(64), default='')
+    
     def __init__(self, **kwargs):
         for k, v in kwargs.iteritems():
             setattr(self, k, v)

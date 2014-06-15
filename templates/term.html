@@ -1,0 +1,26 @@
+{% extends 'base-simple.html' %}
+
+{% block scripts %}
+    <!-- term.js -->
+        <script
+            src="{{ url_for('static', filename='term.js/term.js') }}"
+            type="text/javascript"></script>
+    
+    <!-- dockyard -->
+    <!--
+    <script
+        src="{{ url_for('static', filename='dockyard/js/term.js') }}"
+        type="text/javascript"></script>
+    -->
+    
+    <script type="text/javascript">
+        $(document).ready(function(e) {
+            
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    {{ super() }}
+    
+{% endblock %}

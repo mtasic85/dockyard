@@ -170,6 +170,10 @@ app.register_blueprint(container_blueprint)
 from network import network_blueprint
 app.register_blueprint(network_blueprint)
 
+# term
+from term import term_blueprint
+app.register_blueprint(term_blueprint)
+
 @app.route('/')
 def index():
     return redirect(url_for(FlaskConfig.DEFAULT_VIEW))

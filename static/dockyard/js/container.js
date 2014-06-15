@@ -123,6 +123,7 @@ $.extend(container, {
                     ram_limit: modal_div.find('#ram_limit').val(),
                     n_cpu_cores: modal_div.find('#n_cpu_cores').val(),
                     cpu_share: modal_div.find('#cpu_share').val(),
+                    status: modal_div.find('#status').val(),
                 };
                 
                 $.ajax({
@@ -312,6 +313,7 @@ $.extend(container, {
                 ram_limit: modal_div.find('#ram_limit').val(),
                 n_cpu_cores: modal_div.find('#n_cpu_cores').val(),
                 cpu_share: modal_div.find('#cpu_share').val(),
+                status: modal_div.find('#status').val(),
             };
             
             $.ajax({

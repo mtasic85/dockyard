@@ -180,7 +180,7 @@ def network_routes_all():
         domain = Domain.query.get(_route['domain_id'])
         host = Host.query.get(_route['host_id'])
         container = Container.query.get(_route['container_id'])
-        _route['domain_name'] = domain.name
+        _route['domain_domain'] = domain.domain
         _route['host_name'] = host.name
         _route['container_name'] = container.name
         _route['container_container_id'] = container.container_id
@@ -214,7 +214,7 @@ def network_route_create():
     domain = Domain.query.get(_route['domain_id'])
     host = Host.query.get(_route['host_id'])
     container = Container.query.get(_route['container_id'])
-    _route['domain_name'] = domain.name
+    _route['domain_domain'] = domain.domain
     _route['host_name'] = host.name
     _route['container_name'] = container.name
     _route['container_container_id'] = container.container_id
@@ -248,7 +248,7 @@ def network_route_update():
     domain = Domain.query.get(_route['domain_id'])
     host = Host.query.get(_route['host_id'])
     container = Container.query.get(_route['container_id'])
-    _route['domain_name'] = domain.name
+    _route['domain_domain'] = domain.domain
     _route['host_name'] = host.name
     _route['container_name'] = container.name
     _route['container_container_id'] = container.container_id

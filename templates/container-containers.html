@@ -37,6 +37,8 @@
             <td id="n_cpu_cores"> <%= n_cpu_cores %> </td>
             <td id="cpu_share"> <%= cpu_share %> </td>
             
+            <td id="status"> <%= status %> </td>
+            
             <td id="username"> <%= username %> </td>
             <td id="active"> <%= active %> </td>
             <td id="created"> <%= created %> </td>
@@ -122,13 +124,13 @@
                             </div>
                             
                             <div class="form-group">
-                                <label> expose_ports </label>
+                                <label> Expose Ports </label>
                                 <input type="text" class="form-control" id="expose_ports" placeholder="Expose Ports">
                                 <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> publish_ports </label>
+                                <label> Publish Ports </label>
                                 <input type="text" class="form-control" id="publish_ports" placeholder="Publish Ports">
                                 <p class="help-block">  </p>
                             </div>
@@ -154,6 +156,12 @@
                             <div class="form-group">
                                 <label> CPU Share </label>
                                 <input type="text" class="form-control" id="cpu_share" placeholder="CPU Share" value="0">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Status </label>
+                                <input type="text" class="form-control" id="status" placeholder="Status" value="" disabled>
                                 <p class="help-block">  </p>
                             </div>
                         </div>
@@ -262,6 +270,12 @@
                                 <input class="form-control" id="cpu_share" value="<%= cpu_share %>">
                                 <p class="help-block">  </p>
                             </div>
+                            
+                            <div class="form-group">
+                                <label> Status </label>
+                                <input class="form-control" id="status" value="<%= status %>" disabled>
+                                <p class="help-block">  </p>
+                            </div>
                         </div>
                     </div>
                     
@@ -306,6 +320,8 @@
                         <th> RAM Limit </th>
                         <th> # CPU Cores </th>
                         <th> CPU Share </th>
+                        
+                        <th> Status </th>
                         
                         <th> Username </th>
                         <th> Active </th>

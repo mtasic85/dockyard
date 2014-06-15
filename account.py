@@ -433,7 +433,9 @@ def account_profile():
         user_account = UserAccount.query.filter_by(username=username).one()
         
         for column in user_account.__table__.columns:
-            if column.name == 'id': continue
+            if column.name in ('id', 'created', 'updated', 'active'):
+                continue
+            
             v = getattr(user_account, column.name)
             
             if v:
