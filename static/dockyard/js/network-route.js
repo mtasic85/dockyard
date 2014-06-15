@@ -41,7 +41,35 @@ $.extend(route, {
         // edit
         tr.find('a#edit').click(function(e) {
             var modal_div = $(edit_template(route_));
+            var domain_id_select = modal_div.find('#domain_id');
             var host_id_select = modal_div.find('#host_id');
+            var host_port_select = modal_div.find('#host_port');
+            var container_id_select = modal_div.find('#container_id');
+            var container_port_select = modal_div.find('#container_port');
+            
+            // populate domains
+            $.ajax({
+                type: 'POST',
+                url: '/network/domains/all',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({}),
+            })
+            .done(function(data) {
+                // console.log(data);
+                _.each(data.domains, function(domain_) {
+                    var option = $('<option>')
+                        .attr('value', domain_.id)
+                        .text(domain_.domain)
+                        .appendTo(domain_id_select);
+                });
+                
+                // select domain
+                domain_id_select.val(route_.domain_id);
+            })
+            .error(function (xhr, ajaxOptions, thrownError) {
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            });
             
             // populate hosts
             $.ajax({
@@ -62,6 +90,58 @@ $.extend(route, {
                 
                 // select host
                 host_id_select.val(route_.host_id);
+            })
+            .error(function (xhr, ajaxOptions, thrownError) {
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            });
+            
+            // populate host ports
+            /*
+            $.ajax({
+                type: 'POST',
+                url: '/host/ports/all',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({
+                    host_id: host_.id,
+                }),
+            })
+            .done(function(data) {
+                // console.log(data);
+                _.each(data.ports, function(port) {
+                    var option = $('<option>')
+                        .attr('value', port)
+                        .text(port)
+                        .appendTo(host_port_select);
+                });
+                
+                // select host port
+                host_port_select.val(route_.host_port);
+            })
+            .error(function (xhr, ajaxOptions, thrownError) {
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            });
+            */
+            
+            // populate containers
+            $.ajax({
+                type: 'POST',
+                url: '/containers/all',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({}),
+            })
+            .done(function(data) {
+                // console.log(data);
+                _.each(data.containers, function(container_) {
+                    var option = $('<option>')
+                        .attr('value', container_.id)
+                        .text(container_.name)
+                        .appendTo(container_id_select);
+                });
+                
+                // select container
+                container_id_select.val(route_.container_id);
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -88,8 +168,8 @@ $.extend(route, {
                     domain_id: modal_div.find('#domain_id').val(),
                     host_id: modal_div.find('#host_id').val(),
                     host_port: modal_div.find('#host_port').val(),
-                    conatiner_id: modal_div.find('#conatiner_id').val(),
-                    conatiner_port: modal_div.find('#conatiner_port').val(),
+                    container_id: modal_div.find('#container_id').val(),
+                    container_port: modal_div.find('#container_port').val(),
                     username: modal_div.find('#username').val(),
                 };
                 
@@ -205,7 +285,35 @@ $.extend(route, {
         options = options || {};
         var new_template = _.template($('#modal-new-route').html());
         var modal_div = $(new_template());
+        var domain_id_select = modal_div.find('#domain_id');
         var host_id_select = modal_div.find('#host_id');
+        var host_port_select = modal_div.find('#host_port');
+        var container_id_select = modal_div.find('#container_id');
+        var container_port_select = modal_div.find('#container_port');
+        
+        // populate domains
+        $.ajax({
+            type: 'POST',
+            url: '/network/domains/all',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify({}),
+        })
+        .done(function(data) {
+            // console.log(data);
+            _.each(data.domains, function(domain_) {
+                var option = $('<option>')
+                    .attr('value', domain_.id)
+                    .text(domain_.domain)
+                    .appendTo(domain_id_select);
+            });
+            
+            // select DEFAULT domain
+            domain_id_select.val(route.domain_id);
+        })
+        .error(function (xhr, ajaxOptions, thrownError) {
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+        });
         
         // populate hosts
         $.ajax({
@@ -223,6 +331,30 @@ $.extend(route, {
                     .text(host_.name)
                     .appendTo(host_id_select);
             });
+        })
+        .error(function (xhr, ajaxOptions, thrownError) {
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+        });
+        
+        // populate containers
+        $.ajax({
+            type: 'POST',
+            url: '/containers/all',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify({}),
+        })
+        .done(function(data) {
+            // console.log(data);
+            _.each(data.containers, function(container_) {
+                var option = $('<option>')
+                    .attr('value', container_.id)
+                    .text(container_.name)
+                    .appendTo(container_id_select);
+            });
+            
+            // select container
+            container_id_select.val(route_.container_id);
         })
         .error(function (xhr, ajaxOptions, thrownError) {
             $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
@@ -248,8 +380,8 @@ $.extend(route, {
                 domain_id: modal_div.find('#domain_id').val(),
                 host_id: modal_div.find('#host_id').val(),
                 host_port: modal_div.find('#host_port').val(),
-                conatiner_id: modal_div.find('#conatiner_id').val(),
-                conatiner_port: modal_div.find('#conatiner_port').val(),
+                container_id: modal_div.find('#container_id').val(),
+                container_port: modal_div.find('#container_port').val(),
                 username: modal_div.find('#username').val(),
             };
             

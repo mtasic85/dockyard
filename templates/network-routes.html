@@ -9,7 +9,7 @@
     <script type="text/javascript">
         $(document).ready(function(e) {
             route.table = $('table#routes');
-            route.domain_id = {{ domain_id }};
+            route.domain_id = {{ domain_id|tojson }};
             route.list();
             
             $('button#add').click(function(e) {
@@ -31,13 +31,13 @@
                     <%= host_name %>
                 </td>
             <td id="host_port"> <%= host_port %> </td>
-            <td id="conatiner_name"
-                data-conatiner-name="<%= conatiner_name %>"
-                data-conatiner-id="<%= conatiner_id %>"
-                data-conatiner-conatiner-id="<%= conatiner_conatiner_id %>">
-                    <%= conatiner_name %>
+            <td id="container_name"
+                data-container-name="<%= container_name %>"
+                data-container-id="<%= container_id %>"
+                data-container-container-id="<%= container_container_id %>">
+                    <%= container_name %>
                 </td>
-            <td id="conatiner_port"> <%= conatiner_port %> </td>
+            <td id="container_port"> <%= container_port %> </td>
             <td id="username"> <%= username %> </td>
             <td id="active"> <%= active %> </td>
             <td id="created"> <%= created %> </td>
@@ -75,7 +75,7 @@
                         <div role="form">
                             <div class="form-group">
                                 <label> Domain </label>
-                                <select id="domain_id" class="form-control"></select>
+                                <select id="domain_id" class="form-control" disabled></select>
                                 <p class="help-block">  </p>
                             </div>
                             
@@ -92,14 +92,14 @@
                             </div>
                             
                             <div class="form-group">
-                                <label> Conatiner </label>
-                                <select id="conatiner_id" class="form-control"></select>
+                                <label> Container </label>
+                                <select id="container_id" class="form-control"></select>
                                 <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> Conatiner Port </label>
-                                <select id="conatiner_port" class="form-control"></select>
+                                <label> Container Port </label>
+                                <select id="container_port" class="form-control"></select>
                                 <p class="help-block">  </p>
                             </div>
                             
@@ -150,14 +150,14 @@
                             </div>
                             
                             <div class="form-group">
-                                <label> Conatiner </label>
-                                <select id="conatiner_id" class="form-control"></select>
+                                <label> Container </label>
+                                <select id="container_id" class="form-control"></select>
                                 <p class="help-block">  </p>
                             </div>
                             
                             <div class="form-group">
-                                <label> Conatiner Port </label>
-                                <select id="conatiner_port" class="form-control"></select>
+                                <label> Container Port </label>
+                                <select id="container_port" class="form-control"></select>
                                 <p class="help-block">  </p>
                             </div>
                             

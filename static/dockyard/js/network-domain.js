@@ -90,6 +90,11 @@ $.extend(domain, {
             });
         });
         
+        // routes
+        tr.find('a#routes').click(function(e) {
+            window.open('/network/routes/' + domain_.id, '_self');
+        });
+        
         // activate
         tr.find('a#activate').click(function(e) {
             // update domain
