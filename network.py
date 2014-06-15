@@ -143,8 +143,9 @@ def network_domain_remove():
 # route
 #
 @network_blueprint.route('/network/routes', methods=['GET'])
+@network_blueprint.route('/network/routes/<int:domain_id>', methods=['GET'])
 @login_required
-def network_routes():
+def network_routes(domain_id=None):
     username = current_user.username
     print 'network_routes:', locals()
     
@@ -154,6 +155,7 @@ def network_routes():
     
     return render_template(
         'network-routes.html',
+        domain_id = domain_id,
         **dct
     )
 

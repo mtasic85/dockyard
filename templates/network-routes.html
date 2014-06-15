@@ -9,6 +9,7 @@
     <script type="text/javascript">
         $(document).ready(function(e) {
             route.table = $('table#routes');
+            route.domain_id = {{ domain_id }};
             route.list();
             
             $('button#add').click(function(e) {
@@ -19,10 +20,23 @@
     
     <script type="text/template" id="table-row-route"> 
         <tr data-id="<%= id %>">
-            <td id="domain_name" data-domain-name="<%= domain_name %>" data-domain-id="<%= domain_id %>"> <%= domain_name %> </td>
-            <td id="host_name" data-host-name="<%= host_name %>" data-host-id="<%= host_id %>"> <%= host_name %> </td>
+            <td id="domain_name"
+                data-domain-name="<%= domain_name %>"
+                data-domain-id="<%= domain_id %>">
+                    <%= domain_name %>
+                </td>
+            <td id="host_name"
+                data-host-name="<%= host_name %>"
+                data-host-id="<%= host_id %>">
+                    <%= host_name %>
+                </td>
             <td id="host_port"> <%= host_port %> </td>
-            <td id="conatiner_name" data-conatiner-name="<%= conatiner_name %>" data-conatiner-id="<%= conatiner_id %>"> <%= conatiner_name %> </td>
+            <td id="conatiner_name"
+                data-conatiner-name="<%= conatiner_name %>"
+                data-conatiner-id="<%= conatiner_id %>"
+                data-conatiner-conatiner-id="<%= conatiner_conatiner_id %>">
+                    <%= conatiner_name %>
+                </td>
             <td id="conatiner_port"> <%= conatiner_port %> </td>
             <td id="username"> <%= username %> </td>
             <td id="active"> <%= active %> </td>

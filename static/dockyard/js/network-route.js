@@ -7,6 +7,7 @@ var route = {};
 
 $.extend(route, {
     table: null,
+    domain_id: null,
     
     list: function(options) {
         options = options || {};
