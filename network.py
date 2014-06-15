@@ -32,6 +32,9 @@ from model.network import Domain
 
 network_blueprint = Blueprint('network_blueprint', __name__)
 
+#
+# domain
+#
 @network_blueprint.route('/network/domains', methods=['GET'])
 @login_required
 def network_domains():
@@ -131,6 +134,141 @@ def network_domain_remove():
     
     domain = Domain.query.get(id)
     db.session.delete(domain)
+    db.session.commit()
+    
+    data = {}
+    return jsonify(data)
+
+#
+# route
+#
+@network_blueprint.route('/network/routes', methods=['GET'])
+@login_required
+def network_routes():
+    username = current_user.username
+    print 'network_routes:', locals()
+    
+    # get user account properties
+    user_account = UserAccount.query.filter_by(username=username).one()
+    dct = object_to_dict(user_account)
+    
+    return render_template(
+        'network-routes.html',
+        **dct
+    )
+
+@network_blueprint.route('/network/routes/all', methods=['POST'])
+@login_required
+def network_routes_all():
+    username = current_user.username
+    usertype = current_user.usertype
+    print 'network_routes_all:', locals()
+    
+    if usertype != 'super':
+        data = {}
+        return jsonify(data)
+        
+    routes = Route.query.all()
+    _routes = objects_to_list(routes)
+    
+    # insert domain, host, conatiner names
+    for _route in _routes:
+        domain = Domain.query.get(_mount['domain_id'])
+        host = Host.query.get(_mount['host_id'])
+        conatiner = Conatiner.query.get(_mount['conatiner_id'])
+        _route['domain_name'] = domain.name
+        _route['host_name'] = host.name
+        _route['conatiner_name'] = conatiner.name
+        _route['conatiner_conatiner_id'] = conatiner.conatiner_id
+    
+    data = {
+        'routes': _routes,
+    }
+    
+    return jsonify(data)
+
+@network_blueprint.route('/network/route/create', methods=['POST'])
+@login_required
+def network_route_create():
+    username = current_user.username
+    usertype = current_user.usertype
+    _route = request.json['route']
+    print 'network_route_create:', locals()
+    
+    if usertype != 'super':
+        data = {}
+        return jsonify(data)
+    
+    route = Route(**_route)
+    _route['created'] = _route['updated'] = datetime.utcnow()
+    db.session.add(route)
+    db.session.commit()
+    
+    _route = object_to_dict(route)
+    
+    # insert domain, host, conatiner name
+    domain = Domain.query.get(_mount['domain_id'])
+    host = Host.query.get(_mount['host_id'])
+    conatiner = Conatiner.query.get(_mount['conatiner_id'])
+    _route['domain_name'] = domain.name
+    _route['host_name'] = host.name
+    _route['conatiner_name'] = conatiner.name
+    _route['conatiner_conatiner_id'] = conatiner.conatiner_id
+    
+    data = {
+        'route': _route,
+    }
+    
+    return jsonify(data)
+
+@network_blueprint.route('/network/route/update', methods=['POST'])
+@login_required
+def network_route_update():
+    username = current_user.username
+    usertype = current_user.usertype
+    _route = request.json['route']
+    print 'network_route_update:', locals()
+    
+    if usertype != 'super':
+        data = {}
+        return jsonify(data)
+        
+    route = Route.query.get(_route['id'])
+    _route['updated'] = datetime.utcnow()
+    update_object_with_dict(route, _route)
+    db.session.commit()
+    
+    _route = object_to_dict(route)
+    
+    # insert domain, host, conatiner name
+    domain = Domain.query.get(_mount['domain_id'])
+    host = Host.query.get(_mount['host_id'])
+    conatiner = Conatiner.query.get(_mount['conatiner_id'])
+    _route['domain_name'] = domain.name
+    _route['host_name'] = host.name
+    _route['conatiner_name'] = conatiner.name
+    _route['conatiner_conatiner_id'] = conatiner.conatiner_id
+    
+    data = {
+        'route': _route,
+    }
+    
+    return jsonify(data)
+
+@network_blueprint.route('/network/route/remove', methods=['POST'])
+@login_required
+def network_route_remove():
+    username = current_user.username
+    usertype = current_user.usertype
+    id = request.json['id']
+    print 'network_route_remove:', locals()
+    
+    if usertype != 'super':
+        data = {}
+        return jsonify(data)
+    
+    route = Route.query.get(id)
+    db.session.delete(route)
     db.session.commit()
     
     data = {}
