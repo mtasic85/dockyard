@@ -1,15 +1,13 @@
 import os
 import sys
-import pty
-import subprocess
+
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
-import tornado.process
 
 import pexpect
 
-class EchoWebSocket(tornado.websocket.WebSocketHandler):
+class TermWebSocket(tornado.websocket.WebSocketHandler):
     def check_origin(self, origin):
         print 'check_origin:', self, origin
         return True
@@ -47,7 +45,7 @@ class EchoWebSocket(tornado.websocket.WebSocketHandler):
         self.proc.close(force=True)
 
 application = tornado.web.Application([
-    (r'/', EchoWebSocket),
+    (r'/', TermWebSocket),
 ])
 
 if __name__ == "__main__":

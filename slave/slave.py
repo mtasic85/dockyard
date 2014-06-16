@@ -88,6 +88,15 @@ from flask.ext.login import (
     login_user, logout_user, confirm_login,
 )
 
+# tornado
+import tornado.ioloop
+import tornado.web
+import tornado.websocket
+import tornado.wsgi
+
+# pexpect
+import pexpect
+
 # config
 class FlaskConfig(object):
     SECRET_KEY = '!d0cky4rd-sl4ve!'   # IMPORTANT: change this value with your secret
@@ -143,6 +152,43 @@ def dockyard_volumes():
     
     return jsonify(data)
 
+class TermWebSocket(tornado.websocket.WebSocketHandler):
+    def check_origin(self, origin):
+        print 'check_origin:', self, origin
+        return True
+    
+    def open(self):
+        print 'open:', self
+        io_loop = tornado.ioloop.IOLoop.instance()
+        self.proc = pexpect.spawn(
+            os.getenv('SHELL'),
+            cwd=os.getenv('HOME'),
+        )
+        io_loop.add_handler(self.proc.child_fd, self._read_master, io_loop.READ)
+    
+    def _read_master(self, *args):
+        print '_read_master:', self, args
+        b = os.read(self.proc.child_fd, 1024)
+        message = b.encode('utf-8')
+        
+        try:
+            self.write_message(message)
+        except Exception as e:
+            print e
+            self.close()
+    
+    def on_message(self, message):
+        print 'on_message:', self, repr(message)
+        message = message.replace('\r', '\n')
+        message = message.decode('utf-8')
+        self.proc.write(message)
+    
+    def on_close(self):
+        print 'on_close:', self
+        io_loop = tornado.ioloop.IOLoop.instance()
+        io_loop.remove_handler(self.proc.child_fd)
+        self.proc.close(force=True)
+
 if __name__ == '__main__':
     import argparse
     
@@ -173,9 +219,22 @@ if __name__ == '__main__':
     FlaskConfig.PORT = port
     FlaskConfig.THREADED = args.threaded
     
+    '''
     # run app
     app.run(
         host = FlaskConfig.HOST,
         port = FlaskConfig.PORT,
         threaded = FlaskConfig.THREADED,
     )
+    '''
+    
+    tr = tornado.wsgi.WSGIContainer(app)
+    
+    application = tornado.web.Application([
+        (r'/docker/term', TermWebSocket),
+        (r".*", tornado.web.FallbackHandler, dict(fallback=tr)),
+    ])
+    
+    application.listen(FlaskConfig.PORT)
+    tornado.ioloop.IOLoop.instance().start()
+    

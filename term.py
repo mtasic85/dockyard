@@ -32,22 +32,22 @@ from model.user import UserAccount, UserQuota
 term_blueprint = Blueprint('term_blueprint', __name__)
 
 @term_blueprint.route('/term/<host>/<int:port>', methods=['GET'])
-@login_required
+# @login_required
 def term_term(host, port):
-    username = current_user.username
+    # username = current_user.username
     print 'term_term:', locals()
     
     host = host.replace('_', '.')
     
     # get user account properties
-    user_account = UserAccount.query.filter_by(username=username).one()
-    dct = object_to_dict(user_account)
+    # user_account = UserAccount.query.filter_by(username=username).one()
+    # dct = object_to_dict(user_account)
     
     return render_template(
         'term-term.html',
         host = host,
         port = port,
-        **dct
+        # **dct
     )
 
 """
