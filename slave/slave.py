@@ -8,6 +8,7 @@ Master asks slave for stats and to execute commands.
 __all__ = ['app']
 import os
 import sys
+from functools import wraps
 from ConfigParser import ConfigParser
 
 # requests with 'http+unix:/' adapter
@@ -79,14 +80,16 @@ from flask import (
     Blueprint, abort,
     send_from_directory,
     current_app,
-    make_response,
+    make_response, Response
 )
 
+'''
 # flask login
 from flask.ext.login import (
     current_user, login_required, fresh_login_required,
     login_user, logout_user, confirm_login,
 )
+'''
 
 # tornado
 import tornado.ioloop
@@ -107,13 +110,6 @@ class FlaskConfig(object):
     PORT = 4000
     THREADED = False
     LAZY_INITIALIZATION = False
-    # DEFAULT_VIEW = 'home_blueprint.home'
-    
-    # login
-    # LOGIN_VIEW = 'account_blueprint.account_signin'
-    
-    # database
-    # SQLALCHEMY_DATABASE_URI = 'mysql://user:pass@127.0.0.1/db'
 
 # app
 app = Flask(__name__)
@@ -123,8 +119,37 @@ if FlaskConfig.PROXY_FIX:
 
 app.config.from_object(FlaskConfig)
 
+def check_auth(username, password):
+    config = ConfigParser()
+    config.read(['slave.conf'])
+    username_ = config.get('auth', 'username')
+    password_ = config.get('auth', 'password')
+    return username == username_ and password == password_
+
+def authenticate():
+    # Sends a 401 response that enables basic auth
+    return Response(
+        'Could not verify your access level for that URL.\n'
+        'You have to login with proper credentials',
+        401,
+        {'WWW-Authenticate': 'Basic realm="Login Required"'},
+    )
+
+def requires_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        
+        if not auth or not check_auth(auth.username, auth.password):
+            return authenticate()
+        
+        return f(*args, **kwargs)
+    
+    return decorated
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/<path:path>', methods=['GET', 'POST'])
+@requires_auth
 def catch_all(path):
     # get docker API route
     s = request.url.find(request.url_root) + len(request.url_root)
@@ -137,6 +162,7 @@ def catch_all(path):
     r = f('http+unix://var/run/docker.sock/%s' % path)
     return make_response(r.text, r.status_code, r.headers.items())
 
+'''
 @app.route('/dockyard/volumes', methods=['GET'])
 def dockyard_volumes():
     # read config
@@ -151,23 +177,26 @@ def dockyard_volumes():
     }
     
     return jsonify(data)
+'''
 
 class TermWebSocket(tornado.websocket.WebSocketHandler):
     def check_origin(self, origin):
-        print 'check_origin:', self, origin
+        # print 'check_origin:', self, origin
         return True
     
     def open(self):
-        print 'open:', self
+        # print 'open:', self
         io_loop = tornado.ioloop.IOLoop.instance()
+        
         self.proc = pexpect.spawn(
             os.getenv('SHELL'),
             cwd=os.getenv('HOME'),
         )
+        
         io_loop.add_handler(self.proc.child_fd, self._read_master, io_loop.READ)
     
     def _read_master(self, *args):
-        print '_read_master:', self, args
+        # print '_read_master:', self, args
         b = os.read(self.proc.child_fd, 1024)
         message = b.encode('utf-8')
         
@@ -178,13 +207,13 @@ class TermWebSocket(tornado.websocket.WebSocketHandler):
             self.close()
     
     def on_message(self, message):
-        print 'on_message:', self, repr(message)
+        # print 'on_message:', self, repr(message)
         message = message.replace('\r', '\n')
         message = message.decode('utf-8')
         self.proc.write(message)
     
     def on_close(self):
-        print 'on_close:', self
+        # print 'on_close:', self
         io_loop = tornado.ioloop.IOLoop.instance()
         io_loop.remove_handler(self.proc.child_fd)
         self.proc.close(force=True)
@@ -237,4 +266,3 @@ if __name__ == '__main__':
     
     application.listen(FlaskConfig.PORT)
     tornado.ioloop.IOLoop.instance().start()
-    

@@ -24,6 +24,10 @@ from wtforms import validators
 from wtforms import TextField, PasswordField, SelectField, BooleanField
 from wtforms_html5 import EmailField
 
+# requests
+import requests
+from requests.auth import HTTPBasicAuth
+
 # model
 from model.db import db
 from model.db import object_to_dict, objects_to_list, update_object_with_dict

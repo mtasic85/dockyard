@@ -22,6 +22,8 @@
             <td id="name"> <%= name %> </td>
             <td id="host"> <%= host %> </td>
             <td id="port"> <%= port %> </td>
+            <td id="auth_username"> <%= auth_username %> </td>
+            <td id="auth_password"> <%= auth_password %> </td>
             <td id="active"> <%= active %> </td>
             <td id="created"> <%= created %> </td>
             <td id="updated"> <%= updated %> </td>
@@ -73,6 +75,18 @@
                                 <input type="text" class="form-control" id="port" placeholder="Port" value="4000">
                                 <p class="help-block"> Default port is 4000. </p>
                             </div>
+                            
+                            <div class="form-group">
+                                <label> Auth Username </label>
+                                <input type="text" class="form-control" id="auth_username" placeholder="Auth Username" value="">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Auth Password </label>
+                                <input type="text" class="form-control" id="auth_password" placeholder="Auth Password" value="">
+                                <p class="help-block">  </p>
+                            </div>
                         </div>
                     </div>
                     
@@ -113,6 +127,18 @@
                                 <input class="form-control" id="port" value="<%= port %>">
                                 <p class="help-block"> Default port is 4000. </p>
                             </div>
+                            
+                            <div class="form-group">
+                                <label> Auth Username </label>
+                                <input class="form-control" id="auth_username" value="<%= auth_username %>">
+                                <p class="help-block"> </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> Auth Password </label>
+                                <input class="form-control" id="auth_password" value="<%= auth_password %>">
+                                <p class="help-block"> </p>
+                            </div>
                         </div>
                     </div>
                     
@@ -145,6 +171,8 @@
                         <th> Name </th>
                         <th> Host </th>
                         <th> Port </th>
+                        <th> Auth Username </th>
+                        <th> Auth Password </th>
                         
                         <th> Active </th>
                         <th> Created </th>
