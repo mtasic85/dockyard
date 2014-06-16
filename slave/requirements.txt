@@ -1,0 +1,8 @@
+flask
+requests
+tornado
+gunicorn
+eventlet
+docker-py
+python-dateutil
+pexpect
