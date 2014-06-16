@@ -16,6 +16,8 @@ class Host(db.Model):
     name =          db.Column(db.String(128))
     host =          db.Column(db.String(128))
     port =          db.Column(db.Integer)
+    auth_username = db.Column(db.String(64), default='')
+    auth_password = db.Column(db.String(64), default='')
     
     def __init__(self, **kwargs):
         for k, v in kwargs.iteritems():

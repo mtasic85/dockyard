@@ -62,6 +62,8 @@ $.extend(host, {
                     name: modal_div.find('#name').val(),
                     host: modal_div.find('#host').val(),
                     port: modal_div.find('#port').val(),
+                    auth_username: modal_div.find('#auth_username').val(),
+                    auth_password: modal_div.find('#auth_password').val(),
                 };
                 
                 $.ajax({
@@ -197,6 +199,8 @@ $.extend(host, {
                 name: modal_div.find('#name').val(),
                 host: modal_div.find('#host').val(),
                 port: modal_div.find('#port').val(),
+                auth_username: modal_div.find('#auth_username').val(),
+                auth_password: modal_div.find('#auth_password').val(),
             };
             
             $.ajax({
