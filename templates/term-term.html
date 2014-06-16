@@ -42,7 +42,7 @@
     
     <script type="text/javascript">
         $(document).ready(function(e) {
-            var ws = new WebSocket("ws://89.216.57.9:10888");
+            var ws = new WebSocket("ws://127.0.0.1:4000/dockyard/term");
             
             ws.onopen = function() {
                 var term = window.term = new Terminal({

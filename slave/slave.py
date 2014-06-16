@@ -231,8 +231,8 @@ if __name__ == '__main__':
     tr = tornado.wsgi.WSGIContainer(app)
     
     application = tornado.web.Application([
-        (r'/docker/term', TermWebSocket),
-        (r".*", tornado.web.FallbackHandler, dict(fallback=tr)),
+        (r'/dockyard/term', TermWebSocket),
+        (r'.*', tornado.web.FallbackHandler, dict(fallback=tr)),
     ])
     
     application.listen(FlaskConfig.PORT)
