@@ -4,6 +4,7 @@ flask-mail
 flask-login
 flask-principal
 flask-sqlalchemy
+flask-sockets
 wtforms
 wtforms-html5
 requests
@@ -14,3 +15,4 @@ eventlet
 docker-py
 mysql-python
 python-dateutil
+pexpect

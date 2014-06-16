@@ -56,3 +56,5 @@ include
 lib-python/
 lib_pypy/
 site-packages/
+hacks/
+tmp/
