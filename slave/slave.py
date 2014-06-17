@@ -148,31 +148,6 @@ def requires_auth(f):
     
     return decorated
 
-"""
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/<path:path>', methods=['GET', 'POST'])
-@requires_auth
-def docker_api(path):
-    # get docker API route
-    s = request.url.find(request.url_root) + len(request.url_root)
-    path = request.url[s:]
-    print 'docker_api >>>', path
-    
-    if path.startswith('images/create'):
-        t = threading.Thread(target=_docker_api, args
-        
-        return make_response('{}', 200, [('content-type', 'application/json')])
-    
-    # execute
-    s = requests.Session()
-    s.mount('http+unix://', UnixAdapter('http+unix://var/run/docker.sock'))
-    f = getattr(s, request.method.lower())
-    r = f('http+unix://var/run/docker.sock/%s' % path)
-    
-    print 'docker_api <<<', r.text, r.status_code, r.headers.items()
-    return make_response(r.text, r.status_code, r.headers.items())
-"""
-
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/<path:path>', methods=['GET', 'POST'])
 @requires_auth
@@ -196,26 +171,6 @@ def docker_api(path):
     
     print 'docker_api <<<', r.text, r.status_code, r.headers.items()
     return make_response(r.text, r.status_code, r.headers.items())
-
-# def @app.route('/dockyard/volumes', methods=['GET'])
-# def dockyard_volumes():
-
-'''
-@app.route('/dockyard/volumes', methods=['GET'])
-def dockyard_volumes():
-    # read config
-    config = ConfigParser()
-    config.read(['slave.conf'])
-    btrfs_device = config.get('btrfs', 'device')
-    
-    volumes = []
-    
-    data = {
-        'volumes': volumes,
-    }
-    
-    return jsonify(data)
-'''
 
 class TermWebSocket(tornado.websocket.WebSocketHandler):
     def check_origin(self, origin):
