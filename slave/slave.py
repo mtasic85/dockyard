@@ -165,7 +165,7 @@ def docker_api(path):
     if path.startswith('images/create'):
         t = threading.Thread(
             target = f,
-            args = ('http+unix://var/run/docker.sock/%s' % path),
+            args = ('http+unix://var/run/docker.sock/%s' % path,),
         )
         t.start()
         return make_response('{}', 200, [('content-type', 'application/json')])
