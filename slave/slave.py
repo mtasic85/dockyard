@@ -154,13 +154,15 @@ def docker_api(path):
     # get docker API route
     s = request.url.find(request.url_root) + len(request.url_root)
     path = request.url[s:]
-    print 'docker_api:', path
+    print 'docker_api >>>', path
     
     # execute
     s = requests.Session()
     s.mount('http+unix://', UnixAdapter('http+unix://var/run/docker.sock'))
     f = getattr(s, request.method.lower())
     r = f('http+unix://var/run/docker.sock/%s' % path)
+    
+    print 'docker_api <<<', r.text, r.status_code, r.headers.items()
     return make_response(r.text, r.status_code, r.headers.items())
 
 # def @app.route('/dockyard/volumes', methods=['GET'])
