@@ -163,8 +163,12 @@ def docker_api(path):
     f = getattr(s, request.method.lower())
     
     if path.startswith('images/create'):
+        def _docker_api(path):
+            r = f(path)
+            print '_docker_api <<<', r.text, r.status_code, r.headers.items()
+        
         t = threading.Thread(
-            target = f,
+            target = _docker_api,
             args = ('http+unix://var/run/docker.sock/%s' % path,),
         )
         t.start()
