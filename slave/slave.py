@@ -149,7 +149,6 @@ def requires_auth(f):
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/<path:path>', methods=['GET', 'POST'])
-@app.route('/docker/<path:path>', methods=['GET', 'POST'])
 @requires_auth
 def catch_all(path):
     # get docker API route
@@ -161,6 +160,19 @@ def catch_all(path):
     s.mount('http+unix://', UnixAdapter('http+unix://var/run/docker.sock'))
     f = getattr(s, request.method.lower())
     r = f('http+unix://var/run/docker.sock/%s' % path)
+    return make_response(r.text, r.status_code, r.headers.items())
+
+@app.route('/docker/auth', methods=['GET', 'POST'])
+@requires_auth
+def docker_auth(path):
+    # get docker API route
+    s = request.url.find(request.url_root) + len(request.url_root)
+    
+    # execute
+    s = requests.Session()
+    s.mount('http+unix://', UnixAdapter('http+unix://var/run/docker.sock'))
+    f = getattr(s, request.method.lower())
+    r = f('http+unix://var/run/docker.sock/auth)
     return make_response(r.text, r.status_code, r.headers.items())
 
 '''
