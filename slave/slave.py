@@ -149,6 +149,7 @@ def requires_auth(f):
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/<path:path>', methods=['GET', 'POST'])
+@app.route('/docker/<path:path>', methods=['GET', 'POST'])
 @requires_auth
 def catch_all(path):
     # get docker API route

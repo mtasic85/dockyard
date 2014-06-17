@@ -37,8 +37,6 @@ def term_term(host, port):
     # username = current_user.username
     print 'term_term:', locals()
     
-    host = host.replace('_', '.')
-    
     # get user account properties
     # user_account = UserAccount.query.filter_by(username=username).one()
     # dct = object_to_dict(user_account)
