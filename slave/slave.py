@@ -171,6 +171,7 @@ def docker_api(path):
             target = _docker_api,
             args = ('http+unix://var/run/docker.sock/%s' % path,),
         )
+        
         t.start()
         return make_response('{}', 200, [('content-type', 'application/json')])
     
