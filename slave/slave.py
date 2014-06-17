@@ -185,13 +185,13 @@ def docker_api(path):
     # execute
     s = requests.Session()
     s.mount('http+unix://', UnixAdapter('http+unix://var/run/docker.sock'))
+    f = getattr(s, request.method.lower())
     
     if path.startswith('images/create'):
         t = threading.Thread(target=f, args=(s, request.method.lower()))
         t.start()
         return make_response('{}', 200, [('content-type', 'application/json')])
     
-    f = getattr(s, request.method.lower())
     r = f('http+unix://var/run/docker.sock/%s' % path)
     
     print 'docker_api <<<', r.text, r.status_code, r.headers.items()
