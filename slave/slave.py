@@ -8,6 +8,7 @@ Master asks slave for stats and to execute commands.
 __all__ = ['app']
 import os
 import sys
+import threading
 from functools import wraps
 from ConfigParser import ConfigParser
 
@@ -147,6 +148,31 @@ def requires_auth(f):
     
     return decorated
 
+"""
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/<path:path>', methods=['GET', 'POST'])
+@requires_auth
+def docker_api(path):
+    # get docker API route
+    s = request.url.find(request.url_root) + len(request.url_root)
+    path = request.url[s:]
+    print 'docker_api >>>', path
+    
+    if path.startswith('images/create'):
+        t = threading.Thread(target=_docker_api, args
+        
+        return make_response('{}', 200, [('content-type', 'application/json')])
+    
+    # execute
+    s = requests.Session()
+    s.mount('http+unix://', UnixAdapter('http+unix://var/run/docker.sock'))
+    f = getattr(s, request.method.lower())
+    r = f('http+unix://var/run/docker.sock/%s' % path)
+    
+    print 'docker_api <<<', r.text, r.status_code, r.headers.items()
+    return make_response(r.text, r.status_code, r.headers.items())
+"""
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/<path:path>', methods=['GET', 'POST'])
 @requires_auth
@@ -159,6 +185,12 @@ def docker_api(path):
     # execute
     s = requests.Session()
     s.mount('http+unix://', UnixAdapter('http+unix://var/run/docker.sock'))
+    
+    if path.startswith('images/create'):
+        t = threading.Thread(target=f, args=(s, request.method.lower()))
+        t.start()
+        return make_response('{}', 200, [('content-type', 'application/json')])
+    
     f = getattr(s, request.method.lower())
     r = f('http+unix://var/run/docker.sock/%s' % path)
     
