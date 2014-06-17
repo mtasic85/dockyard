@@ -164,7 +164,7 @@ def catch_all(path):
 
 @app.route('/docker/auth', methods=['GET', 'POST'])
 @requires_auth
-def docker_auth(path):
+def docker_auth():
     # get docker API route
     s = request.url.find(request.url_root) + len(request.url_root)
     
