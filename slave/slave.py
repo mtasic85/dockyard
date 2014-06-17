@@ -172,7 +172,7 @@ def docker_auth(path):
     s = requests.Session()
     s.mount('http+unix://', UnixAdapter('http+unix://var/run/docker.sock'))
     f = getattr(s, request.method.lower())
-    r = f('http+unix://var/run/docker.sock/auth)
+    r = f('http+unix://var/run/docker.sock/auth')
     return make_response(r.text, r.status_code, r.headers.items())
 
 '''
