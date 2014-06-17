@@ -163,6 +163,8 @@ def docker_api(path):
     f = getattr(s, request.method.lower())
     
     if path.startswith('images/create'):
+        # /images/create is long runnign operation
+        # so that is why it is executed from thread
         def _docker_api(path):
             r = f(path)
             print '_docker_api <<<', r.text, r.status_code, r.headers.items()
