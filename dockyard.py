@@ -59,7 +59,7 @@ Sections:
 __all__ = ['app']
 import os
 import sys
-from ConfigParser import RawConfigParser
+from ConfigParser import SafeConfigParser
 
 # requests
 import requests
@@ -88,7 +88,7 @@ from config.flask import FlaskConfig
 _flask_config_path = os.path.join('config', 'flask.conf')
 
 if os.path.exists(_flask_config_path):
-    cp = RawConfigParser()
+    cp = SafeConfigParser()
     cp.optionxform = str
     cp.read(_flask_config_path)
     items = cp.items('FlaskConfig')
