@@ -8,13 +8,6 @@ Follow us on [![alt text][1.2]][1]
 Setup Development Environment
 =============================
 
-```
-$ virtualenv dockyard
-$ cd dockyard
-$ source bin/activate
-$ pip install -r requirements.txt
-```
-
 Install dockyard-mysql
 ```
 $ docker pull mysql
@@ -23,13 +16,25 @@ $ docker run --name dockyard-mysql -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=d0cky4
 
 Install dockyard-web
 ```
-$ docker pull datt/datt-archlinux
-$ docker run --name dockyard-web -a stdin -a stdout -a stderr -i -t -p 2222:22 -p 80:80 --expose 22 --expose 80 datt/datt-archlinux /bin/bash
+$ docker pull base/archlinux
+$ docker run --name dockyard-web -a stdin -a stdout -a stderr -i -t -p 80:80 --expose 80 base/archlinux /bin/bash
 ```
 
 Once you are inside container
 ```
-$ pacman -Syyuu --ignore filesystem
+$ pacman -Syyuu base-devel git pypy mysql --ignore filesystem
+$ curl -O http://python-distribute.org/distribute_setup.py
+$ curl -O https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py
+$ pypy distribute_setup.py
+$ pypy get-pip.py
+$ ln -s /opt/pypy/bin/pip /usr/local/bin/pip-pypy
+$ pip-pypy install virtualenv
+$ ln -s /opt/pypy/bin/virtualenv /usr/local/bin/virtualenv-pypy
+$ git clone https://github.com/mtasic85/dockyard.git
+$ virtualenv-pypy dockyard
+$ cd dockyard
+$ source bin/activate
+$ pip install -r requirements.txt
 ```
 
 ```
