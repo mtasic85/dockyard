@@ -26,7 +26,7 @@ $ docker run --name dockyard-web -a stdin -a stdout -a stderr -i -t -p 80:80 --e
 
 Once you are inside container
 ```
-$ pacman -Syyuu base-devel git pypy mysql --ignore filesystem
+$ pacman -Syyuu base-devel git pypy mysql --ignore filesystem --noconfirm
 $ curl -O http://python-distribute.org/distribute_setup.py
 $ curl -O https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py
 $ pypy distribute_setup.py
@@ -39,10 +39,7 @@ $ virtualenv-pypy dockyard
 $ cd dockyard
 $ source bin/activate
 $ pip install -r requirements.txt
-```
-
-```
-$ sudo python -B dockyard.py -b 0.0.0.0:80
+$ python -B dockyard.py -b 0.0.0.0:80
 ```
 
 [1.2]: http://i.imgur.com/wWzX9uB.png (getdockyard)
