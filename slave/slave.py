@@ -265,7 +265,7 @@ if __name__ == '__main__':
     application = tornado.web.Application([
         (r'/dockyard/term', TermWebSocket),
         (r'.*', tornado.web.FallbackHandler, dict(fallback=tr)),
-    ])
+    ], debug=FlaskConfig.DEBUG)
     
     application.listen(FlaskConfig.PORT)
     tornado.ioloop.IOLoop.instance().start()
