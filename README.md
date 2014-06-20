@@ -9,7 +9,7 @@ multiple hosts and cross-datacenter management.
 Setup Development Environment
 =============================
 
-# Controller Node _ctrl0_
+## Controller Node _ctrl0_
 
 Install dockyard-mysql
 ```
@@ -29,7 +29,7 @@ $ docker run --name dockyard-web -a stdin -a stdout -a stderr -i -t -p 80:80 --e
 
 Once you are inside container
 ```
-$ pacman -Syyuu base-devel git pypy mysql vim --ignore filesystem --noconfirm
+$ pacman -Syyuu base-devel screen git pypy mysql vim --ignore filesystem --noconfirm
 $ curl -O http://python-distribute.org/distribute_setup.py
 $ curl -O https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py
 $ pypy distribute_setup.py
@@ -45,9 +45,9 @@ $ pip install -r requirements.txt
 $ python -B dockyard.py -b 0.0.0.0:80
 ```
 
-# Network Node: _net0_
+## Network Node: _net0_
 
-# Compute Nodes: _compX_
+## Compute Nodes: _compX_
 
 Install dockyard-web
 ```
@@ -57,7 +57,7 @@ $ docker run --name dockyard-slave -a stdin -a stdout -a stderr -i -t -p 4000:40
 
 Once you are inside container
 ```
-$ pacman -Syyuu base-devel git pypy mysql vim --ignore filesystem --noconfirm
+$ pacman -Syyuu base-devel screen git pypy mysql vim --ignore filesystem --noconfirm
 $ curl -O http://python-distribute.org/distribute_setup.py
 $ curl -O https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py
 $ pypy distribute_setup.py
@@ -73,7 +73,6 @@ $ cd slave
 $ pip install -r requirements.txt
 $ python -B slave.py
 ```
-
 
 To exit from dockyard-web container without stopping it, press CTRL+P CTRL+Q.
 
