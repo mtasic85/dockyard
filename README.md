@@ -9,6 +9,8 @@ multiple hosts and cross-datacenter management.
 Setup Development Environment
 =============================
 
+# Controller Node _ctrl0_
+
 Install dockyard-mysql
 ```
 $ docker pull mysql
@@ -42,6 +44,36 @@ $ source bin/activate
 $ pip install -r requirements.txt
 $ python -B dockyard.py -b 0.0.0.0:80
 ```
+
+# Network Node: _net0_
+
+# Compute Nodes: _compX_
+
+Install dockyard-web
+```
+$ docker pull base/archlinux
+$ docker run --name dockyard-slave -a stdin -a stdout -a stderr -i -t -p 4000:4000 --expose 4000 base/archlinux /bin/bash
+```
+
+Once you are inside container
+```
+$ pacman -Syyuu base-devel git pypy mysql vim --ignore filesystem --noconfirm
+$ curl -O http://python-distribute.org/distribute_setup.py
+$ curl -O https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py
+$ pypy distribute_setup.py
+$ pypy get-pip.py
+$ ln -s /opt/pypy/bin/pip /usr/local/bin/pip-pypy
+$ pip-pypy install virtualenv
+$ ln -s /opt/pypy/bin/virtualenv /usr/local/bin/virtualenv-pypy
+$ git clone https://github.com/mtasic85/dockyard.git
+$ virtualenv-pypy dockyard
+$ cd dockyard
+$ source bin/activate
+$ cd slave
+$ pip install -r requirements.txt
+$ python -B slave.py
+```
+
 
 To exit from dockyard-web container without stopping it, press CTRL+P CTRL+Q.
 
