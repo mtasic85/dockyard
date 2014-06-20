@@ -62,13 +62,7 @@
                         <li>
                             <a href="{{ url_for('host_blueprint.host_hosts') }}"><i class="fa fa-cloud fa-fw"></i> Hosts </a>
                         </li>
-                        {% endif %}
                         
-                        <li>
-                            <a href="{{ url_for('image_blueprint.image_images') }}"><i class="fa fa-folder fa-fw"></i> Images </a>
-                        </li>
-                        
-                        {% if usertype == 'super' %}
                         <li>
                             <a href="{{ url_for('mount_blueprint.mount_points') }}"><i class="fa fa-tasks fa-fw"></i> Mount Points </a>
                         </li>
@@ -76,6 +70,10 @@
                         
                         <li>
                             <a href="{{ url_for('volume_blueprint.volume_volumes') }}"><i class="fa fa-database fa-fw"></i> Volumes </a>
+                        </li>
+                        
+                        <li>
+                            <a href="{{ url_for('image_blueprint.image_images') }}"><i class="fa fa-folder fa-fw"></i> Images </a>
                         </li>
                         
                         <li>
