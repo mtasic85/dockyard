@@ -1,9 +1,9 @@
 dockyard
 ========
 
-Dockyard is web UI for docker
-
-Follow us on [![alt text][1.2]][1]
+Dockyard delivers a massively scalable cloud platform based on [Docker](https://docker.io).
+It comes with complete web interface for both administrating and regularly using
+platform.
 
 Setup Development Environment
 =============================
@@ -13,9 +13,9 @@ Install dockyard-mysql
 $ docker pull mysql
 $ docker run --name dockyard-mysql -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=d0cky4rd mysql
 $ mysql -u root -h 127.0.0.1 -p
-mysql> create database dockyard;
-mysql> GRANT ALL PRIVILEGES ON dockyard.* To 'dockyard'@'localhost' IDENTIFIED BY 'd0cky4rd';
-mysql> GRANT ALL PRIVILEGES ON dockyard.* To 'dockyard'@'172.17.42.1' IDENTIFIED BY 'd0cky4rd';
+mysql> CREATE DATABASE dockyard;
+mysql> GRANT ALL PRIVILEGES ON dockyard.* TO 'dockyard'@'localhost' IDENTIFIED BY 'd0cky4rd';
+mysql> GRANT ALL PRIVILEGES ON dockyard.* TO 'dockyard'@'172.17.42.1' IDENTIFIED BY 'd0cky4rd';
 ```
 
 Install dockyard-web
@@ -26,7 +26,7 @@ $ docker run --name dockyard-web -a stdin -a stdout -a stderr -i -t -p 80:80 --e
 
 Once you are inside container
 ```
-$ pacman -Syyuu base-devel git pypy mysql --ignore filesystem --noconfirm
+$ pacman -Syyuu base-devel git pypy mysql vim --ignore filesystem --noconfirm
 $ curl -O http://python-distribute.org/distribute_setup.py
 $ curl -O https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py
 $ pypy distribute_setup.py
@@ -43,6 +43,11 @@ $ python -B dockyard.py -b 0.0.0.0:80
 ```
 
 To exit from dockyard-web container without stopping it, press CTRL+P CTRL+Q.
+
+Social Media
+============
+
+Follow us on [![alt text][1.2]][1]
 
 [1.2]: http://i.imgur.com/wWzX9uB.png (getdockyard)
 [1]: http://www.twitter.com/getdockyard
