@@ -1,7 +1,7 @@
 dockyard
 ========
 
-Dockyard delivers a massively scalable cloud computing platform based
+__Dockyard__ delivers a __massively scalable cloud computing__ platform based
 on [Docker](https://docker.io). It comes with complete web interface
 for both administrating and regularly using platform. It supports
 multiple hosts and cross-datacenter management.
