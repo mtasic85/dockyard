@@ -216,14 +216,15 @@ $.extend(host, {
                 if (data.host !== undefined) {
                     // add single host
                     host._add(data.host);
+                    $.bootstrapGrowl('Host successfully created.', {type: 'success', align: 'center'});
                 } else if (data.hosts !== undefined) {
                     // add multiple hosts
                     _.each(data.hosts, function(_host) {
                         host._add(_host);
                     });
+                    
+                    $.bootstrapGrowl('Multiple Hosts successfully created.', {type: 'success', align: 'center'});
                 }
-                
-                $.bootstrapGrowl('Host successfully created.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
