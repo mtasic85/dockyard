@@ -27,6 +27,11 @@ $ docker pull datt/datt-archlinux
 $ docker run --name dockyard-web -a stdin -a stdout -a stderr -i -t -p 2222:22 -p 80:80 --expose 22 --expose 80 datt/datt-archlinux /bin/bash
 ```
 
+Once you are inside container
+```
+$ pacman -Syyuu --ignore filesystem
+```
+
 ```
 $ sudo python -B dockyard.py -b 0.0.0.0:80
 ```
