@@ -12,6 +12,10 @@ Install dockyard-mysql
 ```
 $ docker pull mysql
 $ docker run --name dockyard-mysql -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=d0cky4rd mysql
+$ mysql -u root -h 127.0.0.1 -p
+mysql> create database dockyard;
+mysql> GRANT ALL PRIVILEGES ON dockyard.* To 'dockyard'@'localhost' IDENTIFIED BY 'd0cky4rd';
+mysql> GRANT ALL PRIVILEGES ON dockyard.* To 'dockyard'@'172.17.42.1' IDENTIFIED BY 'd0cky4rd';
 ```
 
 Install dockyard-web

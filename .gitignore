@@ -58,3 +58,6 @@ lib_pypy/
 site-packages/
 hacks/
 tmp/
+
+# ignore docker configuration files
+config/flask.conf
