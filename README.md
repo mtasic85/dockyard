@@ -6,8 +6,8 @@ on [Docker](https://docker.io). It comes with complete web interface
 for both administrating and regularly using platform. It supports
 multiple hosts and cross-datacenter management.
 
-Setup Development Environment
-=============================
+Setup Development Environment _[in progress]_
+=============================================
 
 ## Controller Node _ctrl0_
 
