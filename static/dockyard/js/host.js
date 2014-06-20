@@ -218,8 +218,8 @@ $.extend(host, {
                     host._add(data.host);
                 } else if (data.hosts !== undefined) {
                     // add multiple hosts
-                    _.each(data.hosts, function(host) {
-                        host._add(host);
+                    _.each(data.hosts, function(_host) {
+                        host._add(_host);
                     });
                 }
                 
