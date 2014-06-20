@@ -16,8 +16,13 @@ $ pip install -r requirements.txt
 ```
 
 ```
-$ docker pull orchardup/mysql
-$ docker run -d -p 3306:3306 -e MYSQL_DATABASE=dockyard -e MYSQL_ROOT_PASSWORD=d0cky4rd -e MYSQL_USER=dockyard -e MYSQL_PASSWORD=d0cky4rd orchardup/mysql
+$ docker pull mysql
+$ docker run --name dockyard-mysql -e MYSQL_ROOT_PASSWORD=d0cky4rd -d mysql
+```
+
+```
+$ docker pull datt/datt-archlinux
+$ docker run --name dockyard-web -a stdin -a stdout -a stderr -i -t -p 2222:22 -p 80:80 --expose 22 --expose 80 base/archlinux /bin/bash
 ```
 
 ```
