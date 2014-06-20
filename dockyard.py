@@ -89,6 +89,7 @@ _flask_config_path = os.path.join('config', 'flask.conf')
 
 if os.path.exists(_flask_config_path):
     cp = SafeConfigParser()
+    cp.optionxform = str
     cp.read(_flask_config_path)
     items = cp.items('FlaskConfig')
     items = dict(items)
