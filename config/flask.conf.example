@@ -1,0 +1,4 @@
+[FlaskConfig]
+SECRET_KEY = '!d0cky4rd!'
+PORT = 80
+SQLALCHEMY_DATABASE_URI = mysql://dockyard:d0cky4rd@127.0.0.1/dockyard

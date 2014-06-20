@@ -83,16 +83,61 @@ def host_create():
         data = {}
         return jsonify(data)
     
-    host = Host(**_host)
-    _host['created'] = _host['updated'] = datetime.utcnow()
-    db.session.add(host)
-    db.session.commit()
+    name = _host['name']
+    host = _host['host']
+    port = _host['port']
+    auth_username = _host['auth_username']
+    auth_password = _host['auth_password']
     
-    _host = object_to_dict(host)
+    if '[' in name and '-' in name and ']' in name and \
+       '[' in host and '-' in host and ']' in host:
+        _hosts = []
+        
+        # name base/range
+        s = name.find('[')
+        e = name.find(']')
+        name_base = name[:s]
+        name_range = name[s:e]
+        name_range = name_range.strip(' ').strip()
+        name_range = map(int, name_range.split('-'))
+        
+        # host base/range
+        s = host.find('[')
+        e = host.find(']')
+        host_base = host[:s]
+        host_range = host[s:e]
+        host_range = host_range.strip(' ').strip()
+        host_range = map(int, host_range.split('-'))
+        
+        for i in range(*name_range):
+            __host = {
+                'name': '%s%i' % (name_base, i),
+                'host': '%s%i' % (host_base, i),
+                'port': port,
+                'auth_username': auth_username,
+                'auth_password': auth_password,
+            }
+            
+            __host['created'] = __host['updated'] = datetime.utcnow()
+            host = Host(**__host)
+            db.session.add(host)
+            db.session.commit()
+            __host = object_to_dict(host)
+            _hosts.append(__host)
+        
+        data = {
+            'hosts': _hosts,
+        }
+    else:
+        _host['created'] = _host['updated'] = datetime.utcnow()
+        host = Host(**_host)
+        db.session.add(host)
+        db.session.commit()
+        _host = object_to_dict(host)
     
-    data = {
-        'host': _host,
-    }
+        data = {
+            'host': _host,
+        }
     
     return jsonify(data)
 
