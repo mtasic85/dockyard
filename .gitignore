@@ -61,3 +61,4 @@ tmp/
 
 # ignore docker configuration files
 config/flask.conf
+slave/slave.conf
