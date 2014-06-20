@@ -42,5 +42,7 @@ $ pip install -r requirements.txt
 $ python -B dockyard.py -b 0.0.0.0:80
 ```
 
+To exit from dockyard-web container without stopping it, press CTRL+P CTRL+Q.
+
 [1.2]: http://i.imgur.com/wWzX9uB.png (getdockyard)
 [1]: http://www.twitter.com/getdockyard
