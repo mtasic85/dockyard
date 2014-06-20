@@ -1,9 +1,10 @@
 dockyard
 ========
 
-Dockyard delivers a massively scalable cloud platform based on [Docker](https://docker.io).
-It comes with complete web interface for both administrating and regularly using
-platform.
+Dockyard delivers a massively scalable cloud computing platform based
+on [Docker](https://docker.io). It comes with complete web interface
+for both administrating and regularly using platform. It supports
+multiple hosts and cross-datacenter management.
 
 Setup Development Environment
 =============================
