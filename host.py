@@ -112,10 +112,10 @@ def host_create():
         host_range = map(int, host_range.split('-'))
         host_range[1] += 1
         
-        for i in range(*name_range):
+        for i, j in zip(range(*name_range), range(*host_range)):
             __host = {
                 'name': '%s%i' % (name_base, i),
-                'host': '%s%i' % (host_base, i),
+                'host': '%s%i' % (host_base, j),
                 'port': port,
                 'auth_username': auth_username,
                 'auth_password': auth_password,
