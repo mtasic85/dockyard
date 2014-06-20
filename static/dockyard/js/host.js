@@ -213,7 +213,16 @@ $.extend(host, {
                 }),
             })
             .done(function(data) {
-                host._add(data.host);
+                if (data.host !== undefined) {
+                    // add single host
+                    host._add(data.host);
+                } else if (data.hosts !== undefined) {
+                    // add multiple hosts
+                    _.each(data.hosts, function(host) {
+                        host._add(host);
+                    });
+                }
+                
                 $.bootstrapGrowl('Host successfully created.', {type: 'success'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {

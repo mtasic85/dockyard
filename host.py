@@ -92,6 +92,7 @@ def host_create():
     if '[' in name and '-' in name and ']' in name and \
        '[' in host and '-' in host and ']' in host:
         _hosts = []
+        hosts = []
         
         # name base/range
         s = name.find('[')
@@ -121,7 +122,11 @@ def host_create():
             __host['created'] = __host['updated'] = datetime.utcnow()
             host = Host(**__host)
             db.session.add(host)
-            db.session.commit()
+            hosts.append(host)
+        
+        db.session.commit()
+        
+        for host in hosts:
             __host = object_to_dict(host)
             _hosts.append(__host)
         
@@ -134,7 +139,7 @@ def host_create():
         db.session.add(host)
         db.session.commit()
         _host = object_to_dict(host)
-    
+        
         data = {
             'host': _host,
         }
