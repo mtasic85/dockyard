@@ -95,8 +95,8 @@ def host_create():
         hosts = []
         
         # name base/range
-        s = name.find('[')
-        e = name.find(']')
+        s = name.find('[') + 1
+        e = name.find(']') - 1
         name_base = name[:s]
         name_range = name[s:e]
         name_range = name_range.strip(' ').strip()
@@ -104,8 +104,8 @@ def host_create():
         name_range[1] += 1
         
         # host base/range
-        s = host.find('[')
-        e = host.find(']')
+        s = host.find('[') + 1
+        e = host.find(']') - 1
         host_base = host[:s]
         host_range = host[s:e]
         host_range = host_range.strip(' ').strip()
