@@ -94,8 +94,6 @@ if os.path.exists(_flask_config_path):
     items = cp.items('FlaskConfig')
     items = dict(items)
     FlaskConfig.__dict__.update(items)
-    print 'FlaskConfig.__dict__:', dict(FlaskConfig.__dict__)
-    print 'FlaskConfig.SQLALCHEMY_DATABASE_URI:', repr(FlaskConfig.SQLALCHEMY_DATABASE_URI)
 
 # app
 app = Flask(__name__)
