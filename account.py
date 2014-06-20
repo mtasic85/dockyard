@@ -398,6 +398,7 @@ class UserForm(Form):
                 v = getattr(self, k)
                 dct[k] = v.data
         
+        dct['active'] = True
         print '!!!', dct
         
         try:
