@@ -25,7 +25,7 @@ $.extend(domain, {
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
     },
     
@@ -78,10 +78,10 @@ $.extend(domain, {
                     
                     // update UI
                     domain._update(data.domain);
-                    $.bootstrapGrowl('Domain successfully updated.', {type: 'success'});
+                    $.bootstrapGrowl('Domain successfully updated.', {type: 'success', align: 'center'});
                 })
                 .error(function (xhr, ajaxOptions, thrownError) {
-                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
                 });
             });
             
@@ -118,10 +118,10 @@ $.extend(domain, {
                 
                 // update UI
                 domain._update(data.domain);
-                $.bootstrapGrowl('Domain activated.', {type: 'success'});
+                $.bootstrapGrowl('Domain activated.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -148,10 +148,10 @@ $.extend(domain, {
                 
                 // update UI
                 domain._update(data.domain);
-                $.bootstrapGrowl('Domain deactivated.', {type: 'success'});
+                $.bootstrapGrowl('Domain deactivated.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -168,10 +168,10 @@ $.extend(domain, {
             })
             .done(function(data) {
                 tr.remove();
-                $.bootstrapGrowl('Domain successfully removed.', {type: 'success'});
+                $.bootstrapGrowl('Domain successfully removed.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
     },
@@ -213,10 +213,10 @@ $.extend(domain, {
             })
             .done(function(data) {
                 domain._add(data.domain);
-                $.bootstrapGrowl('Domain successfully created.', {type: 'success'});
+                $.bootstrapGrowl('Domain successfully created.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         

@@ -25,7 +25,7 @@ $.extend(mount, {
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
     },
     
@@ -63,7 +63,7 @@ $.extend(mount, {
                 host_id_select.val(mount_.host_id);
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
             
             // close
@@ -107,10 +107,10 @@ $.extend(mount, {
                     
                     // update UI
                     mount._update(data.mount);
-                    $.bootstrapGrowl('Mount Point successfully updated.', {type: 'success'});
+                    $.bootstrapGrowl('Mount Point successfully updated.', {type: 'success', align: 'center'});
                 })
                 .error(function (xhr, ajaxOptions, thrownError) {
-                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
                 });
             });
             
@@ -142,10 +142,10 @@ $.extend(mount, {
                 
                 // update UI
                 mount._update(data.mount);
-                $.bootstrapGrowl('Mount Point activated.', {type: 'success'});
+                $.bootstrapGrowl('Mount Point activated.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -172,10 +172,10 @@ $.extend(mount, {
                 
                 // update UI
                 mount._update(data.mount);
-                $.bootstrapGrowl('Mount Point deactivated.', {type: 'success'});
+                $.bootstrapGrowl('Mount Point deactivated.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -192,10 +192,10 @@ $.extend(mount, {
             })
             .done(function(data) {
                 tr.remove();
-                $.bootstrapGrowl('User successfully removed.', {type: 'success'});
+                $.bootstrapGrowl('User successfully removed.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
     },
@@ -224,7 +224,7 @@ $.extend(mount, {
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
         
         // close
@@ -263,10 +263,10 @@ $.extend(mount, {
             })
             .done(function(data) {
                 mount._add(data.mount);
-                $.bootstrapGrowl('Mount Point successfully created.', {type: 'success'});
+                $.bootstrapGrowl('Mount Point successfully created.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         

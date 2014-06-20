@@ -25,7 +25,7 @@ $.extend(volume, {
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
     },
     
@@ -64,7 +64,7 @@ $.extend(volume, {
                 host_id_select.val(volume_.host_id);
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
             
             // populate mount points
@@ -88,7 +88,7 @@ $.extend(volume, {
                 mount_point_id_select.val(volume_.mount_point_id);
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
             
             // close
@@ -131,10 +131,10 @@ $.extend(volume, {
                     
                     // update UI
                     volume._update(data.volume);
-                    $.bootstrapGrowl('Volume successfully updated.', {type: 'success'});
+                    $.bootstrapGrowl('Volume successfully updated.', {type: 'success', align: 'center'});
                 })
                 .error(function (xhr, ajaxOptions, thrownError) {
-                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
                 });
             });
             
@@ -166,10 +166,10 @@ $.extend(volume, {
                 
                 // update UI
                 volume._update(data.volume);
-                $.bootstrapGrowl('Volume activated.', {type: 'success'});
+                $.bootstrapGrowl('Volume activated.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -196,10 +196,10 @@ $.extend(volume, {
                 
                 // update UI
                 volume._update(data.volume);
-                $.bootstrapGrowl('Volume deactivated.', {type: 'success'});
+                $.bootstrapGrowl('Volume deactivated.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -216,10 +216,10 @@ $.extend(volume, {
             })
             .done(function(data) {
                 tr.remove();
-                $.bootstrapGrowl('User successfully removed.', {type: 'success'});
+                $.bootstrapGrowl('User successfully removed.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
     },
@@ -249,7 +249,7 @@ $.extend(volume, {
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
         
         // populate mount points
@@ -270,7 +270,7 @@ $.extend(volume, {
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
         
         // close
@@ -308,10 +308,10 @@ $.extend(volume, {
             })
             .done(function(data) {
                 volume._add(data.volume);
-                $.bootstrapGrowl('Volume successfully created.', {type: 'success'});
+                $.bootstrapGrowl('Volume successfully created.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         

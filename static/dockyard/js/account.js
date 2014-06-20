@@ -25,7 +25,7 @@ $.extend(account, {
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
     },
     
@@ -83,10 +83,10 @@ $.extend(account, {
                     
                     // update UI
                     account._update(data.user_account);
-                    $.bootstrapGrowl('User successfully updated.', {type: 'success'});
+                    $.bootstrapGrowl('User successfully updated.', {type: 'success', align: 'center'});
                 })
                 .error(function (xhr, ajaxOptions, thrownError) {
-                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
                 });
             });
             
@@ -151,10 +151,10 @@ $.extend(account, {
                         }),
                     })
                     .done(function(data) {
-                        $.bootstrapGrowl('Quota successfully updated.', {type: 'success'});
+                        $.bootstrapGrowl('Quota successfully updated.', {type: 'success', align: 'center'});
                     })
                     .error(function (xhr, ajaxOptions, thrownError) {
-                        $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                        $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
                     });
                 });
                 
@@ -163,7 +163,7 @@ $.extend(account, {
                 });
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -195,7 +195,7 @@ $.extend(account, {
                 });
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -223,10 +223,10 @@ $.extend(account, {
                 
                 // update UI
                 account._update(data.user_account);
-                $.bootstrapGrowl('User activated.', {type: 'success'});
+                $.bootstrapGrowl('User activated.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -254,10 +254,10 @@ $.extend(account, {
                 
                 // update UI
                 account._update(data.user_account);
-                $.bootstrapGrowl('User deactivated.', {type: 'success'});
+                $.bootstrapGrowl('User deactivated.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -274,10 +274,10 @@ $.extend(account, {
             })
             .done(function(data) {
                 tr.remove();
-                $.bootstrapGrowl('User successfully removed.', {type: 'success'});
+                $.bootstrapGrowl('User successfully removed.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
     },
@@ -331,10 +331,10 @@ $.extend(account, {
             })
             .done(function(data) {
                 account._add(data.user_account);
-                $.bootstrapGrowl('User successfully created.', {type: 'success'});
+                $.bootstrapGrowl('User successfully created.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         

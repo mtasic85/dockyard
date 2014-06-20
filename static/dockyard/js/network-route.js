@@ -26,7 +26,7 @@ $.extend(route, {
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
     },
     
@@ -68,7 +68,7 @@ $.extend(route, {
                 domain_id_select.val(route_.domain_id);
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
             
             // populate hosts
@@ -92,7 +92,7 @@ $.extend(route, {
                 host_id_select.val(route_.host_id);
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
             
             // populate host ports
@@ -119,7 +119,7 @@ $.extend(route, {
                 host_port_select.val(route_.host_port);
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
             */
             
@@ -144,7 +144,7 @@ $.extend(route, {
                 container_id_select.val(route_.container_id);
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
             
             // close
@@ -188,10 +188,10 @@ $.extend(route, {
                     
                     // update UI
                     route._update(data.route);
-                    $.bootstrapGrowl('Route successfully updated.', {type: 'success'});
+                    $.bootstrapGrowl('Route successfully updated.', {type: 'success', align: 'center'});
                 })
                 .error(function (xhr, ajaxOptions, thrownError) {
-                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
                 });
             });
             
@@ -223,10 +223,10 @@ $.extend(route, {
                 
                 // update UI
                 route._update(data.route);
-                $.bootstrapGrowl('Route activated.', {type: 'success'});
+                $.bootstrapGrowl('Route activated.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -253,10 +253,10 @@ $.extend(route, {
                 
                 // update UI
                 route._update(data.route);
-                $.bootstrapGrowl('Route deactivated.', {type: 'success'});
+                $.bootstrapGrowl('Route deactivated.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -273,10 +273,10 @@ $.extend(route, {
             })
             .done(function(data) {
                 tr.remove();
-                $.bootstrapGrowl('Route successfully removed.', {type: 'success'});
+                $.bootstrapGrowl('Route successfully removed.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
     },
@@ -312,7 +312,7 @@ $.extend(route, {
             domain_id_select.val(route.domain_id);
         })
         .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
         
         // populate hosts
@@ -333,7 +333,7 @@ $.extend(route, {
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
         
         // populate containers
@@ -354,7 +354,7 @@ $.extend(route, {
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
         
         // close
@@ -393,10 +393,10 @@ $.extend(route, {
             })
             .done(function(data) {
                 route._add(data.route);
-                $.bootstrapGrowl('Route successfully created.', {type: 'success'});
+                $.bootstrapGrowl('Route successfully created.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         

@@ -25,7 +25,7 @@ $.extend(host, {
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
     },
     
@@ -81,10 +81,10 @@ $.extend(host, {
                     
                     // update UI
                     host._update(data.host);
-                    $.bootstrapGrowl('Host successfully updated.', {type: 'success'});
+                    $.bootstrapGrowl('Host successfully updated.', {type: 'success', align: 'center'});
                 })
                 .error(function (xhr, ajaxOptions, thrownError) {
-                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
                 });
             });
             
@@ -116,10 +116,10 @@ $.extend(host, {
                 
                 // update UI
                 host._update(data.host);
-                $.bootstrapGrowl('Host activated.', {type: 'success'});
+                $.bootstrapGrowl('Host activated.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -146,10 +146,10 @@ $.extend(host, {
                 
                 // update UI
                 host._update(data.host);
-                $.bootstrapGrowl('Host deactivated.', {type: 'success'});
+                $.bootstrapGrowl('Host deactivated.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -166,10 +166,10 @@ $.extend(host, {
             })
             .done(function(data) {
                 tr.remove();
-                $.bootstrapGrowl('Host successfully removed.', {type: 'success'});
+                $.bootstrapGrowl('Host successfully removed.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
     },
@@ -223,10 +223,10 @@ $.extend(host, {
                     });
                 }
                 
-                $.bootstrapGrowl('Host successfully created.', {type: 'success'});
+                $.bootstrapGrowl('Host successfully created.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         

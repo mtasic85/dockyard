@@ -25,7 +25,7 @@ $.extend(image, {
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
     },
     
@@ -63,7 +63,7 @@ $.extend(image, {
                 host_id_select.val(image_.host_id);
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
             
             // close
@@ -104,10 +104,10 @@ $.extend(image, {
                     
                     // update UI
                     image._update(data.image);
-                    $.bootstrapGrowl('Image successfully updated.', {type: 'success'});
+                    $.bootstrapGrowl('Image successfully updated.', {type: 'success', align: 'center'});
                 })
                 .error(function (xhr, ajaxOptions, thrownError) {
-                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
                 });
             });
             
@@ -139,10 +139,10 @@ $.extend(image, {
                 
                 // update UI
                 image._update(data.image);
-                $.bootstrapGrowl('Image activated.', {type: 'success'});
+                $.bootstrapGrowl('Image activated.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -169,10 +169,10 @@ $.extend(image, {
                 
                 // update UI
                 image._update(data.image);
-                $.bootstrapGrowl('Image deactivated.', {type: 'success'});
+                $.bootstrapGrowl('Image deactivated.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
@@ -189,10 +189,10 @@ $.extend(image, {
             })
             .done(function(data) {
                 tr.remove();
-                $.bootstrapGrowl('Image successfully removed.', {type: 'success'});
+                $.bootstrapGrowl('Image successfully removed.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
     },
@@ -221,7 +221,7 @@ $.extend(image, {
             });
         })
         .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
         
         // close
@@ -257,10 +257,10 @@ $.extend(image, {
             })
             .done(function(data) {
                 image._add(data.image);
-                $.bootstrapGrowl('Image successfully created.', {type: 'success'});
+                $.bootstrapGrowl('Image successfully created.', {type: 'success', align: 'center'});
             })
             .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info'});
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
         });
         
