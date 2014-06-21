@@ -180,21 +180,21 @@ $.extend(host, {
         var modal_div = $(new_template());
         
         // host-switch
-        modal_div.find(('button#host-switch').click(function(e) {
-            var isSelect = modal_div.find(('select#host_id').length > 0;
+        modal_div.find('button#host-switch').click(function(e) {
+            var isSelect = modal_div.find('select#host_id').length > 0;
             
             if (isSelect) {
                 var input = $('<input>')
                     .addClass('form-control')
                     .prop('id', 'host_id');
                 
-                modal_div.find(('select#host_id').replaceWith(input);
+                modal_div.find('select#host_id').replaceWith(input);
             } else {
                 var select = $('<select>')
                     .addClass('form-control')
                     .prop('id', 'host_id');
                 
-                modal_div.find(('input#host_id').replaceWith(select);
+                modal_div.find('input#host_id').replaceWith(select);
             }
         });
         
