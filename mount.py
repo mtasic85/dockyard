@@ -120,9 +120,6 @@ def mount_create():
                 ranges[i] = r
         
         combs = [map(str, c) for c in product(*ranges)]
-        print patterns
-        print ranges
-        print combs
         
         # generate mount points
         host = _mount['host']
@@ -139,6 +136,7 @@ def mount_create():
             _name = name
             _device = device
             _mountpoint = mountpoint
+            _filesystem = filesystem
             _capacity = capacity
             
             for p, c in zip(patterns, comb):
@@ -146,6 +144,7 @@ def mount_create():
                 _name = _name.replace(p, c)
                 _device = _device.replace(p, c)
                 _mountpoint = _mountpoint.replace(p, c)
+                _filesystem = _filesystem.replace(p, c)
                 _capacity = _capacity.replace(p, c)
             
             host_ = Host.query.filter_by(name=_host).one()
@@ -157,6 +156,7 @@ def mount_create():
                 'name': _name,
                 'device': _device,
                 'mountpoint': _mountpoint,
+                'filesystem': _filesystem,
                 'capacity': _capacity,
             }
             
