@@ -223,7 +223,7 @@ $.extend(host, {
                         host._add(_host);
                     });
                     
-                    $.bootstrapGrowl('Multiple Hosts successfully created.', {type: 'success', align: 'center'});
+                    $.bootstrapGrowl('Multiple hosts successfully created.', {type: 'success', align: 'center'});
                 }
             })
             .error(function (xhr, ajaxOptions, thrownError) {

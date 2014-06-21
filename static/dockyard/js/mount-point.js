@@ -293,8 +293,17 @@ $.extend(mount, {
                 }),
             })
             .done(function(data) {
-                mount._add(data.mount);
-                $.bootstrapGrowl('Mount Point successfully created.', {type: 'success', align: 'center'});
+                if (data.mount !== undefined) {
+                    mount._add(data.mount);
+                    $.bootstrapGrowl('Mount Point successfully created.', {type: 'success', align: 'center'});
+                } else if (data.mounts !== undefined) {
+                    // add multiple mounts
+                    _.each(data.mounts, function(_mount) {
+                        mount._add(_mount);
+                    });
+                    
+                    $.bootstrapGrowl('Multiple mount points successfully created.', {type: 'success', align: 'center'});
+                }
             })
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
