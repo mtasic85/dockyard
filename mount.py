@@ -150,21 +150,24 @@ def mount_create():
                 }
                 
                 print __mount
+            
+            data = {
+            }
     else:
         mount = MountPoint(**_mount)
         _mount['created'] = _mount['updated'] = datetime.utcnow()
         db.session.add(mount)
         db.session.commit()
     
-    _mount = object_to_dict(mount)
-    
-    # insert host_name
-    host = Host.query.get(_mount['host_id'])
-    _mount['host_name'] = host.name
-    
-    data = {
-        'mount': _mount,
-    }
+        _mount = object_to_dict(mount)
+        
+        # insert host_name
+        host = Host.query.get(_mount['host_id'])
+        _mount['host_name'] = host.name
+        
+        data = {
+            'mount': _mount,
+        }
     
     return jsonify(data)
 
