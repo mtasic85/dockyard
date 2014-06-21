@@ -91,14 +91,14 @@ def mount_create():
     
     # try to find range patterns
     if 'host' in _mount:
-        host = _mount['host']
-        ranges = list(re.findall('\[\w+\-\w+\]', host))
+        name = _mount['name']
+        ranges = list(re.findall('\[\w+\-\w+\]', name))
     else:
         ranges = None
     
     if ranges:
         # generate all combinations
-        patterns = ranges
+        patterns = list(ranges)
         ranges = [r.strip('[]').split('-') for r in ranges]
         
         for i, r in enumerate(ranges):
@@ -124,14 +124,14 @@ def mount_create():
         print combs
         
         # generate mount points
-        name = _mount['name']
+        host_id = _mount.get('host_id', _mount['host'])
         device = _mount['device']
         mountpoint = _mount['mountpoint']
         filesystem = _mount['filesystem']
         capacity = _mount['capacity']
         
         for comb in combs:
-            _host_id = host
+            _host_id = host_id
             _name = name
             _device = device
             _mountpoint = mountpoint
