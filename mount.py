@@ -68,6 +68,7 @@ def mount_points_all():
     # insert host_name
     for _mount in _mounts:
         host = Host.query.get(_mount['host_id'])
+        assert host is not None
         _mount['host_name'] = host.name
     
     data = {
@@ -168,6 +169,12 @@ def mount_create():
         
         for mount in mounts:
             __mount = object_to_dict(mount)
+            
+            # insert host_name
+            host_ = Host.query.get(__mount['host_id'])
+            assert host_ is not None
+            __mount['host_name'] = host_.name
+            
             _mounts.append(__mount)
         
         data = {
@@ -183,6 +190,7 @@ def mount_create():
         
         # insert host_name
         host = Host.query.get(_mount['host_id'])
+        assert host is not None
         _mount['host_name'] = host.name
         
         data = {
@@ -213,6 +221,7 @@ def mount_update():
     
     # insert host_name
     host = Host.query.get(_mount['host_id'])
+    assert host is not None
     _mount['host_name'] = host.name
     
     data = {

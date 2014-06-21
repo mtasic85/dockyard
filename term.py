@@ -107,6 +107,7 @@ def term_update():
         return jsonify(data)
         
     term = Host.query.get(_term['id'])
+    assert term is not None
     _term['updated'] = datetime.utcnow()
     update_object_with_dict(term, _term)
     db.session.commit()
@@ -132,6 +133,7 @@ def term_remove():
         return jsonify(data)
     
     term = Host.query.get(id)
+    assert term is not None
     db.session.delete(term)
     db.session.commit()
     

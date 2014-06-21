@@ -69,7 +69,11 @@ def container_containers_all():
     # insert image_name
     for _container in _containers:
         host = Host.query.get(_container['host_id'])
+        assert host is not None
+        
         image = Image.query.get(_container['image_id'])
+        assert image is not None
+        
         _container['host_name'] = host.name
         _container['image_name'] = image.name
     
@@ -105,7 +109,11 @@ def container_create():
     # insert host_name
     # insert image_name
     host = Host.query.get(_container['host_id'])
+    assert host is not None
+    
     image = Image.query.get(_container['image_id'])
+    assert image is not None
+    
     _container['host_name'] = host.name
     _container['image_name'] = image.name
     
@@ -138,7 +146,11 @@ def container_update():
     # insert host_name
     # insert image_name
     host = Host.query.get(_container['host_id'])
+    assert host is not None
+    
     image = Image.query.get(_container['image_id'])
+    assert image is not None
+    
     _container['host_name'] = host.name
     _container['image_name'] = image.name
     

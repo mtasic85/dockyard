@@ -161,6 +161,8 @@ def host_update():
         return jsonify(data)
         
     host = Host.query.get(_host['id'])
+    assert host is not None
+    
     _host['updated'] = datetime.utcnow()
     update_object_with_dict(host, _host)
     db.session.commit()
@@ -186,6 +188,7 @@ def host_remove():
         return jsonify(data)
     
     host = Host.query.get(id)
+    assert host is not None
     db.session.delete(host)
     db.session.commit()
     

@@ -68,7 +68,11 @@ def volume_volumes_all():
     # insert mount_point_name
     for _volume in _volumes:
         host = Host.query.get(_volume['host_id'])
+        assert host is not None
+        
         mount_point = MountPoint.query.get(_volume['mount_point_id'])
+        assert mount_point is not None
+        
         _volume['host_name'] = host.name
         _volume['mount_point_name'] = mount_point.name
     
@@ -103,7 +107,11 @@ def volume_create():
     # insert host_name
     # insert mount_point_name
     host = Host.query.get(_volume['host_id'])
+    assert host is not None
+    
     mount_point = MountPoint.query.get(_volume['mount_point_id'])
+    assert mount_point is not None
+    
     _volume['host_name'] = host.name
     _volume['mount_point_name'] = mount_point.name
     
@@ -136,7 +144,11 @@ def volume_update():
     # insert host_name
     # insert mount_point_name
     host = Host.query.get(_volume['host_id'])
+    assert host is not None
+    
     mount_point = MountPoint.query.get(_volume['mount_point_id'])
+    assert mount_point is not None
+    
     _volume['host_name'] = host.name
     _volume['mount_point_name'] = mount_point.name
     

@@ -66,6 +66,7 @@ def image_images_all():
     # insert host_name
     for _image in _images:
         host = Host.query.get(_image['host_id'])
+        assert host is not None
         _image['host_name'] = host.name
     
     data = {
@@ -96,6 +97,7 @@ def image_create():
     
     # insert host_name
     host = Host.query.get(_image['host_id'])
+    assert host is not None
     _image['host_name'] = host.name
     
     data = {
@@ -126,6 +128,7 @@ def image_update():
     
     # insert host_name
     host = Host.query.get(_image['host_id'])
+    assert host is not None
     _image['host_name'] = host.name
     
     data = {
