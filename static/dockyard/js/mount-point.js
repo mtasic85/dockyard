@@ -237,15 +237,17 @@ $.extend(mount, {
             if (isSelect) {
                 var input = $('<input>')
                     .addClass('form-control')
-                    .prop('id', 'host_id');
+                    .prop('id', 'host');
                 
-                modal_div.find('select#host_id').replaceWith(input);
+                modal_div.find('select#host_id')
+                    .replaceWith(input);
             } else {
                 var select = $('<select>')
                     .addClass('form-control')
                     .prop('id', 'host_id');
                 
-                modal_div.find('input#host_id').replaceWith(select);
+                modal_div.find('input#host')
+                    .replaceWith(select);
                 
                 // populate hosts
                 mount._populate_hosts(select);
