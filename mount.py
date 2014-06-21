@@ -141,16 +141,16 @@ def mount_create():
                 _device = _device.replace(p, c)
                 _mountpoint = _mountpoint.replace(p, c)
                 _capacity = _capacity.replace(p, c)
-                
-                __mount = {
-                    'host_id': _host_id,
-                    'name': _name,
-                    'device': _device,
-                    'mountpoint': _mountpoint,
-                    'capacity': _capacity,
-                }
-                
-                print __mount
+            
+            __mount = {
+                'host_id': _host_id,
+                'name': _name,
+                'device': _device,
+                'mountpoint': _mountpoint,
+                'capacity': _capacity,
+            }
+            
+            print __mount
         
         data = {
         }
