@@ -118,7 +118,10 @@ def mount_create():
                 r = ''.join(r)
                 ranges[i] = r
         
-        combs = product(*ranges)
+        combs = [map(str, c) for c in product(*ranges)]
+        print patterns
+        print ranges
+        print combs
         
         # generate mount points
         name = _mount['name']
@@ -128,7 +131,6 @@ def mount_create():
         capacity = _mount['capacity']
         
         for comb in combs:
-            comb = map(str, comb)
             _host_id = host
             _name = name
             _device = device
