@@ -135,6 +135,7 @@ def mount_create():
             _capacity = capacity
             
             for p, c in zip(patterns, comb):
+                print (_host_id, p, c)
                 _host_id = _host_id.replace(p, c)
                 _name = _name.replace(p, c)
                 _device = _device.replace(p, c)
