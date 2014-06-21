@@ -150,9 +150,9 @@ def mount_create():
                 }
                 
                 print __mount
-            
-            data = {
-            }
+        
+        data = {
+        }
     else:
         mount = MountPoint(**_mount)
         _mount['created'] = _mount['updated'] = datetime.utcnow()
