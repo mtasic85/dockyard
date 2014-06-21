@@ -244,10 +244,10 @@ $.extend(mount, {
                     .addClass('form-control')
                     .prop('id', 'host_id');
                 
+                modal_div.find('input#host_id').replaceWith(select);
+                
                 // populate hosts
                 mount._populate_hosts(select);
-                
-                modal_div.find('input#host_id').replaceWith(select);
             }
         });
         
