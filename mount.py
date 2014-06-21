@@ -130,6 +130,9 @@ def mount_create():
         filesystem = _mount['filesystem']
         capacity = _mount['capacity']
         
+        mounts = []
+        _mounts = []
+        
         for comb in combs:
             _host_id = host_id
             _name = name
@@ -153,16 +156,25 @@ def mount_create():
             }
             
             __mount['created'] = __mount['updated'] = datetime.utcnow()
-            print __mount
+            mount = MountPoint(**__mount)
+            db.session.add(mount)
+            mounts.append(mount)
+        
+        db.session.commit()
+        
+        for mount in mounts:
+            __mount = object_to_dict(mount)
+            _mounts.append(__mount)
         
         data = {
+            'mounts': _mounts,
         }
     else:
         _mount['created'] = _mount['updated'] = datetime.utcnow()
         mount = MountPoint(**_mount)
         db.session.add(mount)
         db.session.commit()
-    
+        
         _mount = object_to_dict(mount)
         
         # insert host_name
