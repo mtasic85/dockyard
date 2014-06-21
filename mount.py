@@ -99,7 +99,7 @@ def mount_create():
     if ranges:
         # generate all combinations
         patterns = ranges
-        ranges = [range.strip('[]').split('-') for range in ranges]
+        ranges = [r.strip('[]').split('-') for r in ranges]
         
         for i, r in enumerate(ranges):
             s, e = r
