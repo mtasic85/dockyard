@@ -124,7 +124,7 @@ def mount_create():
         print combs
         
         # generate mount points
-        host_id = _mount.get('host_id', _mount['host'])
+        host = _mount['host']
         device = _mount['device']
         mountpoint = _mount['mountpoint']
         filesystem = _mount['filesystem']
@@ -134,18 +134,22 @@ def mount_create():
         _mounts = []
         
         for comb in combs:
-            _host_id = host_id
+            _host = host
             _name = name
             _device = device
             _mountpoint = mountpoint
             _capacity = capacity
             
             for p, c in zip(patterns, comb):
-                _host_id = _host_id.replace(p, c)
+                _host = _host.replace(p, c)
                 _name = _name.replace(p, c)
                 _device = _device.replace(p, c)
                 _mountpoint = _mountpoint.replace(p, c)
                 _capacity = _capacity.replace(p, c)
+            
+            host_ = Host.query.filter_by(name=_host).one()
+            assert host_ is not None
+            _host_id = host_.id
             
             __mount = {
                 'host_id': _host_id,
