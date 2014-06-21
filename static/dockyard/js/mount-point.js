@@ -200,32 +200,7 @@ $.extend(mount, {
         });
     },
     
-    add: function(options) {
-        options = options || {};
-        var new_template = _.template($('#modal-new-mount').html());
-        var modal_div = $(new_template());
-        var host_id_select = modal_div.find('#host_id');
-        
-        // host-switch
-        modal_div.find('button#host-switch').click(function(e) {
-            var isSelect = modal_div.find('select#host_id').length > 0;
-            console.log(isSelect);
-            
-            if (isSelect) {
-                var input = $('<input>')
-                    .addClass('form-control')
-                    .prop('id', 'host_id');
-                
-                modal_div.find('select#host_id').replaceWith(input);
-            } else {
-                var select = $('<select>')
-                    .addClass('form-control')
-                    .prop('id', 'host_id');
-                
-                modal_div.find('input#host_id').replaceWith(select);
-            }
-        });
-        
+    _populate_hosts: function(host_id_select) {
         // populate hosts
         $.ajax({
             type: 'POST',
@@ -246,6 +221,38 @@ $.extend(mount, {
         .error(function (xhr, ajaxOptions, thrownError) {
             $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
+    },
+    
+    add: function(options) {
+        options = options || {};
+        var new_template = _.template($('#modal-new-mount').html());
+        var modal_div = $(new_template());
+        var host_id_select = modal_div.find('#host_id');
+        
+        // host-switch
+        modal_div.find('button#host-switch').click(function(e) {
+            var isSelect = modal_div.find('select#host_id').length > 0;
+            
+            if (isSelect) {
+                var input = $('<input>')
+                    .addClass('form-control')
+                    .prop('id', 'host_id');
+                
+                modal_div.find('select#host_id').replaceWith(input);
+            } else {
+                var select = $('<select>')
+                    .addClass('form-control')
+                    .prop('id', 'host_id');
+                
+                // populate hosts
+                mount._populate_hosts(select);
+                
+                modal_div.find('input#host_id').replaceWith(select);
+            }
+        });
+        
+        // populate hosts
+        mount._populate_hosts(host_id_select);
         
         // close
         modal_div.find('button#close').click(function(e) {
