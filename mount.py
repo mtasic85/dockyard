@@ -154,8 +154,8 @@ def mount_create():
         data = {
         }
     else:
-        mount = MountPoint(**_mount)
         _mount['created'] = _mount['updated'] = datetime.utcnow()
+        mount = MountPoint(**_mount)
         db.session.add(mount)
         db.session.commit()
     

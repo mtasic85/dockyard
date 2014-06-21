@@ -84,8 +84,8 @@ def network_domain_create():
         data = {}
         return jsonify(data)
     
-    domain = Domain(**_domain)
     _domain['created'] = _domain['updated'] = datetime.utcnow()
+    domain = Domain(**_domain)
     db.session.add(domain)
     db.session.commit()
     
@@ -203,8 +203,8 @@ def network_route_create():
         data = {}
         return jsonify(data)
     
-    route = Route(**_route)
     _route['created'] = _route['updated'] = datetime.utcnow()
+    route = Route(**_route)
     db.session.add(route)
     db.session.commit()
     

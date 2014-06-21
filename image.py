@@ -87,8 +87,8 @@ def image_create():
         data = {}
         return jsonify(data)
     
-    image = Image(**_image)
     _image['created'] = _image['updated'] = datetime.utcnow()
+    image = Image(**_image)
     db.session.add(image)
     db.session.commit()
     
