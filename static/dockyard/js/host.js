@@ -182,6 +182,7 @@ $.extend(host, {
         // host-switch
         modal_div.find('button#host-switch').click(function(e) {
             var isSelect = modal_div.find('select#host_id').length > 0;
+            console.log(isSelect);
             
             if (isSelect) {
                 var input = $('<input>')
