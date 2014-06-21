@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 __all__ = ['mount_blueprint']
+import re
+from itertools import product
 from datetime import datetime, timedelta
 
 # dateutil
@@ -87,10 +89,63 @@ def mount_create():
         data = {}
         return jsonify(data)
     
-    mount = MountPoint(**_mount)
-    _mount['created'] = _mount['updated'] = datetime.utcnow()
-    db.session.add(mount)
-    db.session.commit()
+    # try to find range patterns
+    if 'host' in _mount:
+        host = _mount['host']
+        ranges = list(re.findall('\[\w+\-\w+\]', host))
+    else:
+        ranges = None
+    
+    if ranges:
+        ## FIXME: support arbitrary number of ranges
+        # assert len(ranges) == 2
+        patterns = ranges
+        ranges = [range.strip('[]').split('-') for range in ranges]
+        
+        for i, r in enumerate(ranges):
+            s, e = r
+            
+            if s.isdigit() and e.isdigit():
+                s, e = map(int, r)
+                r = range(s, e + 1)
+                ranges[i] = r
+            else:
+                # FIXME: support alpha-num ranges for multi-character strings
+                #        with same size
+                assert len(s) == len(e) == 1
+                s, e = map(ord, r)
+                r = range(s, e + 1)
+                r = map(chr, r)
+                r = ''.join(r)
+                ranges[i] = r
+        
+        # generate mount points
+        name = _mount['name']
+        device = _mount['device']
+        mountpoint = _mount['mountpoint']
+        filesystem = _mount['filesystem']
+        capacity = _mount['capacity']
+        
+        # rcomb = product(*ranges)
+        # for p, r in zip(patterns, ranges):
+        combs = product(*ranges)
+        
+        for comb in combs:
+            _host_id = host
+            _name = name
+            _device = device
+            _mountpoint = mountpoint
+            
+            for p, c in zip(patterns, comb):
+                _host_id = _host_id.replace(p, c)
+                _name = _name.replace(p, c)
+                _device = _device.replace(p, c)
+                _mountpoint = _mountpoint.replace(p, c)
+    else:
+        mount = MountPoint(**_mount)
+        _mount['created'] = _mount['updated'] = datetime.utcnow()
+        db.session.add(mount)
+        db.session.commit()
     
     _mount = object_to_dict(mount)
     
