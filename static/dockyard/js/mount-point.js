@@ -86,6 +86,7 @@ $.extend(mount, {
                     id: mount_.id,
                     name: modal_div.find('#name').val(),
                     host_id: modal_div.find('#host_id').val(),
+                    host: modal_div.find('#host').val(),
                     device: modal_div.find('#device').val(),
                     mountpoint: modal_div.find('#mountpoint').val(),
                     filesystem: modal_div.find('#filesystem').val(),
@@ -273,6 +274,7 @@ $.extend(mount, {
             var _mount = {
                 name: modal_div.find('#name').val(),
                 host_id: modal_div.find('#host_id').val(),
+                host: modal_div.find('#host').val(),
                 device: modal_div.find('#device').val(),
                 mountpoint: modal_div.find('#mountpoint').val(),
                 filesystem: modal_div.find('#filesystem').val(),
