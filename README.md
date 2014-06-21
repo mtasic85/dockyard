@@ -24,7 +24,8 @@ mysql> GRANT ALL PRIVILEGES ON dockyard.* TO 'dockyard'@'172.17.42.1' IDENTIFIED
 Install dockyard-web
 ```
 $ docker pull base/archlinux
-$ docker run --name dockyard-web -a stdin -a stdout -a stderr -i -t -p 80:80 --expose 80 base/archlinux /bin/bash
+$ docker run --name dockyard-web -a stdin -a stdout -a stderr -i -t \
+    -p 80:80 --expose 80 base/archlinux /bin/bash
 ```
 
 Once you are inside container
@@ -49,15 +50,36 @@ $ python -B dockyard.py -b 0.0.0.0:80
 
 ## Compute Nodes: _compX_
 
+Compute nodes store volumes locally, so docker container and volume are always on
+same machine.
+For storing volumes, dockyard uses mounted btrfs filesystem(s), and creates
+subvolumes.
+You can pass any number of mount points to dockyard-slave container.
+It really depends on host system.
+Lets assume that each compute node has follwoing devcies mounted:
+```
+/dev/sdb1 -> /mnt/sdb1
+/dev/sdc1 -> /mnt/sdc1
+/dev/sdd1 -> /mnt/sdd1
+/dev/sde1 -> /mnt/sde1
+```
+
 Install dockyard-web
 ```
 $ docker pull base/archlinux
-$ docker run --name dockyard-slave -a stdin -a stdout -a stderr -i -t -p 4000:4000 --expose 4000 base/archlinux /bin/bash
+$ docker run --name dockyard-slave --privileged=true \
+    -v /var/run/docker.sock:/docker.sock \
+    -v /mnt/sdb1:/mnt/sdb1 \
+    -v /mnt/sdc1:/mnt/sdc1 \
+    -v /mnt/sdd1:/mnt/sdd1 \
+    -v /mnt/sde1:/mnt/sde1 \
+    -p 4000:4000 --expose 4000 \
+    -a stdin -a stdout -a stderr -i -t base/archlinux /bin/bash
 ```
 
 Once you are inside container
 ```
-$ pacman -Syyuu base-devel screen git pypy mysql vim --ignore filesystem --noconfirm
+$ pacman -Syyuu base-devel btrfs-progs screen git pypy mysql vim --ignore filesystem --noconfirm
 $ curl -O http://python-distribute.org/distribute_setup.py
 $ curl -O https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py
 $ pypy distribute_setup.py
