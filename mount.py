@@ -152,6 +152,7 @@ def mount_create():
                 'capacity': _capacity,
             }
             
+            __mount['created'] = __mount['updated'] = datetime.utcnow()
             print __mount
         
         data = {
