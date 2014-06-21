@@ -97,8 +97,7 @@ def mount_create():
         ranges = None
     
     if ranges:
-        ## FIXME: support arbitrary number of ranges
-        # assert len(ranges) == 2
+        # generate all combinations
         patterns = ranges
         ranges = [range.strip('[]').split('-') for range in ranges]
         
@@ -119,6 +118,8 @@ def mount_create():
                 r = ''.join(r)
                 ranges[i] = r
         
+        combs = product(*ranges)
+        
         # generate mount points
         name = _mount['name']
         device = _mount['device']
@@ -126,21 +127,29 @@ def mount_create():
         filesystem = _mount['filesystem']
         capacity = _mount['capacity']
         
-        # rcomb = product(*ranges)
-        # for p, r in zip(patterns, ranges):
-        combs = product(*ranges)
-        
         for comb in combs:
             _host_id = host
             _name = name
             _device = device
             _mountpoint = mountpoint
+            _capacity = capacity
             
             for p, c in zip(patterns, comb):
                 _host_id = _host_id.replace(p, c)
                 _name = _name.replace(p, c)
                 _device = _device.replace(p, c)
                 _mountpoint = _mountpoint.replace(p, c)
+                _capacity = _capacity.replace(p, c)
+                
+                __mount = {
+                    'host_id': _host_id,
+                    'name': _name,
+                    'device': _device,
+                    'mountpoint': _mountpoint,
+                    'capacity': _capacity,
+                }
+                
+                print __mount
     else:
         mount = MountPoint(**_mount)
         _mount['created'] = _mount['updated'] = datetime.utcnow()
