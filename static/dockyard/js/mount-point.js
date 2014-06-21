@@ -232,9 +232,9 @@ $.extend(mount, {
         
         // host-switch
         modal_div.find('button#host-switch').click(function(e) {
-            var isSelect = modal_div.find('select#host_id').length > 0;
+            var hostIsSelect = modal_div.find('select#host_id').length > 0;
             
-            if (isSelect) {
+            if (hostIsSelect) {
                 var input = $('<input>')
                     .addClass('form-control')
                     .prop('id', 'host');
