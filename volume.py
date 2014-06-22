@@ -149,6 +149,14 @@ def volume_create():
     mount_point = MountPoint.query.get(mount_point_id)
     assert mount_point is not None
     
+    if mount_point.capacity - mount_point.reserved < capacity:
+        data = {
+            'error': 'The is no available space.'\
+                     'Try smaller volume capacity than %s GB.' % capacity,
+        }
+        
+        return jsonify(data)
+    
     # increase reserved storage at mount point
     mount_point.reserved = mount_point.reserved + capacity
     
