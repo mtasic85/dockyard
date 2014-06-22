@@ -193,7 +193,6 @@ def dockyard_volume_create():
     
     size = '%ig' % capacity
     path = os.path.join(mount_point, name)
-    
     subprocess.check_call(['btrfs', 'subvolume', 'create', path])
     subprocess.check_call(['btrfs', 'quota', 'enable', path])
     subprocess.check_call(['btrfs', 'qgroup', 'limit', size, path])
@@ -205,11 +204,10 @@ def dockyard_volume_create():
 @requires_auth
 def dockyard_volume_delete():
     mount_point = request['mount_point']
+    name = request['name']
     print 'dockyard_volume_delete:', locals()
     
-    size = '%ig' % capacity
     path = os.path.join(mount_point, name)
-    
     subprocess.check_call(['btrfs', 'subvolume', 'delete', path])
     
     data = {}
