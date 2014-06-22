@@ -88,6 +88,8 @@ def host_create():
     port = _host['port']
     auth_username = _host['auth_username']
     auth_password = _host['auth_password']
+    ram_capacity = _host['ram_capacity']
+    ram_reserved = _host['ram_reserved']
     
     if '[' in name and '-' in name and ']' in name and \
        '[' in host and '-' in host and ']' in host:
@@ -119,6 +121,8 @@ def host_create():
                 'port': port,
                 'auth_username': auth_username,
                 'auth_password': auth_password,
+                'ram_capacity': ram_capacity,
+                'ram_reserved': ram_reserved,
             }
             
             __host['created'] = __host['updated'] = datetime.utcnow()
