@@ -225,7 +225,21 @@ def volume_remove():
         data = {}
         return jsonify(data)
     
+    # volume
     volume = Volume.query.get(id)
+    
+    # host
+    host = Host.query.get(_volume['host_id'])
+    assert host is not None
+    
+    # mount point
+    mount_point = MountPoint.query.get(_volume['mount_point_id'])
+    assert mount_point is not None
+    
+    # decrease reserved sotrage at mount point
+    mount_point.reserved = mount_point.reserved - volume.capacity
+    
+    # delete volume
     db.session.delete(volume)
     db.session.commit()
     
