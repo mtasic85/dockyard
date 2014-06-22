@@ -267,6 +267,8 @@ def volume_remove():
     mount_point.reserved = mount_point.reserved - volume.capacity
     
     ##
+    perm_name = volume.perm_name
+    
     # delete volume at host
     url = 'http://%s:%i/dockyard/volume/delete' % (host.host, host.port)
     
