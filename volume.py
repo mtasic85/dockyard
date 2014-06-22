@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 __all__ = ['volume_blueprint']
 import uuid
+import random
 from datetime import datetime, timedelta
 
 # dateutil
@@ -127,24 +128,22 @@ def volume_create():
         
         # take first available slice
         mount_points.sort(key=lambda m: m.capacity - m.reserved)
-        mount_point = mount_points[0]
+        mount_point = random.choice(mount_points)
         
         # host, mount_point
         host_id = mount_point.host_id
-        host_name = host.name
         mount_point_id = mount_point.id
-        mount_point_name = mount_point.name
-    else:
-        # host_name
-        host = Host.query.get(host_id)
-        assert host is not None
-        
-        # mount_point_name
-        mount_point = MountPoint.query.get(mount_point_id)
-        assert mount_point is not None
-        
-        host_name = host.name
-        mount_point_name = mount_point.name
+    
+    # host_name
+    host = Host.query.get(host_id)
+    assert host is not None
+    
+    # mount_point_name
+    mount_point = MountPoint.query.get(mount_point_id)
+    assert mount_point is not None
+    
+    # increase reserved storage at mount point
+    mount_point.reserved = mount_point.reserved + capacity
     
     # insert volume into database
     __volume = {
@@ -167,8 +166,8 @@ def volume_create():
     
     # insert host_name
     # insert mount_point_name
-    __volume['host_name'] = host_name
-    __volume['mount_point_name'] = mount_point_name
+    __volume['host_name'] = host.name
+    __volume['mount_point_name'] = mount_point.name
     
     data = {
         'volume': __volume,
