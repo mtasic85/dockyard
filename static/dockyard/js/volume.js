@@ -299,6 +299,8 @@ $.extend(volume, {
     },
     
     _populate_hosts: function(host_id_select, mount_point_id_select) {
+        host_id_select.empty();
+        
         // populate hosts
         $.ajax({
             type: 'POST',
@@ -328,6 +330,8 @@ $.extend(volume, {
     },
     
     _populate_mount_points: function(mount_point_id_select, host_id) {
+        mount_point_id_select.empty();
+        
         $.ajax({
             type: 'POST',
             url: '/mount/points/all',
