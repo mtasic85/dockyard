@@ -117,7 +117,7 @@ from model.container import Container
 from model.network import Domain, Route
 
 # model - create all tables
-db.drop_all()
+# db.drop_all()
 db.create_all()
 
 # create super user if does not exits
