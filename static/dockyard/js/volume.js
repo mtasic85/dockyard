@@ -232,6 +232,7 @@ $.extend(volume, {
         var mount_point_id_select = modal_div.find('#mount_point_id');
         
         // populate hosts
+        /*
         $.ajax({
             type: 'POST',
             url: '/hosts/all',
@@ -251,6 +252,8 @@ $.extend(volume, {
         .error(function (xhr, ajaxOptions, thrownError) {
             $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
+        */
+        volume._populate_hosts(host_id_select);
         
         // populate mount points
         $.ajax({
@@ -327,6 +330,29 @@ $.extend(volume, {
             if (key === 'id') return;
             var td = tr.find('td#' + key);
             td.text(value);
+        });
+    },
+    
+    _populate_hosts: function(host_id_select) {
+        // populate hosts
+        $.ajax({
+            type: 'POST',
+            url: '/hosts/all',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify({}),
+        })
+        .done(function(data) {
+            // console.log(data);
+            _.each(data.hosts, function(host_) {
+                var option = $('<option>')
+                    .attr('value', host_.id)
+                    .text(host_.name)
+                    .appendTo(host_id_select);
+            });
+        })
+        .error(function (xhr, ajaxOptions, thrownError) {
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
     },
 });

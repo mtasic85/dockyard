@@ -29,6 +29,98 @@ $.extend(mount, {
         });
     },
     
+    add: function(options) {
+        options = options || {};
+        var new_template = _.template($('#modal-new-mount').html());
+        var modal_div = $(new_template());
+        var host_id_select = modal_div.find('#host_id');
+        
+        // host-switch
+        modal_div.find('button#host-switch').click(function(e) {
+            var hostIsSelect = modal_div.find('select#host_id').length > 0;
+            
+            if (hostIsSelect) {
+                var input = $('<input>')
+                    .addClass('form-control')
+                    .prop('id', 'host');
+                
+                modal_div.find('select#host_id')
+                    .replaceWith(input);
+            } else {
+                var select = $('<select>')
+                    .addClass('form-control')
+                    .prop('id', 'host_id');
+                
+                modal_div.find('input#host')
+                    .replaceWith(select);
+                
+                // populate hosts
+                mount._populate_hosts(select);
+            }
+        });
+        
+        // populate hosts
+        mount._populate_hosts(host_id_select);
+        
+        // close
+        modal_div.find('button#close').click(function(e) {
+            // close modal
+            modal_div.modal('hide');
+            setTimeout(function() { modal_div.remove();}, 500);
+            $('.modal-backdrop').remove();
+        });
+        
+        // update
+        modal_div.find('button#create').click(function(e) {
+            // close modal
+            modal_div.modal('hide');
+            setTimeout(function() { modal_div.remove();}, 500);
+            $('.modal-backdrop').remove();
+            
+            // create mount
+            var _mount = {
+                name: modal_div.find('#name').val(),
+                host_id: modal_div.find('#host_id').val(),
+                host: modal_div.find('#host').val(),
+                device: modal_div.find('#device').val(),
+                mountpoint: modal_div.find('#mountpoint').val(),
+                filesystem: modal_div.find('#filesystem').val(),
+                capacity: modal_div.find('#capacity').val(),
+                reserved: modal_div.find('#reserved').val(),
+            };
+            
+            $.ajax({
+                type: 'POST',
+                url: '/mount/point/create',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({
+                    mount: _mount,
+                }),
+            })
+            .done(function(data) {
+                if (data.mount !== undefined) {
+                    mount._add(data.mount);
+                    $.bootstrapGrowl('Mount Point successfully created.', {type: 'success', align: 'center'});
+                } else if (data.mounts !== undefined) {
+                    // add multiple mounts
+                    _.each(data.mounts, function(_mount) {
+                        mount._add(_mount);
+                    });
+                    
+                    $.bootstrapGrowl('Multiple mount points successfully created.', {type: 'success', align: 'center'});
+                }
+            })
+            .error(function (xhr, ajaxOptions, thrownError) {
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
+            });
+        });
+        
+        modal_div.modal({
+            backdrop: 'static',
+        });
+    },
+    
     _add: function(mount_) {
         var tbody = mount.table.find('tbody');
         var tr_template = _.template($('#table-row-mount').html());
@@ -222,98 +314,6 @@ $.extend(mount, {
         })
         .error(function (xhr, ajaxOptions, thrownError) {
             $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
-        });
-    },
-    
-    add: function(options) {
-        options = options || {};
-        var new_template = _.template($('#modal-new-mount').html());
-        var modal_div = $(new_template());
-        var host_id_select = modal_div.find('#host_id');
-        
-        // host-switch
-        modal_div.find('button#host-switch').click(function(e) {
-            var hostIsSelect = modal_div.find('select#host_id').length > 0;
-            
-            if (hostIsSelect) {
-                var input = $('<input>')
-                    .addClass('form-control')
-                    .prop('id', 'host');
-                
-                modal_div.find('select#host_id')
-                    .replaceWith(input);
-            } else {
-                var select = $('<select>')
-                    .addClass('form-control')
-                    .prop('id', 'host_id');
-                
-                modal_div.find('input#host')
-                    .replaceWith(select);
-                
-                // populate hosts
-                mount._populate_hosts(select);
-            }
-        });
-        
-        // populate hosts
-        mount._populate_hosts(host_id_select);
-        
-        // close
-        modal_div.find('button#close').click(function(e) {
-            // close modal
-            modal_div.modal('hide');
-            setTimeout(function() { modal_div.remove();}, 500);
-            $('.modal-backdrop').remove();
-        });
-        
-        // update
-        modal_div.find('button#create').click(function(e) {
-            // close modal
-            modal_div.modal('hide');
-            setTimeout(function() { modal_div.remove();}, 500);
-            $('.modal-backdrop').remove();
-            
-            // create mount
-            var _mount = {
-                name: modal_div.find('#name').val(),
-                host_id: modal_div.find('#host_id').val(),
-                host: modal_div.find('#host').val(),
-                device: modal_div.find('#device').val(),
-                mountpoint: modal_div.find('#mountpoint').val(),
-                filesystem: modal_div.find('#filesystem').val(),
-                capacity: modal_div.find('#capacity').val(),
-                reserved: modal_div.find('#reserved').val(),
-            };
-            
-            $.ajax({
-                type: 'POST',
-                url: '/mount/point/create',
-                contentType: 'application/json;charset=utf-8',
-                dataType: 'json',
-                data: JSON.stringify({
-                    mount: _mount,
-                }),
-            })
-            .done(function(data) {
-                if (data.mount !== undefined) {
-                    mount._add(data.mount);
-                    $.bootstrapGrowl('Mount Point successfully created.', {type: 'success', align: 'center'});
-                } else if (data.mounts !== undefined) {
-                    // add multiple mounts
-                    _.each(data.mounts, function(_mount) {
-                        mount._add(_mount);
-                    });
-                    
-                    $.bootstrapGrowl('Multiple mount points successfully created.', {type: 'success', align: 'center'});
-                }
-            })
-            .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
-            });
-        });
-        
-        modal_div.modal({
-            backdrop: 'static',
         });
     },
     
