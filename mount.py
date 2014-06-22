@@ -55,6 +55,7 @@ def mount_points():
 def mount_points_all():
     username = current_user.username
     usertype = current_user.usertype
+    host_id = request.json.get('host_id', None)
     print 'mount_points_all:', locals()
     
     # FIXME:
@@ -62,7 +63,12 @@ def mount_points_all():
         data = {}
         return jsonify(data)
     
-    mounts = MountPoint.query.all()
+    query = MountPoint.query
+    
+    if host_id is not None:
+        query = query.filter_by(host_id=host_id)
+    
+    mounts = query.all()
     _mounts = objects_to_list(mounts)
     
     # insert host_name
