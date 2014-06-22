@@ -110,7 +110,7 @@ $.extend(volume, {
                 var _volume = {
                     id: volume_.id,
                     name: modal_div.find('#name').val(),
-                    capacity: modal_div.find('#capacity').val(),
+                    capacity: parseInt(modal_div.find('#capacity').val()),
                     host_id: modal_div.find('#host_id').val(),
                     mount_point_id: modal_div.find('#mount_point_id').val(),
                     username: modal_div.find('#username').val(),
@@ -259,7 +259,7 @@ $.extend(volume, {
             // create volume
             var _volume = {
                 name: modal_div.find('#name').val(),
-                capacity: modal_div.find('#capacity').val(),
+                capacity: parseInt(modal_div.find('#capacity').val()),
                 host_id: modal_div.find('#host_id').val(),
                 mount_point_id: modal_div.find('#mount_point_id').val(),
                 username: modal_div.find('#username').val(),
