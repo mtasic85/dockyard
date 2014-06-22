@@ -208,7 +208,7 @@ def dockyard_volume_delete():
     name = request.json['name']
     print 'dockyard_volume_delete:', locals()
     
-    path = os.path.join(mount_point, name)
+    path = os.path.join(mountpoint, name)
     subprocess.check_call(['btrfs', 'subvolume', 'delete', path])
     
     data = {}
