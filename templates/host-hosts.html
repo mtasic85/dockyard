@@ -24,6 +24,8 @@
             <td id="port"> <%= port %> </td>
             <td id="auth_username"> <%= auth_username %> </td>
             <td id="auth_password"> <%= auth_password %> </td>
+            <td id="ram_capacity"> <%= ram_capacity %> </td>
+            <td id="ram_reserved"> <%= ram_reserved %> </td>
             <td id="active"> <%= active %> </td>
             <td id="created"> <%= created %> </td>
             <td id="updated"> <%= updated %> </td>
@@ -87,6 +89,18 @@
                                 <input type="text" class="form-control" id="auth_password" placeholder="Auth Password" value="">
                                 <p class="help-block">  </p>
                             </div>
+                            
+                            <div class="form-group">
+                                <label> RAM Capacity </label>
+                                <input type="text" class="form-control" id="ram_capacity" placeholder="RAM Capacity" value="">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> RAM Reserved </label>
+                                <input type="text" class="form-control" id="ram_reserved" placeholder="RAM Reserved" value="0" disabled>
+                                <p class="help-block">  </p>
+                            </div>
                         </div>
                     </div>
                     
@@ -139,6 +153,18 @@
                                 <input class="form-control" id="auth_password" value="<%= auth_password %>">
                                 <p class="help-block"> </p>
                             </div>
+                            
+                            <div class="form-group">
+                                <label> RAM Capacity </label>
+                                <input class="form-control" id="ram_capacity" value="<%= ram_capacity %>">
+                                <p class="help-block"> </p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label> RAM Reserved </label>
+                                <input class="form-control" id="ram_reserved" value="<%= ram_reserved %>" disabled>
+                                <p class="help-block"> </p>
+                            </div>
                         </div>
                     </div>
                     
@@ -173,6 +199,8 @@
                         <th> Port </th>
                         <th> Auth Username </th>
                         <th> Auth Password </th>
+                        <th> RAM Capacity </th>
+                        <th> RAM Reserved </th>
                         
                         <th> Active </th>
                         <th> Created </th>
