@@ -230,11 +230,11 @@ def volume_remove():
     assert volume is not None
     
     # host
-    host = Host.query.get(_volume['host_id'])
+    host = Host.query.get(volume.host_id)
     assert host is not None
     
     # mount point
-    mount_point = MountPoint.query.get(_volume['mount_point_id'])
+    mount_point = MountPoint.query.get(volume.mount_point_id)
     assert mount_point is not None
     
     # decrease reserved sotrage at mount point
