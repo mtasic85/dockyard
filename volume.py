@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 __all__ = ['volume_blueprint']
+import uuid
 from datetime import datetime, timedelta
 
 # dateutil
@@ -95,8 +96,20 @@ def volume_create():
         data = {}
         return jsonify(data)
     
+    host_id = _volume.get('host_id', None)
+    mount_point_id = _volume.get('mount_point_id', None)
+    name = _volume['name']
+    capacity = _volume['capacity']
+    
+    if host_id is None and if mount_point_id is None:
+        pass
+    elif host_id is not None and mount_point_id is None:
+        mount_points = MountPoint.query.filter_by(host_id=host_id).all()
+        
+        
+    
     _volume['created'] = _volume['updated'] = datetime.utcnow()
-    _volume['perm_name'] = '%s_%s' % (_volume['username'], _volume['name'])
+    _volume['perm_name'] = '%s_%s' % (_volume['username'], uuid.uuid4().hex)
     
     volume = Volume(**_volume)
     db.session.add(volume)

@@ -28,7 +28,7 @@ class Container(db.Model):
     publish_ports =     db.Column(db.String(1024), default='')
     link_containers =   db.Column(db.String(1024), default='')
     
-    ram_limit =         db.Column(db.String(32), default='256m')
+    ram_limit =         db.Column(db.Integer, default=256)
     n_cpu_cores =       db.Column(db.Integer, default=1)
     cpu_share =         db.Column(db.Integer, default=0)
     

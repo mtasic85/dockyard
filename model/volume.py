@@ -18,7 +18,7 @@ class Volume(db.Model):
     username =          db.Column(db.String(128))
     name =              db.Column(db.String(256))
     perm_name =         db.Column(db.String(256))
-    capacity =          db.Column(db.String(32), default='1G')
+    capacity =          db.Column(db.Integer, default=0)
     
     def __init__(self, **kwargs):
         for k, v in kwargs.iteritems():
