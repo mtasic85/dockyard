@@ -25,6 +25,7 @@
             <td id="mountpoint"> <%= mountpoint %> </td>
             <td id="filesystem"> <%= filesystem %> </td>
             <td id="capacity"> <%= capacity %> </td>
+            <td id="reserved"> <%= reserved %> </td>
             
             <td id="active"> <%= active %> </td>
             <td id="created"> <%= created %> </td>
@@ -121,6 +122,12 @@
                                 <input type="text" class="form-control" id="capacity" placeholder="Capacity">
                                 <p class="help-block">  </p>
                             </div>
+                            
+                            <div class="form-group">
+                                <label> Reserved </label>
+                                <input type="text" class="form-control" id="reserved" placeholder="Reserved">
+                                <p class="help-block">  </p>
+                            </div>
                         </div>
                     </div>
                     
@@ -179,6 +186,12 @@
                                 <input class="form-control" id="capacity" value="<%= capacity %>">
                                 <p class="help-block">  </p>
                             </div>
+                            
+                            <div class="form-group">
+                                <label> Reserved </label>
+                                <input class="form-control" id="reserved" value="<%= reserved %>">
+                                <p class="help-block">  </p>
+                            </div>
                         </div>
                     </div>
                     
@@ -214,6 +227,7 @@
                         <th> Mount Point </th>
                         <th> File System </th>
                         <th> Capacity </th>
+                        <th> Reserved </th>
                         
                         <th> Active </th>
                         <th> Created </th>
