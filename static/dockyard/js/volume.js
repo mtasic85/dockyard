@@ -253,9 +253,10 @@ $.extend(volume, {
             $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
         */
-        volume._populate_hosts(host_id_select);
+        volume._populate_hosts(host_id_select, mount_point_id_select);
         
         // populate mount points
+        /*
         $.ajax({
             type: 'POST',
             url: '/mount/points/all',
@@ -275,6 +276,7 @@ $.extend(volume, {
         .error(function (xhr, ajaxOptions, thrownError) {
             $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
+        */
         
         // close
         modal_div.find('button#close').click(function(e) {
@@ -333,7 +335,7 @@ $.extend(volume, {
         });
     },
     
-    _populate_hosts: function(host_id_select) {
+    _populate_hosts: function(host_id_select, mount_point_id_select) {
         // populate hosts
         $.ajax({
             type: 'POST',
@@ -350,10 +352,40 @@ $.extend(volume, {
                     .text(host_.name)
                     .appendTo(host_id_select);
             });
+            
+            // populate mount points for selected host
+            if (data.hosts.length > 0) {
+                var host_id = data.hosts[0].id;
+                volume._populate_mount_points(mount_point_id_select, host_id);
+            }
         })
         .error(function (xhr, ajaxOptions, thrownError) {
             $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
     },
+    
+    _populate_mount_points: function(mount_point_id_select, host_id) {
+        $.ajax({
+            type: 'POST',
+            url: '/mount/points/all',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify({
+                host_id: host_id,
+            }),
+        })
+        .done(function(data) {
+            // console.log(data);
+            _.each(data.mounts, function(mount_point_) {
+                var option = $('<option>')
+                    .attr('value', mount_point_.id)
+                    .text(mount_point_.name)
+                    .appendTo(mount_point_id_select);
+            });
+        })
+        .error(function (xhr, ajaxOptions, thrownError) {
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
+        });
+    }
 });
 
