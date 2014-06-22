@@ -227,6 +227,7 @@ def volume_remove():
     
     # volume
     volume = Volume.query.get(id)
+    assert volume is not None
     
     # host
     host = Host.query.get(_volume['host_id'])
