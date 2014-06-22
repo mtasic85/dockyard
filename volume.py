@@ -129,9 +129,22 @@ def volume_create():
         mount_points.sort(key=lambda m: m.capacity - m.reserved)
         mount_point = mount_points[0]
         
-        # host_id, mount_point_id
+        # host, mount_point
         host_id = mount_point.host_id
+        host_name = host.name
         mount_point_id = mount_point.id
+        mount_point_name = mount_point.name
+    else:
+        # host_name
+        host = Host.query.get(host_id)
+        assert host is not None
+        
+        # mount_point_name
+        mount_point = MountPoint.query.get(mount_point_id)
+        assert mount_point is not None
+        
+        host_name = host.name
+        mount_point_name = mount_point.name
     
     # insert volume into database
     __volume = {
@@ -153,17 +166,9 @@ def volume_create():
     __volume = object_to_dict(volume)
     
     # insert host_name
-    # FIXME: optimize
-    host = Host.query.get(host_id)
-    assert host is not None
-    
     # insert mount_point_name
-    # FIXME: optimize
-    mount_point = MountPoint.query.get(mount_point_id)
-    assert mount_point is not None
-    
-    __volume['host_name'] = host.name
-    __volume['mount_point_name'] = mount_point.name
+    __volume['host_name'] = host_name
+    __volume['mount_point_name'] = mount_point_name
     
     data = {
         'volume': __volume,
