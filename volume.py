@@ -166,8 +166,8 @@ def volume_create():
     
     volume = Volume(**__volume)
     db.session.add(volume)
-    db.session.commit()
     
+    ##
     # create volume at host
     url = 'http://%s:%i/dockyard/volume/create' % (host.host, host.port)
     
@@ -184,6 +184,9 @@ def volume_create():
     auth = auth=HTTPBasicAuth(host.auth_username, host.auth_password)
     r = requests.post(url, data=data_, headers=headers, auth=auth)
     assert r.status_code == 200
+    ##
+    
+    db.session.commit()
     
     # return response
     __volume = object_to_dict(volume)
@@ -215,8 +218,26 @@ def volume_update():
     volume = Volume.query.get(_volume['id'])
     _volume['updated'] = datetime.utcnow()
     update_object_with_dict(volume, _volume)
-    db.session.commit()
     
+    ##
+    # delete volume at host
+    url = 'http://%s:%i/dockyard/volume/delete' % (host.host, host.port)
+    
+    data_ = json.dumps({
+        'mountpoint': mount_point.mountpoint,
+        'name': perm_name,
+    })
+    
+    headers = {
+        'content-type': 'application/json',
+    }
+    
+    auth = auth=HTTPBasicAuth(host.auth_username, host.auth_password)
+    r = requests.post(url, data=data_, headers=headers, auth=auth)
+    assert r.status_code == 200
+    ##
+    
+    db.session.commit()
     _volume = object_to_dict(volume)
     
     # insert host_name
