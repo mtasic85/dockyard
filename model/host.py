@@ -18,6 +18,8 @@ class Host(db.Model):
     port =          db.Column(db.Integer)
     auth_username = db.Column(db.String(64), default='')
     auth_password = db.Column(db.String(64), default='')
+    ram_capacity =  db.Column(db.String(64), default='0')
+    ram_reserved =  db.Column(db.String(64), default='0')
     
     def __init__(self, **kwargs):
         for k, v in kwargs.iteritems():
