@@ -64,6 +64,8 @@ $.extend(host, {
                     port: modal_div.find('#port').val(),
                     auth_username: modal_div.find('#auth_username').val(),
                     auth_password: modal_div.find('#auth_password').val(),
+                    ram_capacity: modal_div.find('#ram_capacity').val(),
+                    ram_reserved: modal_div.find('#ram_reserved').val(),
                 };
                 
                 $.ajax({
@@ -201,6 +203,8 @@ $.extend(host, {
                 port: modal_div.find('#port').val(),
                 auth_username: modal_div.find('#auth_username').val(),
                 auth_password: modal_div.find('#auth_password').val(),
+                ram_capacity: modal_div.find('#ram_capacity').val(),
+                ram_reserved: modal_div.find('#ram_reserved').val(),
             };
             
             $.ajax({
