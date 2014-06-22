@@ -91,6 +91,7 @@ $.extend(mount, {
                     mountpoint: modal_div.find('#mountpoint').val(),
                     filesystem: modal_div.find('#filesystem').val(),
                     capacity: modal_div.find('#capacity').val(),
+                    reserved: modal_div.find('#reserved').val(),
                 };
                 
                 $.ajax({
@@ -281,6 +282,7 @@ $.extend(mount, {
                 mountpoint: modal_div.find('#mountpoint').val(),
                 filesystem: modal_div.find('#filesystem').val(),
                 capacity: modal_div.find('#capacity').val(),
+                reserved: modal_div.find('#reserved').val(),
             };
             
             $.ajax({
