@@ -101,7 +101,7 @@ def volume_create():
     name = _volume['name']
     capacity = _volume['capacity']
     
-    if host_id is None and if mount_point_id is None:
+    if host_id is None and mount_point_id is None:
         pass
     elif host_id is not None and mount_point_id is None:
         mount_points = MountPoint.query.filter_by(host_id=host_id).all()
