@@ -186,16 +186,16 @@ def docker_api(path):
 @app.route('/dockyard/volume/create', methods=['POST'])
 @requires_auth
 def dockyard_volume_create():
-    mount_point = request['mount_point']
-    name = request['name']
-    capacity = request['capacity']
+    mountpoint = request.json['mountpoint']
+    name = request.json['name']
+    size = request.json['size']
     print 'dockyard_volume_create:', locals()
     
-    size = '%ig' % capacity
-    path = os.path.join(mount_point, name)
+    size_ = '%ig' % size
+    path = os.path.join(mountpoint, name)
     subprocess.check_call(['btrfs', 'subvolume', 'create', path])
     subprocess.check_call(['btrfs', 'quota', 'enable', path])
-    subprocess.check_call(['btrfs', 'qgroup', 'limit', size, path])
+    subprocess.check_call(['btrfs', 'qgroup', 'limit', size_, path])
     
     data = {}
     return jsonify(data)
@@ -203,8 +203,8 @@ def dockyard_volume_create():
 @app.route('/dockyard/volume/delete', methods=['POST'])
 @requires_auth
 def dockyard_volume_delete():
-    mount_point = request['mount_point']
-    name = request['name']
+    mountpoint = request.json['mountpoint']
+    name = request.json['name']
     print 'dockyard_volume_delete:', locals()
     
     path = os.path.join(mount_point, name)

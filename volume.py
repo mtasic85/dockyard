@@ -155,11 +155,23 @@ def volume_create():
     }
     
     __volume['created'] = __volume['updated'] = datetime.utcnow()
-    __volume['perm_name'] = '%s_%s' % (username_, uuid.uuid4().hex)
+    __volume['perm_name'] = perm_name = '%s_%s' % (username_, uuid.uuid4().hex)
     
     volume = Volume(**__volume)
     db.session.add(volume)
     db.session.commit()
+    
+    # create volume at host
+    url = 'http://%s:%i/dockyard/volume/create' % (host.host, host.port)
+    
+    data_ = json.dumps({
+        'mountpoint': mount_point.mountpoint,
+        'name': perm_name,
+        'size': capacity,
+    })
+    
+    headers = {'content-type': 'application/json'}
+    r = requests.post(url, data_, headers)
     
     # return response
     __volume = object_to_dict(volume)
