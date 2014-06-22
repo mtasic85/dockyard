@@ -218,25 +218,6 @@ def volume_update():
     volume = Volume.query.get(_volume['id'])
     _volume['updated'] = datetime.utcnow()
     update_object_with_dict(volume, _volume)
-    
-    ##
-    # delete volume at host
-    url = 'http://%s:%i/dockyard/volume/delete' % (host.host, host.port)
-    
-    data_ = json.dumps({
-        'mountpoint': mount_point.mountpoint,
-        'name': perm_name,
-    })
-    
-    headers = {
-        'content-type': 'application/json',
-    }
-    
-    auth = auth=HTTPBasicAuth(host.auth_username, host.auth_password)
-    r = requests.post(url, data=data_, headers=headers, auth=auth)
-    assert r.status_code == 200
-    ##
-    
     db.session.commit()
     _volume = object_to_dict(volume)
     
@@ -284,6 +265,24 @@ def volume_remove():
     
     # decrease reserved sotrage at mount point
     mount_point.reserved = mount_point.reserved - volume.capacity
+    
+    ##
+    # delete volume at host
+    url = 'http://%s:%i/dockyard/volume/delete' % (host.host, host.port)
+    
+    data_ = json.dumps({
+        'mountpoint': mount_point.mountpoint,
+        'name': perm_name,
+    })
+    
+    headers = {
+        'content-type': 'application/json',
+    }
+    
+    auth = auth=HTTPBasicAuth(host.auth_username, host.auth_password)
+    r = requests.post(url, data=data_, headers=headers, auth=auth)
+    assert r.status_code == 200
+    ##
     
     # delete volume
     db.session.delete(volume)
