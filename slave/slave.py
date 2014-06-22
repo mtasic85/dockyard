@@ -9,6 +9,7 @@ __all__ = ['app']
 import os
 import sys
 import threading
+import subprocess
 from functools import wraps
 from ConfigParser import ConfigParser
 
@@ -181,6 +182,38 @@ def docker_api(path):
     
     print 'docker_api <<<', r.text, r.status_code, r.headers.items()
     return make_response(r.text, r.status_code, r.headers.items())
+
+@app.route('/dockyard/volume/create', methods=['POST'])
+@requires_auth
+def dockyard_volume_create():
+    mount_point = request['mount_point']
+    name = request['name']
+    capacity = request['capacity']
+    print 'dockyard_volume_create:', locals()
+    
+    size = '%ig' % capacity
+    path = os.path.join(mount_point, name)
+    
+    subprocess.check_call(['btrfs', 'subvolume', 'create', path])
+    subprocess.check_call(['btrfs', 'quota', 'enable', path])
+    subprocess.check_call(['btrfs', 'qgroup', 'limit', size, path])
+    
+    data = {}
+    return jsonify(data)
+
+@app.route('/dockyard/volume/delete', methods=['POST'])
+@requires_auth
+def dockyard_volume_delete():
+    mount_point = request['mount_point']
+    print 'dockyard_volume_delete:', locals()
+    
+    size = '%ig' % capacity
+    path = os.path.join(mount_point, name)
+    
+    subprocess.check_call(['btrfs', 'subvolume', 'delete', path])
+    
+    data = {}
+    return jsonify(data)
 
 class TermWebSocket(tornado.websocket.WebSocketHandler):
     def check_origin(self, origin):
