@@ -149,7 +149,7 @@ def volume_create():
     __volume = {
         'host_id': host_id,
         'mount_point_id': mount_point_id,
-        'name': name
+        'name': name,
         'capacity': capacity,
         'username': username_,
     }
