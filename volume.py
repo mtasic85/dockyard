@@ -100,36 +100,73 @@ def volume_create():
     mount_point_id = _volume.get('mount_point_id', None)
     name = _volume['name']
     capacity = _volume['capacity']
+    username_ = _volume['username']
     
-    if host_id is None and mount_point_id is None:
-        pass
-    elif host_id is not None and mount_point_id is None:
-        mount_points = MountPoint.query.filter_by(host_id=host_id).all()
+    # find available host and/or mount point
+    if host_id is None or mount_point_id is None:
+        query = MountPoint.query
         
+        if host_id is not None and mount_point_id is None:
+            query = query.filter_by(host_id=host_id)
         
+        mount_points = query.all()
+        
+        mount_points = [
+            m for m in mount_points
+            if m.capacity - m.reserved >= capacity
+        ]
+        
+        # no mount_points available
+        if not mount_points:
+            data = {
+                'error': 'The is no available space.'\
+                         'Try smaller volume capacity than %s GB.' % capacity,
+            }
+            
+            return jsonify(data)
+        
+        # take first available slice
+        mount_points.sort(key=lambda m: m.capacity - m.reserved)
+        mount_point = mount_points[0]
+        
+        # host_id, mount_point_id
+        host_id = mount_point.host_id
+        mount_point_id = mount_point.id
     
-    _volume['created'] = _volume['updated'] = datetime.utcnow()
-    _volume['perm_name'] = '%s_%s' % (_volume['username'], uuid.uuid4().hex)
+    # insert volume into database
+    __volume = {
+        'host_id': host_id,
+        'mount_point_id': mount_point_id,
+        'name': name
+        'capacity': capacity,
+        'username': username_,
+    }
     
-    volume = Volume(**_volume)
+    __volume['created'] = __volume['updated'] = datetime.utcnow()
+    __volume['perm_name'] = '%s_%s' % (username_, uuid.uuid4().hex)
+    
+    volume = Volume(**__volume)
     db.session.add(volume)
     db.session.commit()
     
-    _volume = object_to_dict(volume)
+    # return response
+    __volume = object_to_dict(volume)
     
     # insert host_name
-    # insert mount_point_name
-    host = Host.query.get(_volume['host_id'])
+    # FIXME: optimize
+    host = Host.query.get(host_id)
     assert host is not None
     
-    mount_point = MountPoint.query.get(_volume['mount_point_id'])
+    # insert mount_point_name
+    # FIXME: optimize
+    mount_point = MountPoint.query.get(mount_point_id)
     assert mount_point is not None
     
-    _volume['host_name'] = host.name
-    _volume['mount_point_name'] = mount_point.name
+    __volume['host_name'] = host.name
+    __volume['mount_point_name'] = mount_point.name
     
     data = {
-        'volume': _volume,
+        'volume': __volume,
     }
     
     return jsonify(data)
