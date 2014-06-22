@@ -232,51 +232,14 @@ $.extend(volume, {
         var mount_point_id_select = modal_div.find('#mount_point_id');
         
         // populate hosts
-        /*
-        $.ajax({
-            type: 'POST',
-            url: '/hosts/all',
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify({}),
-        })
-        .done(function(data) {
-            // console.log(data);
-            _.each(data.hosts, function(host_) {
-                var option = $('<option>')
-                    .attr('value', host_.id)
-                    .text(host_.name)
-                    .appendTo(host_id_select);
-            });
-        })
-        .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
-        });
-        */
+        // populate mount points
         volume._populate_hosts(host_id_select, mount_point_id_select);
         
-        // populate mount points
-        /*
-        $.ajax({
-            type: 'POST',
-            url: '/mount/points/all',
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify({}),
-        })
-        .done(function(data) {
-            // console.log(data);
-            _.each(data.mounts, function(mount_point_) {
-                var option = $('<option>')
-                    .attr('value', mount_point_.id)
-                    .text(mount_point_.name)
-                    .appendTo(mount_point_id_select);
-            });
-        })
-        .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
+        // populate mount points for selected host
+        host_id_select.change(function(e) {
+            var host_id = host_id_select.val();
+            volume._populate_mount_points(mount_point_id_select, host_id);
         });
-        */
         
         // close
         modal_div.find('button#close').click(function(e) {
