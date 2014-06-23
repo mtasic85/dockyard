@@ -397,7 +397,7 @@ $.extend(volume, {
     _populate_mount_points: function(mount_point_id_select, host_id) {
         mount_point_id_select.empty();
         
-        if (!!host_id) {
+        if (!host_id) {
             return;
         }
         
