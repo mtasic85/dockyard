@@ -391,7 +391,7 @@ $.extend(volume, {
             
             // populate mount points for selected host
             if (data.hosts.length > 0) {
-                var host_id = data.hosts[0].id;
+                var host_id = host_id_select.val();
                 volume._populate_mount_points(mount_point_id_select, host_id);
             }
         })
