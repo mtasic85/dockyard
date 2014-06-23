@@ -106,6 +106,7 @@ def image_create():
     image = Image(**_image)
     db.session.add(image)
     
+    '''
     ##
     # "async" create/pull image
     def _image_create():
@@ -147,6 +148,28 @@ def image_create():
     
     t = Thread(target=_image_create)
     t.start()
+    ##
+    '''
+    
+    ##
+    # get all hosts
+    hosts = Host.query.all()
+    
+    for host in hosts:
+        # create volume at host
+        url = 'http://%s:%i/docker/images/create?fromImage=%s' % (
+            host.host,
+            host.port,
+            _image['name'],
+        )
+        
+        data_ = json.dumps({})
+        headers = {'content-type': 'application/json'}
+        auth = auth=HTTPBasicAuth(host.auth_username, host.auth_password)
+        r = requests.post(url, data=data_, headers=headers, auth=auth)
+        print r
+    
+    image.status = 'ready'
     ##
     
     db.session.commit()
