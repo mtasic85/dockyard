@@ -166,8 +166,11 @@ def image_create():
         data_ = json.dumps({})
         headers = {'content-type': 'application/json'}
         auth = auth=HTTPBasicAuth(host.auth_username, host.auth_password)
-        r = requests.post(url, data=data_, headers=headers, auth=auth)
-        print r
+        
+        try:
+            r = requests.post(url, data=data_, headers=headers, auth=auth)
+        except requests.exceptions.ChunkedEncodingError as e:
+            pass
     
     image.status = 'ready'
     ##
