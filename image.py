@@ -76,8 +76,9 @@ def image_images_all():
     # insert host_name
     for _image in _images:
         host = Host.query.get(_image['host_id'])
-        assert host is not None
-        _image['host_name'] = host.name
+        
+        if host:
+            _image['host_name'] = host.name
     
     data = {
         'images': _images,
