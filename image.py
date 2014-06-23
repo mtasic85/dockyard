@@ -149,8 +149,8 @@ def image_create():
         db.session.commit()
         print '!!!', 'DONE'
     
-    t = Thread(target=_image_create)
-    t.start()
+    mt = Thread(target=_image_create)
+    mt.start()
     ##
     
     '''
