@@ -43,28 +43,7 @@ $.extend(image, {
             var host_id_select = modal_div.find('#host_id');
             
             // populate hosts
-            $.ajax({
-                type: 'POST',
-                url: '/hosts/all',
-                contentType: 'application/json;charset=utf-8',
-                dataType: 'json',
-                data: JSON.stringify({}),
-            })
-            .done(function(data) {
-                // console.log(data);
-                _.each(data.hosts, function(host_) {
-                    var option = $('<option>')
-                        .attr('value', host_.id)
-                        .text(host_.name)
-                        .appendTo(host_id_select);
-                });
-                
-                // select host
-                host_id_select.val(image_.host_id);
-            })
-            .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
-            });
+            image._populate_hosts(host_id_select);
             
             // close
             modal_div.find('button#close').click(function(e) {
@@ -204,25 +183,7 @@ $.extend(image, {
         var host_id_select = modal_div.find('#host_id');
         
         // populate hosts
-        $.ajax({
-            type: 'POST',
-            url: '/hosts/all',
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify({}),
-        })
-        .done(function(data) {
-            // console.log(data);
-            _.each(data.hosts, function(host_) {
-                var option = $('<option>')
-                    .attr('value', host_.id)
-                    .text(host_.name)
-                    .appendTo(host_id_select);
-            });
-        })
-        .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
-        });
+        image._populate_hosts(host_id_select);
         
         // close
         modal_div.find('button#close').click(function(e) {
@@ -276,6 +237,42 @@ $.extend(image, {
             if (key === 'id') return;
             var td = tr.find('td#' + key);
             td.text(value);
+        });
+    },
+    
+    _populate_hosts: function(host_id_select) {
+        host_id_select.empty();
+        
+        // populate hosts
+        $.ajax({
+            type: 'POST',
+            url: '/hosts/all',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify({}),
+        })
+        .done(function(data) {
+            // handled error
+            if (data.error) {
+                $.bootstrapGrowl(data.error, {type: 'info', align: 'center'});
+                return;
+            }
+            
+            // console.log(data);
+            var option = $('<option>')
+                .attr('value', '')
+                .text('')
+                .appendTo(host_id_select);
+            
+            _.each(data.hosts, function(host_) {
+                var option = $('<option>')
+                    .attr('value', host_.id)
+                    .text(host_.name)
+                    .appendTo(host_id_select);
+            });
+        })
+        .error(function (xhr, ajaxOptions, thrownError) {
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
         });
     },
 });
