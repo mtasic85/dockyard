@@ -173,7 +173,8 @@ def docker_api(path):
         
         t = threading.Thread(
             target = _docker_api,
-            args = ('http+unix://var/run/docker.sock/%s' % path,),
+            # args = ('http+unix://var/run/docker.sock/%s' % path,),
+            args = ('http+unix://docker.sock/%s' % path,),
         )
         
         t.start()
