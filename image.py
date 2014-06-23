@@ -123,7 +123,7 @@ def image_create():
         
         for host in hosts:
             # create volume at host
-            url = 'http://%s:%i/docker/images/create?fromImage=%s' % (
+            url = 'http://%s:%i/images/create?fromImage=%s' % (
                 host.host,
                 host.port,
                 _image['name'],
