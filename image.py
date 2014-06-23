@@ -113,8 +113,8 @@ def image_create():
     def _requests_post(*args, **kwargs):
         try:
             r = requests.post(*args, **kwargs)
-            # assert r.status_code == 200
             print r
+            assert r.status_code == 200
         except requests.exceptions.ChunkedEncodingError as e:
             print e
     
@@ -157,33 +157,6 @@ def image_create():
     mt.start()
     ##
     
-    '''
-    ##
-    # get all hosts
-    hosts = Host.query.all()
-    
-    for host in hosts:
-        # create volume at host
-        url = 'http://%s:%i/images/create?fromImage=%s' % (
-            host.host,
-            host.port,
-            _image['name'],
-        )
-        
-        data_ = json.dumps({})
-        headers = {'content-type': 'application/json'}
-        auth = auth=HTTPBasicAuth(host.auth_username, host.auth_password)
-        
-        try:
-            r = requests.post(url, data=data_, headers=headers, auth=auth)
-            print r
-        except requests.exceptions.ChunkedEncodingError as e:
-            print e
-    
-    image.status = 'ready'
-    ##
-    '''
-    
     # insert host_name
     host = Host.query.get(_image['host_id'])
     
@@ -210,7 +183,7 @@ def image_update():
     if usertype != 'super':
         data = {}
         return jsonify(data)
-        
+    
     image = Image.query.get(_image['id'])
     _image['updated'] = datetime.utcnow()
     update_object_with_dict(image, _image)
