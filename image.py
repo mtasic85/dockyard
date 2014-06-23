@@ -118,7 +118,7 @@ def image_create():
         except requests.exceptions.ChunkedEncodingError as e:
             print e
     
-    def _image_create(db_session):
+    def _image_create():
         # get all hosts
         hosts = Host.query.all()
         threads = []
