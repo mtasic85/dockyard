@@ -149,9 +149,9 @@ def requires_auth(f):
     
     return decorated
 
-# @app.route('/', methods=['GET', 'POST'])
-# @app.route('/<path:path>', methods=['GET', 'POST'])
-@app.route('/docker/<path:path>', methods=['GET', 'POST', 'DELETE'])
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/<path:path>', methods=['GET', 'POST'])
+# @app.route('/docker/<path:path>', methods=['GET', 'POST', 'DELETE'])
 @requires_auth
 def docker_api(path):
     # get docker API route
