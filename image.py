@@ -111,7 +111,7 @@ def image_create():
     def _image_create():
         # get all hosts
         hosts = Host.query.all()
-        threads = []
+        #~ threads = []
         
         for host in hosts:
             # create volume at host
@@ -125,17 +125,20 @@ def image_create():
             headers = {'content-type': 'application/json'}
             auth = auth=HTTPBasicAuth(host.auth_username, host.auth_password)
             
-            t = Thread(
-                target = requests.post,
-                args = (url,),
-                kwargs = dict(data=data_, headers=headers, auth=auth)
-            )
+            #~ t = Thread(
+                #~ target = requests.post,
+                #~ args = (url,),
+                #~ kwargs = dict(data=data_, headers=headers, auth=auth)
+            #~ )
             
-            threads.append(t)
-            t.start()
+            #~ threads.append(t)
+            #~ t.start()
+            
+            r = requests.post(url, data=data_, headers=headers, auth=auth)
+            assert r.status_code == 200
         
-        for t in threads:
-            t.join()
+        #~ for t in threads:
+            #~ t.join()
         
         image.status = 'ready'
         db.session.commit()
