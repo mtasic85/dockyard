@@ -19,6 +19,12 @@ $.extend(volume, {
             data: JSON.stringify({}),
         })
         .done(function(data) {
+            // handled error
+            if (data.error) {
+                $.bootstrapGrowl(data.error, {type: 'info', align: 'center'});
+                return;
+            }
+            
             // console.log(data);
             _.each(data.volumes, function(volume_) {
                 volume._add(volume_);
@@ -52,6 +58,12 @@ $.extend(volume, {
                 data: JSON.stringify({}),
             })
             .done(function(data) {
+                // handled error
+                if (data.error) {
+                    $.bootstrapGrowl(data.error, {type: 'info', align: 'center'});
+                    return;
+                }
+                
                 // console.log(data);
                 _.each(data.hosts, function(host_) {
                     var option = $('<option>')
@@ -76,6 +88,12 @@ $.extend(volume, {
                 data: JSON.stringify({}),
             })
             .done(function(data) {
+                // handled error
+                if (data.error) {
+                    $.bootstrapGrowl(data.error, {type: 'info', align: 'center'});
+                    return;
+                }
+                
                 // console.log(data);
                 _.each(data.mounts, function(mount_point_) {
                     var option = $('<option>')
@@ -126,6 +144,18 @@ $.extend(volume, {
                     }),
                 })
                 .done(function(data) {
+                    // handled error
+                    if (data.error) {
+                        $.bootstrapGrowl(data.error, {type: 'info', align: 'center'});
+                        return;
+                    }
+                    
+                    // handled error
+                    if (data.error) {
+                        $.bootstrapGrowl(data.error, {type: 'info', align: 'center'});
+                        return;
+                    }
+                    
                     // required to fix variable "volume" from closure
                     _.each(_volume, function(value, key) { volume_[key] = value; });
                     
@@ -161,6 +191,12 @@ $.extend(volume, {
                 }),
             })
             .done(function(data) {
+                // handled error
+                if (data.error) {
+                    $.bootstrapGrowl(data.error, {type: 'info', align: 'center'});
+                    return;
+                }
+                
                 // required to fix variable "volume" from closure
                 _.each(_volume, function(value, key) { volume_[key] = value; });
                 
@@ -191,6 +227,12 @@ $.extend(volume, {
                 }),
             })
             .done(function(data) {
+                // handled error
+                if (data.error) {
+                    $.bootstrapGrowl(data.error, {type: 'info', align: 'center'});
+                    return;
+                }
+                
                 // required to fix variable "volume" from closure
                 _.each(_volume, function(value, key) { volume_[key] = value; });
                 
@@ -215,6 +257,12 @@ $.extend(volume, {
                 }),
             })
             .done(function(data) {
+                // handled error
+                if (data.error) {
+                    $.bootstrapGrowl(data.error, {type: 'info', align: 'center'});
+                    return;
+                }
+                
                 tr.remove();
                 $.bootstrapGrowl('User successfully removed.', {type: 'success', align: 'center'});
             })
@@ -275,6 +323,12 @@ $.extend(volume, {
                 }),
             })
             .done(function(data) {
+                // handled error
+                if (data.error) {
+                    $.bootstrapGrowl(data.error, {type: 'info', align: 'center'});
+                    return;
+                }
+                
                 volume._add(data.volume);
                 $.bootstrapGrowl('Volume successfully created.', {type: 'success', align: 'center'});
             })
@@ -310,6 +364,12 @@ $.extend(volume, {
             data: JSON.stringify({}),
         })
         .done(function(data) {
+            // handled error
+            if (data.error) {
+                $.bootstrapGrowl(data.error, {type: 'info', align: 'center'});
+                return;
+            }
+            
             // console.log(data);
             _.each(data.hosts, function(host_) {
                 var option = $('<option>')
@@ -342,6 +402,12 @@ $.extend(volume, {
             }),
         })
         .done(function(data) {
+            // handled error
+            if (data.error) {
+                $.bootstrapGrowl(data.error, {type: 'info', align: 'center'});
+                return;
+            }
+            
             // console.log(data);
             _.each(data.mounts, function(mount_point_) {
                 var option = $('<option>')
