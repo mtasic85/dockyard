@@ -78,12 +78,12 @@ def container_containers_all():
     # insert image_name
     for _container in _containers:
         host = Host.query.get(_container['host_id'])
-        assert host is not None
+        # assert host is not None
         
         image = Image.query.get(_container['image_id'])
         assert image is not None
         
-        _container['host_name'] = host.name
+        _container['host_name'] = host.name if host else 'All'
         _container['image_name'] = image.name
     
     data = {
@@ -118,49 +118,12 @@ def container_create():
     # insert host_name
     # insert image_name
     host = Host.query.get(_container['host_id'])
-    assert host is not None
+    # assert host is not None
     
     image = Image.query.get(_container['image_id'])
     assert image is not None
     
-    _container['host_name'] = host.name
-    _container['image_name'] = image.name
-    
-    data = {
-        'container': _container,
-    }
-    
-    return jsonify(data)
-
-@container_blueprint.route('/container/update', methods=['POST'])
-@login_required
-def container_update():
-    username = current_user.username
-    usertype = current_user.usertype
-    _container = request.json['container']
-    print 'container_update:', locals()
-    
-    # FIXME:
-    if usertype != 'super':
-        data = {}
-        return jsonify(data)
-        
-    container = Container.query.get(_container['id'])
-    _container['updated'] = datetime.utcnow()
-    update_object_with_dict(container, _container)
-    db.session.commit()
-    
-    _container = object_to_dict(container)
-    
-    # insert host_name
-    # insert image_name
-    host = Host.query.get(_container['host_id'])
-    assert host is not None
-    
-    image = Image.query.get(_container['image_id'])
-    assert image is not None
-    
-    _container['host_name'] = host.name
+    _container['host_name'] = host.name if host else 'All'
     _container['image_name'] = image.name
     
     data = {
