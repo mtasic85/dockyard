@@ -16,6 +16,7 @@ class Image(db.Model):
     host_id =       db.Column(db.Integer)
     username =      db.Column(db.String(128))
     name =          db.Column(db.String(256))
+    status =        db.Column(db.String(64), default='')
     
     def __init__(self, **kwargs):
         for k, v in kwargs.iteritems():

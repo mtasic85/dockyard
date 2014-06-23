@@ -21,6 +21,7 @@
         <tr data-id="<%= id %>">
             <td id="name"> <%= name %> </td>
             <td id="host_name" data-host-name="<%= host_name %>" data-host-id="<%= host_id %>"> <%= host_name %> </td>
+            <td id="status"> <%= status %> </td>
             <td id="username"> <%= username %> </td>
             <td id="active"> <%= active %> </td>
             <td id="created"> <%= created %> </td>
@@ -69,6 +70,12 @@
                             </div>
                             
                             <div class="form-group">
+                                <label> Status </label>
+                                <input type="text" class="form-control" id="status" placeholder="Status" value="{{ username }}" disabled>
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
                                 <label> Username </label>
                                 <input type="text" class="form-control" id="username" placeholder="Username" value="{{ username }}" disabled>
                                 <p class="help-block">  </p>
@@ -109,6 +116,12 @@
                             </div>
                             
                             <div class="form-group">
+                                <label> Status </label>
+                                <input class="form-control" id="status" value="<%= status %>" disabled>
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <div class="form-group">
                                 <label> Username </label>
                                 <input class="form-control" id="username" value="<%= username %>" disabled>
                                 <p class="help-block">  </p>
@@ -144,6 +157,7 @@
                     <tr>
                         <th> Name </th>
                         <th> Host </th>
+                        <th> Status </th>
                         <th> Username </th>
                         
                         <th> Active </th>
