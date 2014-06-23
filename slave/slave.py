@@ -165,6 +165,7 @@ def docker_api(path):
     s.mount('http+unix://', UnixAdapter('http+unix://docker.sock'))
     f = getattr(s, request.method.lower())
     
+    '''
     if path.startswith('images/create'):
         # /images/create is long runnign operation
         # so that is why it is executed from thread
@@ -180,6 +181,7 @@ def docker_api(path):
         
         t.start()
         return make_response('{}', 200, [('content-type', 'application/json')])
+    '''
     
     # r = f('http+unix://var/run/docker.sock/%s' % path)
     r = f('http+unix://docker.sock/%s' % path)
