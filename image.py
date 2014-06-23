@@ -5,6 +5,7 @@ import sys
 import json
 import uuid
 import random
+from threading import Thread
 from datetime import datetime, timedelta
 
 # dateutil
@@ -101,7 +102,40 @@ def image_create():
     image = Image(**_image)
     db.session.add(image)
     
+    ##
+    # "async" create/pull image
+    def _image_create():
+        # get all hosts
+        hosts = Host.query.all()
+        threads = []
+        
+        for host in hosts:
+            # create volume at host
+            url = 'http://%s:%i/docker/images/create?fromImage=' % (
+                host.host,
+                host.port,
+                _image['name'],
+            )
+            
+            data_ = json.dumps({})
+            headers = {'content-type': 'application/json'}
+            auth = auth=HTTPBasicAuth(host.auth_username, host.auth_password)
+            
+            t = Thread(
+                target = requests.post,
+                args = (url,),
+                kwargs = dict(data=data_, headers=headers, auth=auth)
+            )
+            
+            threads.append(t)
+            t.start()
+        
+        for t in threads:
+            t.join()
     
+    t = Thread(target=_image_create)
+    t.start()
+    ##
     
     db.session.commit()
     _image = object_to_dict(image)
