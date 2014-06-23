@@ -162,7 +162,7 @@ def image_create():
     if host:
         _image['host_name'] = host.name
     else:
-        _image['host_name'] = '__ALL__'
+        _image['host_name'] = 'ALL'
     
     data = {
         'image': _image,
