@@ -136,7 +136,7 @@ def image_create():
             
             r = requests.post(url, data=data_, headers=headers, auth=auth)
             print r
-            assert r.status_code == 200
+            # assert r.status_code == 200
         
         #~ for t in threads:
             #~ t.join()
