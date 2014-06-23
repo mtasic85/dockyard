@@ -106,13 +106,20 @@ def image_create():
     image = Image(**_image)
     db.session.add(image)
     
-    '''
     ##
     # "async" create/pull image
+    def _requests_post(*args, **kwargs):
+        try:
+            r = requests.post(*args, **kwargs)
+            assert r.status_code == 200
+            print r
+        except requests.exceptions.ChunkedEncodingError as e:
+            print e
+    
     def _image_create():
         # get all hosts
         hosts = Host.query.all()
-        #~ threads = []
+        threads = []
         
         for host in hosts:
             # create volume at host
@@ -126,21 +133,17 @@ def image_create():
             headers = {'content-type': 'application/json'}
             auth = auth=HTTPBasicAuth(host.auth_username, host.auth_password)
             
-            #~ t = Thread(
-                #~ target = requests.post,
-                #~ args = (url,),
-                #~ kwargs = dict(data=data_, headers=headers, auth=auth)
-            #~ )
+            t = Thread(
+                target = _requests_post,
+                args = (url,),
+                kwargs = dict(data=data_, headers=headers, auth=auth)
+            )
             
-            #~ threads.append(t)
-            #~ t.start()
-            
-            r = requests.post(url, data=data_, headers=headers, auth=auth)
-            print r
-            # assert r.status_code == 200
+            threads.append(t)
+            t.start()
         
-        #~ for t in threads:
-            #~ t.join()
+        for t in threads:
+            t.join()
         
         image.status = 'ready'
         db.session.commit()
@@ -149,8 +152,8 @@ def image_create():
     t = Thread(target=_image_create)
     t.start()
     ##
-    '''
     
+    '''
     ##
     # get all hosts
     hosts = Host.query.all()
@@ -175,6 +178,7 @@ def image_create():
     
     image.status = 'ready'
     ##
+    '''
     
     db.session.commit()
     _image = object_to_dict(image)
