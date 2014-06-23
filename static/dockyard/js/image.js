@@ -32,7 +32,6 @@ $.extend(image, {
     _add: function(image_) {
         var tbody = image.table.find('tbody');
         var tr_template = _.template($('#table-row-image').html());
-        var edit_template = _.template($('#modal-edit-image').html());
         
         var tr = $(tr_template(image_))
             .appendTo(tbody);
