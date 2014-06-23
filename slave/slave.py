@@ -179,7 +179,8 @@ def docker_api(path):
         t.start()
         return make_response('{}', 200, [('content-type', 'application/json')])
     
-    r = f('http+unix://var/run/docker.sock/%s' % path)
+    # r = f('http+unix://var/run/docker.sock/%s' % path)
+    r = f('http+unix://docker.sock/%s' % path)
     
     print 'docker_api <<<', r.text, r.status_code, r.headers.items()
     return make_response(r.text, r.status_code, r.headers.items())
