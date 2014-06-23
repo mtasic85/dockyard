@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 __all__ = ['container_blueprint']
+import os
+import sys
+import json
+import uuid
+import random
 from datetime import datetime, timedelta
 
 # dateutil
@@ -23,6 +28,10 @@ from flask.ext.wtf import Form
 from wtforms import validators
 from wtforms import TextField, PasswordField, SelectField, BooleanField
 from wtforms_html5 import EmailField
+
+# requests
+import requests
+from requests.auth import HTTPBasicAuth
 
 # model
 from model.db import db
