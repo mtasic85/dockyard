@@ -79,6 +79,8 @@ def image_images_all():
         
         if host:
             _image['host_name'] = host.name
+        else:
+            _image['host_name'] = 'ALL'
     
     data = {
         'images': _images,
