@@ -169,8 +169,9 @@ def image_create():
         
         try:
             r = requests.post(url, data=data_, headers=headers, auth=auth)
+            print r
         except requests.exceptions.ChunkedEncodingError as e:
-            pass
+            print e
     
     image.status = 'ready'
     ##
