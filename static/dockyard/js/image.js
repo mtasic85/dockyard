@@ -181,7 +181,7 @@ $.extend(image, {
         });
     },
     
-    _populate_hosts: function(host_id_select) {
+    _populate_hosts: function(host_id_select, host_id) {
         host_id_select.empty();
         
         // populate hosts
@@ -211,6 +211,11 @@ $.extend(image, {
                     .text(host_.name)
                     .appendTo(host_id_select);
             });
+            
+            // select host
+            if (!!host_id) {
+                host_id_select.val(host_id);
+            }
         })
         .error(function (xhr, ajaxOptions, thrownError) {
             $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});

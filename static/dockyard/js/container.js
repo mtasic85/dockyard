@@ -44,7 +44,7 @@ $.extend(container, {
             var image_id_select = modal_div.find('#image_id');
             
             // populate hosts
-            container._populate_hosts(host_id_select);
+            container._populate_hosts(host_id_select, container_.host_id);
             
             // populate images
             $.ajax({
@@ -310,7 +310,7 @@ $.extend(container, {
         });
     },
     
-    _populate_hosts: function(host_id_select) {
+    _populate_hosts: function(host_id_select, host_id) {
         host_id_select.empty();
         
         // populate hosts
@@ -340,6 +340,11 @@ $.extend(container, {
                     .text(host_.name)
                     .appendTo(host_id_select);
             });
+            
+            // select host
+            if (!!host_id) {
+                host_id_select.val(host_id);
+            }
         })
         .error(function (xhr, ajaxOptions, thrownError) {
             $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
