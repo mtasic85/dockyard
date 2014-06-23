@@ -125,12 +125,15 @@ $.extend(volume, {
                 $('.modal-backdrop').remove();
                 
                 // update volume
+                var host_id = modal_div.find('#host_id').val() || undefined;
+                var mount_point_id = modal_div.find('#mount_point_id').val() || undefined;
+            
                 var _volume = {
                     id: volume_.id,
                     name: modal_div.find('#name').val(),
                     capacity: parseInt(modal_div.find('#capacity').val()),
-                    host_id: modal_div.find('#host_id').val(),
-                    mount_point_id: modal_div.find('#mount_point_id').val(),
+                    host_id: host_id,
+                    mount_point_id: mount_point_id,
                     username: modal_div.find('#username').val(),
                 };
                 
@@ -305,11 +308,14 @@ $.extend(volume, {
             $('.modal-backdrop').remove();
             
             // create volume
+            var host_id = modal_div.find('#host_id').val() || undefined;
+            var mount_point_id = modal_div.find('#mount_point_id').val() || undefined;
+            
             var _volume = {
                 name: modal_div.find('#name').val(),
                 capacity: parseInt(modal_div.find('#capacity').val()),
-                host_id: modal_div.find('#host_id').val(),
-                mount_point_id: modal_div.find('#mount_point_id').val(),
+                host_id: host_id,
+                mount_point_id: mount_point_id,
                 username: modal_div.find('#username').val(),
             };
             
