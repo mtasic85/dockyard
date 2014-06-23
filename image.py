@@ -148,7 +148,7 @@ def image_create():
             t.join()
         
         session = db.create_scoped_session()
-        image = Image.query.get(_image['id'])
+        image = session.query(Image).get(_image['id'])
         image.status = 'ready'
         session.commit()
         print '!!!', 'DONE'
