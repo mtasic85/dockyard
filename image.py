@@ -133,7 +133,7 @@ def image_create():
             
             data_ = json.dumps({})
             headers = {'content-type': 'application/json'}
-            auth = auth=HTTPBasicAuth(host.auth_username, host.auth_password)
+            auth = HTTPBasicAuth(host.auth_username, host.auth_password)
             
             t = Thread(
                 target = _requests_post,
@@ -151,7 +151,6 @@ def image_create():
         image = session.query(Image).get(_image['id'])
         image.status = 'ready'
         session.commit()
-        print '!!!', 'DONE'
     
     mt = Thread(target=_image_create)
     mt.start()
@@ -163,38 +162,7 @@ def image_create():
     if host:
         _image['host_name'] = host.name
     else:
-        _image['host_name'] = 'ALL'
-    
-    data = {
-        'image': _image,
-    }
-    
-    return jsonify(data)
-
-@image_blueprint.route('/image/update', methods=['POST'])
-@login_required
-def image_update():
-    username = current_user.username
-    usertype = current_user.usertype
-    _image = request.json['image']
-    print 'image_update:', locals()
-    
-    # FIXME:
-    if usertype != 'super':
-        data = {}
-        return jsonify(data)
-    
-    image = Image.query.get(_image['id'])
-    _image['updated'] = datetime.utcnow()
-    update_object_with_dict(image, _image)
-    db.session.commit()
-    
-    _image = object_to_dict(image)
-    
-    # insert host_name
-    host = Host.query.get(_image['host_id'])
-    assert host is not None
-    _image['host_name'] = host.name
+        _image['host_name'] = '__ALL__'
     
     data = {
         'image': _image,

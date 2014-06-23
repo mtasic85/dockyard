@@ -189,7 +189,7 @@ def volume_create():
         'content-type': 'application/json',
     }
     
-    auth = auth=HTTPBasicAuth(host.auth_username, host.auth_password)
+    auth = HTTPBasicAuth(host.auth_username, host.auth_password)
     r = requests.post(url, data=data_, headers=headers, auth=auth)
     assert r.status_code == 200
     ##
@@ -289,7 +289,7 @@ def volume_remove():
         'content-type': 'application/json',
     }
     
-    auth = auth=HTTPBasicAuth(host.auth_username, host.auth_password)
+    auth = HTTPBasicAuth(host.auth_username, host.auth_password)
     r = requests.post(url, data=data_, headers=headers, auth=auth)
     assert r.status_code == 200
     ##

@@ -37,64 +37,6 @@ $.extend(image, {
         var tr = $(tr_template(image_))
             .appendTo(tbody);
         
-        // edit
-        tr.find('a#edit').click(function(e) {
-            var modal_div = $(edit_template(image_));
-            var host_id_select = modal_div.find('#host_id');
-            
-            // populate hosts
-            image._populate_hosts(host_id_select);
-            
-            // close
-            modal_div.find('button#close').click(function(e) {
-                // close modal
-                modal_div.modal('hide');
-                setTimeout(function() { modal_div.remove();}, 500);
-                $('.modal-backdrop').remove();
-            });
-            
-            // update
-            modal_div.find('button#update').click(function(e) {
-                // close modal
-                modal_div.modal('hide');
-                setTimeout(function() { modal_div.remove();}, 500);
-                $('.modal-backdrop').remove();
-                
-                // update image
-                var _image = {
-                    id: image_.id,
-                    name: modal_div.find('#name').val(),
-                    host_id: modal_div.find('#host_id').val(),
-                    username: modal_div.find('#username').val(),
-                };
-                
-                $.ajax({
-                    type: 'POST',
-                    url: '/image/update',
-                    contentType: 'application/json;charset=utf-8',
-                    dataType: 'json',
-                    data: JSON.stringify({
-                        image: _image,
-                    }),
-                })
-                .done(function(data) {
-                    // required to fix variable "image" from closure
-                    _.each(_image, function(value, key) { image_[key] = value; });
-                    
-                    // update UI
-                    image._update(data.image);
-                    $.bootstrapGrowl('Image successfully updated.', {type: 'success', align: 'center'});
-                })
-                .error(function (xhr, ajaxOptions, thrownError) {
-                    $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
-                });
-            });
-            
-            modal_div.modal({
-                backdrop: 'static',
-            });
-        });
-        
         // activate
         tr.find('a#activate').click(function(e) {
             // update image
