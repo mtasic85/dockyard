@@ -98,6 +98,7 @@ def image_create():
         data = {}
         return jsonify(data)
     
+    _image['status'] = 'downloading'
     _image['created'] = _image['updated'] = datetime.utcnow()
     image = Image(**_image)
     db.session.add(image)
@@ -111,7 +112,7 @@ def image_create():
         
         for host in hosts:
             # create volume at host
-            url = 'http://%s:%i/docker/images/create?fromImage=' % (
+            url = 'http://%s:%i/docker/images/create?fromImage=%s' % (
                 host.host,
                 host.port,
                 _image['name'],
@@ -132,6 +133,10 @@ def image_create():
         
         for t in threads:
             t.join()
+        
+        image.status = 'ready'
+        db.session.commit()
+        print '!!!', 'DONE'
     
     t = Thread(target=_image_create)
     t.start()
