@@ -51,10 +51,9 @@
                     </button>
                     
                     <ul class="dropdown-menu pull-right" role="menu">
-                        <li><a href="#" id="edit"> Edit </a></li>
-                        <li class="divider"></li>
                         <li><a href="#" id="attach"> Attach </a></li>
                         <li><a href="#" id="logs"> Logs </a></li>
+                        <li class="divider"></li>
                         <li><a href="#" id="start"> Start </a></li>
                         <li><a href="#" id="restart"> Restart </a></li>
                         <li><a href="#" id="stop"> Stop </a></li>
@@ -170,118 +169,6 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="close"> Close </button>
                         <button type="button" class="btn btn-primary" id="create"> Create </button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-    </script>
-    
-    <script type="text/template" id="modal-edit-container">
-        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"> Edit Container </h4>
-                    </div>
-                    
-                    <div class="modal-body">
-                        <div role="form">
-                            <div class="form-group">
-                                <label> Container ID </label>
-                                <input class="form-control" id="container_id" value="<%= container_id %>" disabled>
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label> Name </label>
-                                <input class="form-control" id="name" value="<%= name %>">
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label> Host </label>
-                                <select id="host_id" class="form-control" disabled></select>
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label> Image </label>
-                                <select id="image_id" class="form-control" disabled></select>
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label> Command </label>
-                                <input class="form-control" id="command" value="<%= command %>">
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label> Volumes </label>
-                                <input class="form-control" id="volumes" value="<%= volumes %>">
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label> Volumes From </label>
-                                <input class="form-control" id="volumes_from" value="<%= volumes_from %>">
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label> Env Vars </label>
-                                <input class="form-control" id="env_vars" value="<%= env_vars %>">
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label> Expose Ports </label>
-                                <input class="form-control" id="expose_ports" value="<%= expose_ports %>">
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label> Publish Ports </label>
-                                <input class="form-control" id="publish_ports" value="<%= publish_ports %>">
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label> Link Containers </label>
-                                <input class="form-control" id="link_containers" value="<%= link_containers %>">
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label> RAM Limit </label>
-                                <input class="form-control" id="ram_limit" value="<%= ram_limit %>">
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label> # CPU Cores </label>
-                                <input class="form-control" id="n_cpu_cores" value="<%= n_cpu_cores %>">
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label> CPU Share </label>
-                                <input class="form-control" id="cpu_share" value="<%= cpu_share %>">
-                                <p class="help-block">  </p>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label> Status </label>
-                                <input class="form-control" id="status" value="<%= status %>" disabled>
-                                <p class="help-block">  </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" id="close"> Close </button>
-                        <button type="button" class="btn btn-primary" id="update"> Save changes </button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

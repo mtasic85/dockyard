@@ -128,25 +128,7 @@ $.extend(container, {
         container._populate_hosts(host_id_select);
         
         // populate images
-        $.ajax({
-            type: 'POST',
-            url: '/images/all',
-            contentType: 'application/json;charset=utf-8',
-            dataType: 'json',
-            data: JSON.stringify({}),
-        })
-        .done(function(data) {
-            // console.log(data);
-            _.each(data.images, function(image_) {
-                var option = $('<option>')
-                    .attr('value', image_.id)
-                    .text(image_.name)
-                    .appendTo(image_id_select);
-            });
-        })
-        .error(function (xhr, ajaxOptions, thrownError) {
-            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
-        });
+        container._populate_images(image_id_select);
         
         // close
         modal_div.find('button#close').click(function(e) {
@@ -248,6 +230,32 @@ $.extend(container, {
             // select host
             if (!!host_id) {
                 host_id_select.val(host_id);
+            }
+        })
+        .error(function (xhr, ajaxOptions, thrownError) {
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
+        });
+    },
+    
+    _populate_images: function(image_id_select, image_id) {
+        $.ajax({
+            type: 'POST',
+            url: '/images/all',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify({}),
+        })
+        .done(function(data) {
+            // console.log(data);
+            _.each(data.images, function(image_) {
+                var option = $('<option>')
+                    .attr('value', image_.id)
+                    .text(image_.name)
+                    .appendTo(image_id_select);
+            });
+            
+            if (!!image_id) {
+                image_id_select.val(image_id);
             }
         })
         .error(function (xhr, ajaxOptions, thrownError) {
