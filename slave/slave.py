@@ -161,7 +161,8 @@ def docker_api(path):
     
     # execute
     s = requests.Session()
-    s.mount('http+unix://', UnixAdapter('http+unix://var/run/docker.sock'))
+    # s.mount('http+unix://', UnixAdapter('http+unix://var/run/docker.sock'))
+    s.mount('http+unix://', UnixAdapter('http+unix://docker.sock'))
     f = getattr(s, request.method.lower())
     
     if path.startswith('images/create'):
