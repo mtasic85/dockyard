@@ -35,6 +35,79 @@ $.extend(volume, {
         });
     },
     
+    add: function(options) {
+        options = options || {};
+        var new_template = _.template($('#modal-new-volume').html());
+        var modal_div = $(new_template());
+        var host_id_select = modal_div.find('#host_id');
+        var mount_point_id_select = modal_div.find('#mount_point_id');
+        
+        // populate hosts
+        // populate mount points
+        volume._populate_hosts(host_id_select, mount_point_id_select);
+        
+        // populate mount points for selected host
+        host_id_select.change(function(e) {
+            var host_id = host_id_select.val();
+            volume._populate_mount_points(mount_point_id_select, host_id);
+        });
+        
+        // close
+        modal_div.find('button#close').click(function(e) {
+            // close modal
+            modal_div.modal('hide');
+            setTimeout(function() { modal_div.remove();}, 500);
+            $('.modal-backdrop').remove();
+        });
+        
+        // update
+        modal_div.find('button#create').click(function(e) {
+            // close modal
+            modal_div.modal('hide');
+            setTimeout(function() { modal_div.remove();}, 500);
+            $('.modal-backdrop').remove();
+            
+            // create volume
+            var host_id = modal_div.find('#host_id').val() || undefined;
+            var mount_point_id = modal_div.find('#mount_point_id').val() || undefined;
+            
+            var _volume = {
+                name: modal_div.find('#name').val(),
+                capacity: parseInt(modal_div.find('#capacity').val()),
+                host_id: host_id,
+                mount_point_id: mount_point_id,
+                username: modal_div.find('#username').val(),
+            };
+            
+            $.ajax({
+                type: 'POST',
+                url: '/volume/create',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({
+                    volume: _volume,
+                }),
+            })
+            .done(function(data) {
+                // handled error
+                if (data.error) {
+                    $.bootstrapGrowl(data.error, {type: 'info', align: 'center'});
+                    return;
+                }
+                
+                volume._add(data.volume);
+                $.bootstrapGrowl('Volume successfully created.', {type: 'success', align: 'center'});
+            })
+            .error(function (xhr, ajaxOptions, thrownError) {
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
+            });
+        });
+        
+        modal_div.modal({
+            backdrop: 'static',
+        });
+    },
+    
     _add: function(volume_) {
         var tbody = volume.table.find('tbody');
         var tr_template = _.template($('#table-row-volume').html());
@@ -272,79 +345,6 @@ $.extend(volume, {
             .error(function (xhr, ajaxOptions, thrownError) {
                 $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
             });
-        });
-    },
-    
-    add: function(options) {
-        options = options || {};
-        var new_template = _.template($('#modal-new-volume').html());
-        var modal_div = $(new_template());
-        var host_id_select = modal_div.find('#host_id');
-        var mount_point_id_select = modal_div.find('#mount_point_id');
-        
-        // populate hosts
-        // populate mount points
-        volume._populate_hosts(host_id_select, mount_point_id_select);
-        
-        // populate mount points for selected host
-        host_id_select.change(function(e) {
-            var host_id = host_id_select.val();
-            volume._populate_mount_points(mount_point_id_select, host_id);
-        });
-        
-        // close
-        modal_div.find('button#close').click(function(e) {
-            // close modal
-            modal_div.modal('hide');
-            setTimeout(function() { modal_div.remove();}, 500);
-            $('.modal-backdrop').remove();
-        });
-        
-        // update
-        modal_div.find('button#create').click(function(e) {
-            // close modal
-            modal_div.modal('hide');
-            setTimeout(function() { modal_div.remove();}, 500);
-            $('.modal-backdrop').remove();
-            
-            // create volume
-            var host_id = modal_div.find('#host_id').val() || undefined;
-            var mount_point_id = modal_div.find('#mount_point_id').val() || undefined;
-            
-            var _volume = {
-                name: modal_div.find('#name').val(),
-                capacity: parseInt(modal_div.find('#capacity').val()),
-                host_id: host_id,
-                mount_point_id: mount_point_id,
-                username: modal_div.find('#username').val(),
-            };
-            
-            $.ajax({
-                type: 'POST',
-                url: '/volume/create',
-                contentType: 'application/json;charset=utf-8',
-                dataType: 'json',
-                data: JSON.stringify({
-                    volume: _volume,
-                }),
-            })
-            .done(function(data) {
-                // handled error
-                if (data.error) {
-                    $.bootstrapGrowl(data.error, {type: 'info', align: 'center'});
-                    return;
-                }
-                
-                volume._add(data.volume);
-                $.bootstrapGrowl('Volume successfully created.', {type: 'success', align: 'center'});
-            })
-            .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
-            });
-        });
-        
-        modal_div.modal({
-            backdrop: 'static',
         });
     },
     
