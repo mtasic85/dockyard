@@ -105,6 +105,8 @@ def image_create():
     _image['created'] = _image['updated'] = datetime.utcnow()
     image = Image(**_image)
     db.session.add(image)
+    db.session.commit()
+    _image = object_to_dict(image)
     
     ##
     # "async" create/pull image
@@ -145,11 +147,13 @@ def image_create():
         for t in threads:
             t.join()
         
+        session = db.create_scoped_session()
+        image = Image.query.get(_image['id'])
         image.status = 'ready'
-        db_session.commit()
+        session.commit()
         print '!!!', 'DONE'
     
-    mt = Thread(target=_image_create, args=(db.session,))
+    mt = Thread(target=_image_create)
     mt.start()
     ##
     
@@ -179,9 +183,6 @@ def image_create():
     image.status = 'ready'
     ##
     '''
-    
-    db.session.commit()
-    _image = object_to_dict(image)
     
     # insert host_name
     host = Host.query.get(_image['host_id'])
