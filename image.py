@@ -111,7 +111,7 @@ def image_create():
     def _requests_post(*args, **kwargs):
         try:
             r = requests.post(*args, **kwargs)
-            assert r.status_code == 200
+            # assert r.status_code == 200
             print r
         except requests.exceptions.ChunkedEncodingError as e:
             print e
