@@ -83,7 +83,7 @@ def container_containers_all():
         image = Image.query.get(_container['image_id'])
         assert image is not None
         
-        _container['host_name'] = host.name if host else 'All'
+        _container['host_name'] = host.name if host else 'ALL'
         _container['image_name'] = image.name
     
     data = {
@@ -123,7 +123,7 @@ def container_create():
     image = Image.query.get(_container['image_id'])
     assert image is not None
     
-    _container['host_name'] = host.name if host else 'All'
+    _container['host_name'] = host.name if host else 'ALL'
     _container['image_name'] = image.name
     
     data = {
