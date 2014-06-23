@@ -371,6 +371,11 @@ $.extend(volume, {
             }
             
             // console.log(data);
+            var option = $('<option>')
+                .attr('value', '')
+                .text('')
+                .appendTo(host_id_select);
+            
             _.each(data.hosts, function(host_) {
                 var option = $('<option>')
                     .attr('value', host_.id)
@@ -391,6 +396,10 @@ $.extend(volume, {
     
     _populate_mount_points: function(mount_point_id_select, host_id) {
         mount_point_id_select.empty();
+        
+        if (!!host_id) {
+            return;
+        }
         
         $.ajax({
             type: 'POST',

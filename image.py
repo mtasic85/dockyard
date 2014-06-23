@@ -91,8 +91,10 @@ def image_create():
     _image['created'] = _image['updated'] = datetime.utcnow()
     image = Image(**_image)
     db.session.add(image)
-    db.session.commit()
     
+    
+    
+    db.session.commit()
     _image = object_to_dict(image)
     
     # insert host_name
