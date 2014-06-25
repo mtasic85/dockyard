@@ -173,6 +173,8 @@ def container_create():
         "ExposedPorts": {p: {} for p in _publish_ports.strip().split(',')},
     })
     
+    print data_
+    
     headers = {
         'content-type': 'application/json',
     }
