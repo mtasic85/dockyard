@@ -118,7 +118,7 @@ def container_create():
     ram_limit = _container['ram_limit']
     n_cpu_cores = _container['n_cpu_cores']
     
-    if not host_id and not volumes:
+    # if not host_id and not volumes:
     
     _container['username'] = username
     _container['created'] = _container['updated'] = datetime.utcnow()
