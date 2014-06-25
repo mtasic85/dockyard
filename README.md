@@ -64,6 +64,11 @@ Lets assume that each compute node has follwoing devcies mounted:
 /dev/sde1 -> /mnt/sde1
 ```
 
+Disable auto-start of docker containers when host reboots.
+```
+sudo sh -c "echo 'DOCKER_OPTS=\"-r=false\"' > /etc/default/docker"
+```
+
 Install dockyard-web
 ```
 $ docker pull base/archlinux
