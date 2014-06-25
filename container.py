@@ -105,6 +105,20 @@ def container_create():
         data = {}
         return jsonify(data)
     
+    host_id = _container.get('host_id', None)
+    name = _container['name']
+    image_id = _container['image_id']
+    command = _container['command']
+    volumes = _container.get('volumes', None)
+    # volumes_from = _container.get('volumes_from', None)
+    env_vars = _container['env_vars']
+    expose_ports = _container['expose_ports']
+    publish_ports = _container['publish_ports']
+    # link_containers = _container['link_containers']
+    ram_limit = _container['ram_limit']
+    n_cpu_cores = _container['n_cpu_cores']
+    
+    if 
     _container['username'] = username
     _container['created'] = _container['updated'] = datetime.utcnow()
     _container['perm_name'] = '%s_%s' % (_container['username'], _container['name'])
