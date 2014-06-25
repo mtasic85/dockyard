@@ -170,7 +170,7 @@ def container_create():
         "Volumes": {v: {} for v in _volume_names},
         "WorkingDir": "",
         "DisableNetwork": False,
-        "ExposedPorts": {p: {} for p in _publish_ports.strip().split(',')},
+        "ExposedPorts": {p: {} for p in _publish_ports.strip('\t ').split(',')},
     })
     
     print data_
