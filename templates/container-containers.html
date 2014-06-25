@@ -25,9 +25,10 @@
             <td id="host_name" data-host-name="<%= host_name %>" data-host-id="<%= host_id %>"> <%= host_name %> </td>
             <td id="command"> <%= command %> </td>
             
-            <td id="volumes"> <%= volumes %> </td>
+            <td id="volume"> <%= volume %> </td>
             
             <!--
+            <td id="volumes"> <%= volumes %> </td>
             <td id="volumes_from"> < %= volumes_from % > </td>
             -->
             
@@ -112,12 +113,18 @@
                             </div>
                             
                             <div class="form-group">
+                                <label> Volume </label>
+                                <input type="text" class="form-control" id="volume" placeholder="Volume">
+                                <p class="help-block">  </p>
+                            </div>
+                            
+                            <!--
+                            <div class="form-group">
                                 <label> Volumes </label>
                                 <input type="text" class="form-control" id="volumes" placeholder="Volumes">
                                 <p class="help-block">  </p>
                             </div>
                             
-                            <!--
                             <div class="form-group">
                                 <label> Volumes From </label>
                                 <input type="text" class="form-control" id="volumes_from" placeholder="Volumes From">
@@ -205,8 +212,9 @@
                         <th> Image </th>
                         <th> Command </th>
                         
-                        <th> Volumes </th>
+                        <th> Volume </th>
                         <!--
+                        <th> Volumes </th>
                         <th> Volumes From </th>
                         -->
                         <th> Env Vars </th>
