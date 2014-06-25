@@ -179,6 +179,7 @@ def container_create():
     
     auth = HTTPBasicAuth(host.auth_username, host.auth_password)
     r = requests.post(url, data=data_, headers=headers, auth=auth)
+    print r
     assert r.status_code == 200
     container_id = r.json()['Id']
     ##
