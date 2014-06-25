@@ -29,6 +29,80 @@ $.extend(container, {
         });
     },
     
+    add: function(options) {
+        options = options || {};
+        var new_template = _.template($('#modal-new-container').html());
+        var modal_div = $(new_template());
+        var host_id_select = modal_div.find('#host_id');
+        var image_id_select = modal_div.find('#image_id');
+        var volumes_select = modal_div.find('#volumes');
+        
+        // populate hosts
+        container._populate_hosts(host_id_select);
+        
+        // populate images
+        container._populate_images(image_id_select);
+        
+        // populate volumes
+        container._populate_volumes(volumes_select);
+        
+        // close
+        modal_div.find('button#close').click(function(e) {
+            // close modal
+            modal_div.modal('hide');
+            setTimeout(function() { modal_div.remove();}, 500);
+            $('.modal-backdrop').remove();
+        });
+        
+        // update
+        modal_div.find('button#create').click(function(e) {
+            // close modal
+            modal_div.modal('hide');
+            setTimeout(function() { modal_div.remove();}, 500);
+            $('.modal-backdrop').remove();
+            
+            // create container
+            var _container = {
+                name: modal_div.find('#name').val(),
+                host_id: modal_div.find('#host_id').val(),
+                image_id: modal_div.find('#image_id').val(),
+                command: modal_div.find('#command').val(),
+                volumes: modal_div.find('#volumes').val(),
+                // volumes: modal_div.find('#volumes').val(),
+                // volumes_from: modal_div.find('#volumes_from').val(),
+                env_vars: modal_div.find('#env_vars').val(),
+                expose_ports: modal_div.find('#expose_ports').val(),
+                publish_ports: modal_div.find('#publish_ports').val(),
+                // link_containers: modal_div.find('#link_containers').val(),
+                ram_limit: modal_div.find('#ram_limit').val(),
+                n_cpu_cores: modal_div.find('#n_cpu_cores').val(),
+                // cpu_share: modal_div.find('#cpu_share').val(),
+                status: modal_div.find('#status').val(),
+            };
+            
+            $.ajax({
+                type: 'POST',
+                url: '/container/create',
+                contentType: 'application/json;charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({
+                    container: _container,
+                }),
+            })
+            .done(function(data) {
+                container._add(data.container);
+                $.bootstrapGrowl('Volume successfully created.', {type: 'success', align: 'center'});
+            })
+            .error(function (xhr, ajaxOptions, thrownError) {
+                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
+            });
+        });
+        
+        modal_div.modal({
+            backdrop: 'static',
+        });
+    },
+    
     _add: function(container_) {
         var tbody = container.table.find('tbody');
         var tr_template = _.template($('#table-row-container').html());
@@ -117,75 +191,6 @@ $.extend(container, {
         });
     },
     
-    add: function(options) {
-        options = options || {};
-        var new_template = _.template($('#modal-new-container').html());
-        var modal_div = $(new_template());
-        var host_id_select = modal_div.find('#host_id');
-        var image_id_select = modal_div.find('#image_id');
-        
-        // populate hosts
-        container._populate_hosts(host_id_select);
-        
-        // populate images
-        container._populate_images(image_id_select);
-        
-        // close
-        modal_div.find('button#close').click(function(e) {
-            // close modal
-            modal_div.modal('hide');
-            setTimeout(function() { modal_div.remove();}, 500);
-            $('.modal-backdrop').remove();
-        });
-        
-        // update
-        modal_div.find('button#create').click(function(e) {
-            // close modal
-            modal_div.modal('hide');
-            setTimeout(function() { modal_div.remove();}, 500);
-            $('.modal-backdrop').remove();
-            
-            // create container
-            var _container = {
-                name: modal_div.find('#name').val(),
-                host_id: modal_div.find('#host_id').val(),
-                image_id: modal_div.find('#image_id').val(),
-                command: modal_div.find('#command').val(),
-                volumes: modal_div.find('#volumes').val(),
-                volumes_from: modal_div.find('#volumes_from').val(),
-                env_vars: modal_div.find('#env_vars').val(),
-                expose_ports: modal_div.find('#expose_ports').val(),
-                publish_ports: modal_div.find('#publish_ports').val(),
-                link_containers: modal_div.find('#link_containers').val(),
-                ram_limit: modal_div.find('#ram_limit').val(),
-                n_cpu_cores: modal_div.find('#n_cpu_cores').val(),
-                cpu_share: modal_div.find('#cpu_share').val(),
-                status: modal_div.find('#status').val(),
-            };
-            
-            $.ajax({
-                type: 'POST',
-                url: '/container/create',
-                contentType: 'application/json;charset=utf-8',
-                dataType: 'json',
-                data: JSON.stringify({
-                    container: _container,
-                }),
-            })
-            .done(function(data) {
-                container._add(data.container);
-                $.bootstrapGrowl('Volume successfully created.', {type: 'success', align: 'center'});
-            })
-            .error(function (xhr, ajaxOptions, thrownError) {
-                $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
-            });
-        });
-        
-        modal_div.modal({
-            backdrop: 'static',
-        });
-    },
-    
     _update: function(container_) {
         var tr = $('tr[data-id="' + container_.id + '"]');
         
@@ -214,7 +219,6 @@ $.extend(container, {
                 return;
             }
             
-            // console.log(data);
             var option = $('<option>')
                 .attr('value', '')
                 .text('')
@@ -256,6 +260,36 @@ $.extend(container, {
             
             if (!!image_id) {
                 image_id_select.val(image_id);
+            }
+        })
+        .error(function (xhr, ajaxOptions, thrownError) {
+            $.bootstrapGrowl('Oops, something went wrong!', {type: 'info', align: 'center'});
+        });
+    },
+    
+    _populate_volumes: function(volumes_select, volume_id) {
+        $.ajax({
+            type: 'POST',
+            url: '/volumes/all',
+            contentType: 'application/json;charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify({}),
+        })
+        .done(function(data) {
+            var option = $('<option>')
+                .attr('value', '')
+                .text('')
+                .appendTo(volumes_select);
+            
+            _.each(data.volumes, function(volume_) {
+                var option = $('<option>')
+                    .attr('value', volume_.id)
+                    .text(volume_.name)
+                    .appendTo(volumes_select);
+            });
+            
+            if (!!volume_id) {
+                volumes_select.val(volume_id);
             }
         })
         .error(function (xhr, ajaxOptions, thrownError) {
