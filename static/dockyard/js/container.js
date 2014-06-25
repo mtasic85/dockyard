@@ -62,12 +62,16 @@ $.extend(container, {
             $('.modal-backdrop').remove();
             
             // create container
+            var volumes = [];
+            var volume = modal_div.find('#volumes').val();
+            if (!!volume) volumes.push(volume);
+            
             var _container = {
                 name: modal_div.find('#name').val(),
                 host_id: modal_div.find('#host_id').val(),
                 image_id: modal_div.find('#image_id').val(),
                 command: modal_div.find('#command').val(),
-                volumes: modal_div.find('#volumes').val(),
+                volumes: volumes,
                 // volumes: modal_div.find('#volumes').val(),
                 // volumes_from: modal_div.find('#volumes_from').val(),
                 env_vars: modal_div.find('#env_vars').val(),
