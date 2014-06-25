@@ -33,7 +33,9 @@
             <td id="env_vars"> <%= env_vars %> </td>
             <td id="expose_ports"> <%= expose_ports %> </td>
             <td id="publish_ports"> <%= publish_ports %> </td>
-            <td id="link_containers"> <%= link_containers %> </td>
+            <!--
+            <td id="link_containers"> < %= link_containers % > </td>
+            -->
             
             <td id="ram_limit"> <%= ram_limit %> </td>
             <td id="n_cpu_cores"> <%= n_cpu_cores %> </td>
@@ -138,15 +140,17 @@
                                 <p class="help-block">  </p>
                             </div>
                             
+                            <!--
                             <div class="form-group">
                                 <label> Link Containers </label>
                                 <input type="text" class="form-control" id="link_containers" placeholder="Link Containers">
                                 <p class="help-block">  </p>
                             </div>
+                            -->
                             
                             <div class="form-group">
                                 <label> RAM Limit </label>
-                                <input type="text" class="form-control" id="ram_limit" placeholder="RAM Limit" value="256m">
+                                <input type="text" class="form-control" id="ram_limit" placeholder="RAM Limit" value="256M">
                                 <p class="help-block">  </p>
                             </div>
                             
@@ -203,7 +207,9 @@
                         <th> Env Vars </th>
                         <th> Expose Ports </th>
                         <th> Publish Ports </th>
+                        <!--
                         <th> Link Containers </th>
+                        -->
                         <th> RAM Limit </th>
                         <th> # CPU Cores </th>
                         <th> CPU Share </th>
